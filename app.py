@@ -6,7 +6,7 @@ import google.generativeai as genai
 app = Flask(__name__)
 CORS(app)
 
-GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "AQ.Ab8RN6JCsGcCTpnHWGiuCtk96VPgeTjVljHjbNoEhGXfgHOp0w")
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
 genai.configure(api_key=GEMINI_API_KEY)
 
 system_instruction = """
