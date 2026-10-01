@@ -1,0 +1,1644 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Xưởng Ô Tô 8 Giờ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#22090d;
+  --paper:#f3ead6;
+  --paper-dim:#e8dcc0;
+  --card:#fffaf0;
+  --brass:#bd8a34;
+  --brass-dim:#e8c988;
+  --indigo:#671626;
+  --indigo-dim:#a13a4a;
+  --indigo-pale:#f2dde1;
+  --rust:#9c4227;
+  --rust-dim:#e3a98f;
+  --rust-pale:#f3ddd2;
+  --good:#3f7d4c;
+  --good-pale:#dcefd8;
+  --danger:#a4332a;
+  --danger-pale:#f3d7d0;
+  --text:#241c12;
+  font-family:'Inter',system-ui,sans-serif;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;background:var(--ink);color:var(--text);}
+body{min-height:100vh; overflow-x:hidden;}
+h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif; margin:0 0 .3em; font-weight:650; line-height:1.15;}
+p{margin:.3em 0; line-height:1.55;}
+button{font-family:inherit; cursor:pointer;}
+.mono{font-family:'JetBrains Mono',monospace;}
+::selection{background:var(--brass-dim);}
+
+/* ===================== animated background (hero) ===================== */
+.hero-bgfx{position:absolute; inset:0; overflow:hidden; pointer-events:none;}
+.hero-bgfx .gear{position:absolute; opacity:.16; font-size:5.5rem; animation:spinSlow 22s linear infinite;}
+.hero-bgfx .gear.g2{animation-duration:30s; animation-direction:reverse; font-size:3.6rem;}
+.hero-bgfx .gear.g3{animation-duration:26s; font-size:4.4rem;}
+.hero-bgfx .puff{position:absolute; bottom:-40px; width:70px; height:70px; border-radius:50%; background:radial-gradient(circle,rgba(255,255,255,.5),rgba(255,255,255,0) 70%); animation:floatUp 9s ease-in infinite;}
+.hero-bgfx .thread{position:absolute; font-size:1.8rem; opacity:.35; animation:driftSide 14s ease-in-out infinite;}
+@keyframes spinSlow{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+@keyframes floatUp{0%{transform:translateY(0) scale(.6); opacity:0;}15%{opacity:.6;}100%{transform:translateY(-420px) scale(1.3); opacity:0;}}
+@keyframes driftSide{0%,100%{transform:translateX(0) rotate(0deg);}50%{transform:translateX(24px) rotate(12deg);}}
+@keyframes popIn{from{opacity:0; transform:scale(.9) translateY(8px);}to{opacity:1; transform:scale(1) translateY(0);}}
+@keyframes slideFade{from{opacity:0; transform:translate(-50%,10px);}to{opacity:1; transform:translate(-50%,0);}}
+@keyframes shimmerGlow{0%,100%{box-shadow:0 0 0 0 rgba(189,138,52,.5);}50%{box-shadow:0 0 0 8px rgba(189,138,52,0);}}
+@keyframes confettiFall{0%{transform:translateY(-10px) rotate(0deg); opacity:1;}100%{transform:translateY(360px) rotate(420deg); opacity:0;}}
+@keyframes badgeIn{from{transform:scale(.5); opacity:0;}to{transform:scale(1); opacity:1;}}
+
+/* ===================== start screen ===================== */
+#start-screen{position:relative; min-height:100vh; background:linear-gradient(160deg,#170709,#671626 55%,#2a0f12); color:#f3ead6; display:flex; align-items:center; justify-content:center; padding:30px;}
+.start-box{position:relative; z-index:2; max-width:680px; text-align:center;}
+.start-box .kicker{font-family:'JetBrains Mono',monospace; letter-spacing:.14em; font-size:.75rem; color:var(--brass-dim); text-transform:uppercase; margin-bottom:10px;}
+.start-box h1{font-size:3.1rem; color:#fbf3df; margin-bottom:6px;}
+.start-box .sub{color:#c9d4e3; font-size:1.02rem; max-width:520px; margin:0 auto 26px;}
+.start-actions{display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:22px;}
+.btn{border-radius:10px; border:1px solid var(--ink); background:var(--ink); color:var(--paper); padding:12px 22px; font-size:.92rem; font-weight:700; transition:transform .15s ease, box-shadow .15s ease, background .15s ease;}
+.btn:hover{transform:translateY(-2px); box-shadow:0 8px 18px rgba(0,0,0,.28);}
+.btn:active{transform:translateY(0) scale(.98);}
+.btn.primary{background:var(--brass); border-color:var(--brass); color:#241c12; animation:shimmerGlow 2.6s ease-in-out infinite;}
+.btn.primary:hover{background:#cf9c42;}
+.btn.ghost{background:transparent; border:1px solid rgba(255,255,255,.4); color:#f3ead6;}
+.btn.ghost:hover{background:rgba(255,255,255,.08);}
+.btn.secondary{background:transparent; color:var(--ink); border:1px solid #b6a67f;}
+.btn.secondary:hover{border-color:var(--ink); background:#fff8ea;}
+.btn:disabled{opacity:.4; cursor:not-allowed; animation:none; transform:none; box-shadow:none;}
+.btn.wide{width:100%;}
+.lang-toggle{display:inline-flex; border:1px solid rgba(255,255,255,.4); border-radius:100px; overflow:hidden; margin-bottom:20px;}
+.lang-toggle button{background:transparent; border:none; color:#e7ddc3; padding:6px 16px; font-size:.78rem; font-weight:700; letter-spacing:.03em; transition:background .15s;}
+.lang-toggle button.active{background:var(--brass); color:#241c12;}
+.start-credit{margin-top:34px; font-size:.72rem; color:#93a3ba; font-family:'JetBrains Mono',monospace;}
+
+/* ===================== role screen ===================== */
+#role-screen{min-height:100vh; background:radial-gradient(circle at 50% 0%,#8a2438,#150709 75%); color:#f3ead6; display:flex; align-items:center; justify-content:center; padding:30px;}
+.role-wrap{max-width:760px; width:100%; text-align:center;}
+.role-cards{display:flex; gap:20px; flex-wrap:wrap; justify-content:center; margin-top:26px;}
+.role-card{flex:1; min-width:260px; max-width:320px; background:rgba(255,250,240,.06); border:2px solid rgba(255,255,255,.18); border-radius:16px; padding:26px 20px; cursor:pointer; transition:transform .18s ease, border-color .18s ease, background .18s ease; text-align:left;}
+.role-card:hover{transform:translateY(-4px) rotate(-.3deg); border-color:var(--brass-dim); background:rgba(255,250,240,.1);}
+.role-card.selected{border-color:var(--brass); background:rgba(189,138,52,.16); box-shadow:0 0 0 3px rgba(189,138,52,.35);}
+.role-card .emoji{font-size:2.6rem;}
+.role-card h3{color:#fbf3df; margin-top:8px;}
+.role-card p{color:#cfd8e6; font-size:.86rem;}
+.diff-cards{display:flex; gap:18px; flex-wrap:wrap; justify-content:center; margin-top:22px;}
+.diff-card{flex:1; min-width:240px; max-width:280px; background:rgba(255,250,240,.06); border:2px solid rgba(255,255,255,.18); border-radius:16px; padding:20px 18px; cursor:pointer; transition:transform .18s ease, border-color .18s ease, background .18s ease; text-align:left;}
+.diff-card:hover{transform:translateY(-4px); border-color:var(--brass-dim); background:rgba(255,250,240,.1);}
+.diff-card.selected{border-color:var(--brass); background:rgba(189,138,52,.16); box-shadow:0 0 0 3px rgba(189,138,52,.35);}
+.diff-card .emoji{font-size:2rem;}
+.diff-card h3{color:#fbf3df; margin:6px 0 2px; font-size:1.15rem;}
+.diff-card p{color:#cfd8e6; font-size:.8rem; margin-bottom:10px;}
+.diff-table{font-family:'JetBrains Mono',monospace; font-size:.72rem; color:#e7ddc3; border-top:1px solid rgba(255,255,255,.15); padding-top:8px;}
+.diff-table div{display:flex; justify-content:space-between; margin-bottom:4px;}
+.diff-table span{color:#f3ead6; font-weight:700;}
+
+/* ===================== app shell ===================== */
+#app{max-width:1220px; margin:0 auto; min-height:100vh; background:var(--paper); display:flex; flex-direction:column; position:relative;}
+.topbar{background:var(--ink); color:var(--paper); padding:13px 20px; display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; border-bottom:4px solid var(--brass);}
+.topbar .brand{display:flex; align-items:center; gap:10px;}
+.topbar .brand .gearicon{display:inline-block; animation:spinSlow 12s linear infinite; font-size:1.3rem;}
+.topbar .brand h1{font-size:1.18rem; color:var(--paper); margin:0;}
+.topbar .brand span{font-size:.72rem; color:var(--brass-dim); font-family:'JetBrains Mono',monospace; display:block;}
+.topbar .midchip{background:#2a221a; border:1px solid #4a3e2c; border-radius:100px; padding:6px 14px; font-size:.76rem; color:#e6d9b8; font-family:'JetBrains Mono',monospace;}
+.topbar .icons{display:flex; gap:8px; align-items:center;}
+.icon-btn{background:#241d15; border:1px solid #4a3e2c; color:var(--paper); width:34px; height:34px; border-radius:9px; display:flex; align-items:center; justify-content:center; font-size:.95rem; transition:background .15s, transform .15s;}
+.icon-btn:hover{background:#382c1e; transform:translateY(-1px);}
+.lang-pill{display:inline-flex; border:1px solid #4a3e2c; border-radius:100px; overflow:hidden;}
+.lang-pill button{background:#241d15; border:none; color:#c9bfa4; padding:6px 11px; font-size:.7rem; font-weight:700;}
+.lang-pill button.active{background:var(--brass); color:#241c12;}
+.role-badge{font-size:.7rem; background:#241d15; border:1px solid #4a3e2c; padding:6px 11px; border-radius:100px; color:var(--brass-dim);}
+
+.layout{display:flex; flex:1; min-height:0;}
+nav.side{width:196px; flex-shrink:0; background:var(--paper-dim); border-right:1px solid #d8c79c; padding:14px 10px;}
+nav.side button.navitem{display:block; width:100%; text-align:left; background:transparent; border:none; border-radius:8px; padding:9px 10px; margin-bottom:4px; font-size:.83rem; color:#4a3c26; font-weight:600; transition:background .15s, transform .15s;}
+nav.side button.navitem:hover:not(:disabled){background:#ddcda3; transform:translateX(2px);}
+nav.side button.navitem.active{background:var(--ink); color:var(--paper);}
+nav.side button.navitem:disabled{color:#b8a97e; cursor:not-allowed;}
+nav.side .lv-num{display:inline-block; width:1.35em; font-family:'JetBrains Mono',monospace; opacity:.6;}
+nav.side h4{font-size:.66rem; text-transform:uppercase; letter-spacing:.06em; color:#8c7845; margin:16px 4px 6px;}
+nav.side .side-btn{display:flex; align-items:center; gap:7px; width:100%; text-align:left; background:var(--card); border:1px solid #d8c79c; border-radius:8px; padding:9px 10px; margin-bottom:6px; font-size:.8rem; color:#4a3c26; font-weight:600; transition:transform .15s, border-color .15s;}
+nav.side .side-btn:hover{transform:translateY(-1px); border-color:var(--brass);}
+nav.side .footer-credit{margin-top:20px; font-size:.66rem; color:#9c8a5e; font-family:'JetBrains Mono',monospace; padding:0 4px;}
+
+main{flex:1; min-width:0; padding:22px 26px 40px; overflow-y:auto;}
+
+/* roadmap strip */
+.roadmap{display:flex; align-items:center; gap:6px; margin-bottom:18px; flex-wrap:wrap;}
+.roadmap .node{width:30px; height:30px; border-radius:50%; background:#e2d3ab; border:2px solid #cbb883; display:flex; align-items:center; justify-content:center; font-size:.78rem; font-weight:700; color:#7a672f; transition:transform .15s;}
+.roadmap .node.done{background:var(--good); border-color:var(--good); color:#fff;}
+.roadmap .node.current{background:var(--brass); border-color:#a67623; color:#241c12; transform:scale(1.18); box-shadow:0 0 0 4px rgba(189,138,52,.25);}
+.roadmap .bar{flex:1; height:3px; background:#d8c79c; min-width:10px;}
+.roadmap .bar.done{background:var(--good);}
+
+/* ===================== generic ui ===================== */
+.card{background:var(--card); border:1px solid #e4d3a8; border-radius:13px; padding:18px 20px; margin-bottom:15px; transition:box-shadow .18s ease;}
+.card.hoverable:hover{box-shadow:0 8px 20px rgba(80,60,20,.12); transform:translateY(-1px);}
+.card h3{font-size:1.05rem;}
+.row{display:flex; gap:16px; flex-wrap:wrap;}
+.col{flex:1; min-width:220px;}
+
+label{display:block; font-size:.79rem; color:#5a4726; margin-bottom:4px; font-weight:600;}
+input[type=range]{width:100%; accent-color:var(--brass);}
+.stepper-row{display:flex; gap:6px; margin-top:5px;}
+.step-btn{width:30px; height:30px; border-radius:7px; border:1px solid #cdbb8b; background:var(--card); font-weight:800; font-size:1rem; line-height:1; color:var(--ink); transition:transform .12s ease, border-color .12s ease;}
+.step-btn:hover{border-color:var(--brass); transform:translateY(-1px);}
+.step-btn:active{transform:scale(.92);}
+input[type=number]{width:100%; padding:7px 9px; border:1px solid #cdbb8b; border-radius:6px; font-family:'JetBrains Mono',monospace; background:#fffef9;}
+
+.statgrid{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:16px;}
+.statbox{flex:1; min-width:190px; background:var(--card); border:1px solid #e4d3a8; border-radius:12px; padding:13px 15px;}
+.statbox .sh{display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;}
+.statbox .sh .lbl{font-size:.72rem; font-weight:700; letter-spacing:.03em; text-transform:uppercase; color:#6b5a34; display:flex; gap:6px; align-items:center;}
+.statbox .sh .goal{font-size:.68rem; color:#9c8a5e;}
+.statbox .val{font-family:'JetBrains Mono',monospace; font-size:1.4rem; font-weight:700;}
+.statbox .val .of{font-size:.85rem; color:#9c8a5e; font-weight:500;}
+.statbox .meter{height:8px; border-radius:5px; background:#e9dcbb; overflow:hidden; margin-top:7px;}
+.statbox .meter i{display:block; height:100%; border-radius:5px; transition:width .55s ease;}
+.statbox.brass .meter i{background:linear-gradient(90deg,var(--brass),#e2b45c);}
+.statbox.indigo .meter i{background:linear-gradient(90deg,var(--indigo),#c65a6c);}
+.statbox.rust .meter i{background:linear-gradient(90deg,var(--rust),#d97a52);}
+.statbox.good .meter i{background:linear-gradient(90deg,var(--good),#78c184);}
+
+.btn.small{padding:8px 14px; font-size:.82rem;}
+.choicebtn{display:block; width:100%; text-align:left; background:var(--paper); border:1px solid #d8c79c; border-radius:9px; padding:11px 14px; margin-top:8px; font-size:.86rem; transition:transform .13s, border-color .13s, background .13s;}
+.choicebtn:hover{border-color:var(--brass); background:#fbf1d9; transform:translateX(3px);}
+
+/* W bar / labor bar */
+.wbar{display:flex; height:44px; border-radius:9px; overflow:hidden; border:1px solid #d8c79c;}
+.wbar div{display:flex; align-items:center; justify-content:center; font-size:.78rem; font-weight:700; color:#fff; font-family:'JetBrains Mono',monospace; transition:width .5s ease;}
+.wbar .c{background:#5d7699;}
+.wbar .v{background:#4c8956;}
+.wbar .m{background:var(--rust);}
+.wlegend{display:flex; gap:16px; font-size:.74rem; margin-top:7px; color:#5a4726; flex-wrap:wrap;}
+.wlegend span::before{content:"■ ";}
+.wlegend .c::before{color:#5d7699;}
+.wlegend .v::before{color:#4c8956;}
+.wlegend .m::before{color:var(--rust);}
+
+.laborbar{display:flex; height:34px; border-radius:7px; overflow:hidden; border:1px solid #d8c79c;}
+.laborbar .t{background:#4c8956;}
+.laborbar .t2{background:var(--rust);}
+.laborbar div{display:flex; align-items:center; justify-content:center; color:#fff; font-size:.72rem; font-weight:700; transition:width .5s ease;}
+
+/* role split panels */
+.split{display:flex; gap:16px; flex-wrap:wrap; margin-bottom:6px;}
+.panel{flex:1; min-width:250px; border-radius:13px; padding:17px 19px; transition:box-shadow .2s;}
+.panel.capital{background:linear-gradient(155deg,#3a1420,#671626); color:#f7ecec; border:1px solid #7a2536;}
+.panel.capital h3{color:var(--brass-dim);}
+.panel.worker{background:linear-gradient(155deg,#3c2317,#5c3220); color:#f7ebe1; border:1px solid #6b3f2b;}
+.panel.worker h3{color:#f0c3a5;}
+.panel .k{font-size:.73rem; opacity:.78;}
+.panel .v{font-family:'JetBrains Mono',monospace; font-size:1.12rem;}
+.panel.you{box-shadow:0 0 0 3px rgba(189,138,52,.55);}
+.panel .youtag{display:inline-block; background:var(--brass); color:#241c12; font-size:.63rem; font-weight:800; letter-spacing:.04em; padding:2px 8px; border-radius:100px; margin-bottom:6px;}
+.meter{height:9px; border-radius:5px; background:rgba(255,255,255,.15); overflow:hidden; margin-top:4px;}
+.meter i{display:block; height:100%; transition:width .5s ease;}
+.panel.capital .meter i{background:var(--brass);}
+.panel.worker .meter i{background:#f0c3a5;}
+
+/* modal */
+#overlay{position:fixed; inset:0; background:rgba(15,10,6,.74); display:none; align-items:center; justify-content:center; padding:20px; z-index:50;}
+#overlay.show{display:flex;}
+.modal{background:var(--card); border-radius:15px; max-width:540px; width:100%; padding:24px 26px; border-top:6px solid var(--brass); animation:popIn .18s ease-out; max-height:86vh; overflow-y:auto;}
+.modal .tag{font-size:.7rem; color:var(--rust); font-weight:800; letter-spacing:.03em; margin-bottom:4px; text-transform:uppercase;}
+.knowledge-note{margin-top:14px; background:#e7efe2; border:1px solid #c4d9bc; border-radius:10px; padding:12px 14px; font-size:.82rem; color:#31501f;}
+
+#toast{position:fixed; bottom:20px; left:50%; background:var(--ink); color:var(--paper); padding:11px 20px; border-radius:10px; font-size:.85rem; display:none; z-index:60; border-left:4px solid var(--brass); max-width:82%; animation:slideFade .2s ease-out;}
+#toast.show{display:block;}
+
+.pill{display:inline-block; padding:4px 11px; border-radius:100px; font-size:.71rem; font-weight:800; letter-spacing:.02em;}
+.pill.win{background:var(--good-pale); color:#265c26;}
+.pill.lose{background:var(--danger-pale); color:#7c2019;}
+.pill.info{background:var(--indigo-pale); color:#671626;}
+
+.quiz-opt{display:block; width:100%; text-align:left; background:var(--paper); border:1px solid #d8c79c; border-radius:9px; padding:10px 14px; margin-top:8px; font-size:.86rem; transition:transform .13s;}
+.quiz-opt:hover{border-color:var(--brass); transform:translateX(3px);}
+.quiz-opt.correct{background:var(--good-pale); border-color:#7ab26f;}
+.quiz-opt.wrong{background:var(--danger-pale); border-color:#c9705d;}
+
+hr.sep{border:none; border-top:1px solid #e4d3a8; margin:16px 0;}
+.small{font-size:.79rem; color:#6b5a34;}
+ul.tight{margin:4px 0; padding-left:18px;}
+ul.tight li{margin-bottom:3px; font-size:.87rem;}
+
+.confetti-layer{position:fixed; inset:0; pointer-events:none; z-index:70; overflow:hidden;}
+.confetti-piece{position:absolute; top:-10px; width:9px; height:14px; animation:confettiFall 2.1s ease-in forwards;}
+
+.locked-card{opacity:.55;}
+.result-art{display:flex; justify-content:center; margin:-6px 0 12px; animation:popIn .35s ease-out;}
+.result-art svg{max-width:420px; filter:drop-shadow(0 6px 10px rgba(0,0,0,.12));}
+#arrive-fx{position:fixed; inset:0; background:var(--ink); z-index:99999; pointer-events:none; opacity:1; transition:opacity .5s ease;}
+#arrive-fx.hide{opacity:0;}
+.badge-pop{animation:badgeIn .3s ease-out;}
+
+@media(max-width:820px){
+  .layout{flex-direction:column;}
+  nav.side{width:100%; padding:10px;}
+  nav.side .side-list{display:flex; overflow-x:auto; gap:6px;}
+  nav.side .side-list button{white-space:nowrap; width:auto;}
+  nav.side h4, nav.side .footer-credit{display:none;}
+  .start-box h1{font-size:2.1rem;}
+}
+</style>
+</head>
+<body>
+<div id="arrive-fx"></div>
+
+<div id="start-screen" style="display:none;">
+  <div class="hero-bgfx" id="hero-bgfx"></div>
+  <div class="start-box">
+    <div class="lang-toggle" id="lang-toggle-start"></div>
+    <div style="font-size:2.1rem; margin-bottom:8px;">🏭</div>
+    <div class="kicker" id="s-kicker"></div>
+    <h1 id="s-title"></h1>
+    <p class="sub" id="s-sub"></p>
+    <div class="start-actions">
+      <button class="btn primary" id="s-play"></button>
+      <button class="btn ghost" id="s-rules"></button>
+      <button class="btn ghost" id="s-home"></button>
+    </div>
+    <div class="start-credit" id="s-credit"></div>
+  </div>
+</div>
+
+<div id="role-screen" style="display:none;">
+  <div class="role-wrap">
+    <div class="kicker" id="r-kicker" style="font-family:'JetBrains Mono',monospace; letter-spacing:.14em; font-size:.75rem; color:var(--brass-dim); text-transform:uppercase; margin-bottom:8px;"></div>
+    <h1 id="r-title" style="color:#fbf3df; font-size:2rem;"></h1>
+    <p id="r-sub" style="color:#cfd8e6;"></p>
+    <div class="role-cards" id="role-cards"></div>
+    <div class="start-actions" style="margin-top:26px;">
+      <button class="btn primary" id="r-continue" disabled></button>
+      <button class="btn ghost" id="r-back"></button>
+    </div>
+  </div>
+</div>
+
+<div id="diff-screen" style="display:none; min-height:100vh; background:radial-gradient(circle at 50% 0%,#8a2438,#150709 75%); color:#f3ead6; align-items:center; justify-content:center; padding:30px;">
+  <div class="role-wrap" style="max-width:920px;">
+    <div class="kicker" id="d-kicker" style="font-family:'JetBrains Mono',monospace; letter-spacing:.14em; font-size:.75rem; color:var(--brass-dim); text-transform:uppercase; margin-bottom:8px;"></div>
+    <h1 id="d-title" style="color:#fbf3df; font-size:2rem;"></h1>
+    <p id="d-sub" style="color:#cfd8e6;"></p>
+    <div class="diff-cards" id="diff-cards"></div>
+    <p id="d-warn" style="color:#e3a98f; font-size:.8rem; margin-top:10px;"></p>
+    <div class="start-actions" style="margin-top:20px;">
+      <button class="btn primary" id="d-continue" disabled></button>
+      <button class="btn ghost" id="d-back"></button>
+    </div>
+  </div>
+</div>
+
+<div id="app" style="display:none;"></div>
+<div id="overlay"><div class="modal" id="modal-body"></div></div>
+<div id="toast"></div>
+
+<script>
+/* =========================================================
+   XƯỞNG Ô TÔ 8 GIỜ — xưởng ô tô thuở sơ khai ngành công nghiệp
+   Mô phỏng quản lý 6 màn · song ngữ VI/EN · KTCT Mác-Lênin
+   ========================================================= */
+
+const FMT = n => '$' + (Math.round(n*10)/10).toLocaleString('en-US');
+function L(o){ return o[S.lang]; }
+
+/* ---------------- global state ---------------- */
+const S = {
+  lang:'vi', role:null, difficulty:null, screen:'start',
+  unlocked:new Set(), maxLevelReached:1, history:{}, sound:true,
+  L1:null,L2:null,L3:null,L4:null,L5:null,L6:null
+};
+
+/* ---------------- difficulty config ---------------- */
+const DIFF = {
+  easy:{
+    label:{vi:'Dễ',en:'Easy'}, emoji:'🌤️',
+    desc:{vi:'Hợp để làm quen luật chơi và các khái niệm.',en:'Good for getting used to the rules and concepts.'},
+    L1start:250, L1target:700,
+    L4target:1400, L4mrate:80, L4workhealth:30,
+    L5health:30, L5discCap:75, L5discWork:85,
+    L6score:3
+  },
+  normal:{
+    label:{vi:'Vừa',en:'Normal'}, emoji:'⚖️',
+    desc:{vi:'Cân bằng — đúng như đề cương thiết kế.',en:'Balanced — matches the original design.'},
+    L1start:200, L1target:1000,
+    L4target:2000, L4mrate:100, L4workhealth:40,
+    L5health:40, L5discCap:60, L5discWork:70,
+    L6score:4
+  },
+  hard:{
+    label:{vi:'Khó',en:'Hard'}, emoji:'🔥',
+    desc:{vi:'Thử thách — biên độ sai lầm rất hẹp.',en:'Challenging — very little room for error.'},
+    L1start:160, L1target:1400,
+    L4target:2800, L4mrate:130, L4workhealth:50,
+    L5health:50, L5discCap:45, L5discWork:55,
+    L6score:5
+  }
+};
+function DCFG(){ return DIFF[S.difficulty||'normal']; }
+
+/* ---------------- sound ---------------- */
+let actx=null;
+function blip(freq=520,dur=.07,type='sine'){
+  if(!S.sound) return;
+  try{
+    actx = actx || new (window.AudioContext||window.webkitAudioContext)();
+    const o=actx.createOscillator(), g=actx.createGain();
+    o.type=type; o.frequency.value=freq;
+    g.gain.setValueAtTime(.09, actx.currentTime);
+    g.gain.exponentialRampToValueAtTime(.001, actx.currentTime+dur);
+    o.connect(g); g.connect(actx.destination);
+    o.start(); o.stop(actx.currentTime+dur);
+  }catch(e){}
+}
+function chime(){ blip(523,.1); setTimeout(()=>blip(659,.1),100); setTimeout(()=>blip(784,.12),200); setTimeout(()=>blip(1047,.28),320); }
+function buzz(){ blip(220,.22,'sawtooth'); setTimeout(()=>blip(180,.22,'sawtooth'),160); setTimeout(()=>blip(130,.32,'sawtooth'),320); }
+document.addEventListener('click', e=>{
+  if(e.target.closest('button')) blip(420,.045);
+}, true);
+
+function confettiBurst(){
+  const colors=['#bd8a34','#9c4227','#2f4260','#3f7d4c','#e8c988'];
+  const layer=document.createElement('div');
+  layer.className='confetti-layer';
+  document.body.appendChild(layer);
+  for(let i=0;i<46;i++){
+    const p=document.createElement('div');
+    p.className='confetti-piece';
+    p.style.left=(Math.random()*100)+'vw';
+    p.style.background=colors[i%colors.length];
+    p.style.animationDelay=(Math.random()*.4)+'s';
+    p.style.transform=`rotate(${Math.random()*360}deg)`;
+    layer.appendChild(p);
+  }
+  setTimeout(()=>layer.remove(),2600);
+}
+
+function winArt(){
+  return `<div class="result-art">
+  <svg viewBox="0 0 360 170" width="100%" height="150" preserveAspectRatio="xMidYMid meet">
+    <g fill="var(--brass-dim)" opacity=".3">
+      <rect x="8" y="92" width="24" height="68"/><rect x="38" y="62" width="20" height="98"/><rect x="64" y="102" width="22" height="58"/>
+      <rect x="272" y="72" width="22" height="88"/><rect x="300" y="96" width="20" height="64"/><rect x="326" y="56" width="22" height="104"/>
+    </g>
+    <polyline points="28,150 88,112 138,126 188,72 238,86 300,30" fill="none" stroke="var(--good)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="300,30 324,35 299,55" fill="var(--good)"/>
+    <g stroke-width="5" stroke-linecap="round" fill="none">
+      <g stroke="var(--rust)"><circle cx="118" cy="130" r="7" fill="var(--rust)" stroke="none"/><line x1="118" y1="137" x2="118" y2="157"/><line x1="118" y1="142" x2="106" y2="124"/><line x1="118" y1="142" x2="130" y2="124"/></g>
+      <g stroke="var(--brass)"><circle cx="160" cy="120" r="7" fill="var(--brass)" stroke="none"/><line x1="160" y1="127" x2="160" y2="157"/><line x1="160" y1="132" x2="148" y2="114"/><line x1="160" y1="132" x2="172" y2="114"/></g>
+      <g stroke="var(--rust)"><circle cx="202" cy="130" r="7" fill="var(--rust)" stroke="none"/><line x1="202" y1="137" x2="202" y2="157"/><line x1="202" y1="142" x2="190" y2="124"/><line x1="202" y1="142" x2="214" y2="124"/></g>
+    </g>
+    <g fill="var(--brass)"><circle cx="55" cy="28" r="3"/><circle cx="245" cy="16" r="3"/><circle cx="340" cy="58" r="3"/><circle cx="18" cy="52" r="3"/><circle cx="270" cy="42" r="2.4"/></g>
+  </svg></div>`;
+}
+function loseArt(){
+  return `<div class="result-art">
+  <svg viewBox="0 0 360 170" width="100%" height="150" preserveAspectRatio="xMidYMid meet">
+    <g stroke="var(--paper-dim)" stroke-width="1" opacity=".6"><line x1="0" y1="40" x2="360" y2="40"/><line x1="0" y1="80" x2="360" y2="80"/><line x1="0" y1="120" x2="360" y2="120"/></g>
+    <polyline points="18,28 78,58 118,44 158,90 198,74 248,150" fill="none" stroke="var(--danger)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="248,150 230,137 257,128" fill="var(--danger)"/>
+    <g fill="var(--danger)">
+      <circle cx="292" cy="58" r="9"/>
+      <path d="M292 67 q-3 19 -17 29 q9 4 19 -2 q6 13 19 15 q-4 -13 2 -21 q-7 -6 -9 -13 q6 -4 7 -10 q-11 4 -21 2 z"/>
+    </g>
+    <g fill="var(--paper)" stroke="var(--danger)" stroke-width="1.5">
+      <rect x="256" y="28" width="12" height="16" transform="rotate(20 262 36)"/>
+      <rect x="272" y="13" width="12" height="16" transform="rotate(-15 278 21)"/>
+      <rect x="246" y="8" width="12" height="16" transform="rotate(35 252 16)"/>
+    </g>
+  </svg></div>`;
+}
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.remove('show'); void t.offsetWidth; t.classList.add('show');
+  clearTimeout(toast._h); toast._h=setTimeout(()=>t.classList.remove('show'),3400);
+}
+function closeModal(){ document.getElementById('overlay').classList.remove('show'); document.getElementById('modal-body').innerHTML=''; }
+function openModal(html){ document.getElementById('modal-body').innerHTML=html; document.getElementById('overlay').classList.add('show'); }
+
+/* =========================================================
+   TEXT DICTIONARY (UI chrome)
+   ========================================================= */
+const UI = {
+  gameTitle:{vi:'Xưởng Ô Tô 8 Giờ', en:'The 8-Hour Auto Workshop'},
+  gameSub:{vi:'Xưởng ô tô · Buổi bình minh ngành công nghiệp ô tô', en:'An auto workshop · The dawn of the automobile industry'},
+  startKicker:{vi:'MÔ PHỎNG QUẢN LÝ · KTCT MÁC – LÊNIN', en:'MANAGEMENT SIMULATION · MARXIST POLITICAL ECONOMY'},
+  startSub:{vi:'Từ máy tiện tay của một thợ cơ khí tự do, đến một xưởng ô tô đầy công nhân — rồi một phiên toà để bạn tự trả lời: đây là hợp tác, hay là bóc lột?', en:'From a lone mechanic at a hand lathe to a car workshop full of workers — then a tribunal where you answer for yourself: cooperation, or exploitation?'},
+  play:{vi:'▶ Bắt đầu', en:'▶ Start'},
+  rules:{vi:'📜 Luật chơi', en:'📜 Rules'},
+  credit:{vi:'6 màn · 1 lượt = 1 tháng', en:'6 stages · 1 turn = 1 month'},
+  rulesTitle:{vi:'Luật chơi', en:'How to play'},
+  rulesBody:{vi:`
+    <p><b>Nhịp chơi:</b> mỗi lượt = 1 tháng. Đầu mỗi lượt, một thẻ sự kiện ngẫu nhiên xuất hiện — bạn chọn cách phản ứng, rồi xem kết quả.</p>
+    <p><b>Vai trò:</b> bạn chọn làm <b>nhà tư bản</b> (điều hành xưởng: giá, lương, máy móc) hoặc <b>công nhân</b> (thương lượng, phản ứng trước các quyết định của chủ xưởng). Ở màn 1–2 chưa có quan hệ chủ – thợ nên cả hai vai trải nghiệm như nhau.</p>
+    <p><b>Chỉ số W = c + v + m:</b> c (máy móc, nguyên liệu — chỉ chuyển giá trị, không tự sinh thêm), v (tiền lương), m (giá trị thặng dư — do lao động sống tạo ra). Thanh ngày lao động chia thành t (thời gian lao động tất yếu, xanh) và t′ (thời gian lao động thặng dư, đỏ).</p>
+    <p><b>Kiến thức:</b> mỗi màn mở khoá dần các khái niệm, xem trong mục "Thư viện kiến thức" ở thanh bên.</p>
+    <p><b>Thắng/thua từng màn</b> chỉ để bạn thấy hệ quả của lựa chọn — thua không mất tiến trình lâu dài, bạn luôn được chơi lại.</p>`,
+    en:`<p><b>Pace:</b> one turn = one month. Each turn opens with a random event card — you pick a response, then see the outcome.</p>
+    <p><b>Role:</b> play as the <b>workshop owner</b> (set prices, wages, machinery) or as a <b>worker</b> (negotiate, react to the owner's decisions). Stages 1–2 have no employer–worker relation yet, so both roles experience them the same way.</p>
+    <p><b>W = c + v + m:</b> c (machinery, raw material — only transfers value, never creates more), v (wages), m (surplus value — created by living labour). The workday bar splits into t (necessary labour time, green) and t′ (surplus labour time, red).</p>
+    <p><b>Knowledge:</b> each stage unlocks concepts — check the "Knowledge library" in the sidebar.</p>
+    <p><b>Winning/losing a stage</b> is just there to show you the consequence of your choices — losing never erases progress, you can always retry.</p>`},
+  close:{vi:'Đóng', en:'Close'},
+  roleKicker:{vi:'TRƯỚC KHI BẮT ĐẦU', en:'BEFORE YOU BEGIN'},
+  roleTitle:{vi:'Bạn muốn trải nghiệm dưới góc nhìn nào?', en:'Whose eyes do you want to see this through?'},
+  roleSub:{vi:'Vai trò sẽ đổi cách bạn ra quyết định ở các màn có quan hệ chủ – thợ (màn 3 – 5).', en:'Your role changes how you make decisions in the stages with an employer–worker relation (stages 3–5).'},
+  diffKicker:{vi:'BƯỚC CUỐI TRƯỚC KHI VÀO XƯỞNG', en:'ONE LAST STEP BEFORE THE MILL'},
+  diffTitle:{vi:'Chọn độ khó', en:'Choose a difficulty'},
+  diffSub:{vi:'Mỗi độ khó đổi mục tiêu cần đạt ở các màn có thắng/thua. Chọn xong sẽ giữ nguyên suốt ván chơi.', en:'Each difficulty changes the targets in the win/lose stages. Once chosen, it stays fixed for the whole playthrough.'},
+  diffWarn:{vi:'⚠️ Không thể đổi lại giữa chừng — chỉ đổi được khi chơi lại từ đầu.', en:'⚠️ Cannot be changed mid-game — only by restarting from the beginning.'},
+  roleCapTitle:{vi:'Nhà tư bản', en:'The Workshop Owner'},
+  roleCapDesc:{vi:'Bạn điều hành xưởng: định giá, trả lương, mua máy móc, quyết định giờ làm — và nhìn thấy toàn bộ sổ sách W = c + v + m.', en:'You run the workshop: set prices, pay wages, buy machinery, decide hours — and see the full ledger, W = c + v + m.'},
+  roleWorkTitle:{vi:'Người thợ cơ khí', en:'The Mechanic'},
+  roleWorkDesc:{vi:'Bạn là một công nhân: nhận hay từ chối lời mời làm việc, chấp nhận hay phản đối tăng ca — và cảm nhận hậu quả trên chính sức khoẻ của mình.', en:'You are a worker: accept or refuse job offers, agree to or resist overtime — and feel the consequences in your own health.'},
+  continue:{vi:'Tiếp tục →', en:'Continue →'},
+  back:{vi:'← Quay lại', en:'← Back'},
+  menuGreet:{vi:'Chào mừng đến xưởng ô tô 👋', en:'Welcome to the workshop 👋'},
+  menuIntroCap:{vi:'Bạn sẽ đi từ một thợ cơ khí tự do, đến chủ một xưởng ô tô đầy công nhân, rồi một phiên toà để tự trả lời: quan hệ chủ xưởng – thợ cơ khí là hợp tác tự nguyện, hay còn là bóc lột?', en:'You will go from a free mechanic, to the owner of a car workshop full of workers, to a tribunal where you answer for yourself: is the owner–mechanic relation just voluntary cooperation, or still exploitation?'},
+  menuIntroWork:{vi:'Bạn sẽ đi từ một thợ cơ khí tự do, đến một công nhân trong xưởng ô tô, rồi một phiên toà để tự trả lời: bạn có đang bị bóc lột, dù mọi thứ trông có vẻ công bằng?', en:'You will go from a free mechanic, to a worker inside a car workshop, to a tribunal where you answer for yourself: are you being exploited, even when everything looks fair on paper?'},
+  startL1:{vi:'Bắt đầu màn 1 →', en:'Start stage 1 →'},
+  knowledgeLib:{vi:'📖 Thư viện kiến thức', en:'📖 Knowledge library'},
+  rulesSide:{vi:'❓ Luật chơi', en:'❓ Rules'},
+  monthLbl:{vi:'Tháng', en:'Month'},
+  cashLbl:{vi:'Tiền mặt', en:'Cash'},
+  capitalLbl:{vi:'Vốn', en:'Capital'},
+  logTitle:{vi:'Nhật ký', en:'Log'},
+  retry:{vi:'Chơi lại màn này', en:'Retry this stage'},
+  sameForRole:{vi:'Giai đoạn này giống nhau cho cả hai vai — chưa có ai làm thuê cho ai.', en:'This stage plays out the same for both roles — no one is employed by anyone yet.'},
+};
+
+function tr(key){ return L(UI[key]); }
+
+/* =========================================================
+   KNOWLEDGE CONCEPTS
+   ========================================================= */
+const CONCEPTS = {
+  hth:{lv:1, title:{vi:'Hàng hoá & công thức H–T–H', en:'Commodity & the H–M–H formula'},
+    text:{vi:'Khi tự làm rồi tự bán để đổi lấy thứ mình cần, tiền chỉ là vật môi giới trao đổi. Mục đích cuối cùng là giá trị sử dụng, không phải làm giàu.',
+          en:'When you make something yourself and sell it to get what you need, money is just a go-between. The final goal is use-value, not getting richer.'}},
+  thtprime:{lv:2, title:{vi:'Công thức T–H–T′', en:'The M–C–M′ formula'},
+    text:{vi:'Khi dùng tiền để mua hàng rồi bán lại lấy nhiều tiền hơn, mục đích là giá trị trao đổi tự nó lớn lên. Nhưng lưu thông (mua rẻ bán đắt, đầu cơ) chỉ phân phối lại của cải có sẵn, không tự sinh giá trị mới cho toàn xã hội.',
+          en:'When money buys goods to sell for more money, the goal is exchange-value growing on its own. But circulation (buy low/sell high, speculation) only redistributes existing wealth — it creates no new value for society.'}},
+  laborcom:{lv:3, title:{vi:'Hàng hoá sức lao động', en:'Labour-power as a commodity'},
+    text:{vi:'Sức lao động chỉ thành hàng hoá khi người lao động tự do về thân thể và không có tư liệu sản xuất nên buộc phải bán sức lao động để sống. Giá trị của nó bằng giá trị các tư liệu sinh hoạt cần thiết để tái sản xuất sức lao động.',
+          en:'Labour-power becomes a commodity only when the worker is personally free and owns no means of production, so must sell their labour-power to live. Its value equals the value of the necessities needed to reproduce it.'}},
+  cvm:{lv:4, title:{vi:'c, v, m và W = c + v + m', en:'c, v, m and W = c + v + m'},
+    text:{vi:'c (tư bản bất biến): giá trị máy móc, nguyên liệu — chỉ chuyển nguyên vào sản phẩm. v (tư bản khả biến): tiền lương — chỉ lao động sống mới tạo giá trị mới, gồm v và phần dôi ra là m.',
+          en:'c (constant capital): value of machines and raw material — only transferred into the product. v (variable capital): wages — only living labour creates new value, made up of v plus the surplus, m.'}},
+  rate:{lv:4, title:{vi:'m′ và p′', en:'The rates m′ and p′'},
+    text:{vi:'Tỉ suất giá trị thặng dư m′ = m/v phản ánh đúng mức bóc lột. Tỉ suất lợi nhuận p′ = m/(c+v) làm lợi nhuận trông như "sinh từ cả vốn" — một hình thức che đậy nguồn gốc thực của lợi nhuận.',
+          en:'The rate of surplus value m′ = m/v shows the true degree of exploitation. The profit rate p′ = m/(c+v) makes profit look like it "comes from all the capital" — a disguise of profit’s real source.'}},
+  absolute:{lv:5, title:{vi:'Giá trị thặng dư tuyệt đối', en:'Absolute surplus value'},
+    text:{vi:'Kéo dài ngày lao động (t′ tăng) trong khi t không đổi. Trực tiếp nhất, nhưng đụng giới hạn sức khoẻ và pháp luật.',
+          en:'Extending the workday (t′ grows) while t stays fixed. The most direct method, but hits limits of health and law.'}},
+  relative:{lv:5, title:{vi:'Giá trị thặng dư tương đối', en:'Relative surplus value'},
+    text:{vi:'Khi năng suất lao động xã hội tăng, giá trị tư liệu sinh hoạt giảm, t rút ngắn mà không cần kéo dài ngày làm — t′ vẫn tăng trong cùng một ngày 8 giờ.',
+          en:'When social productivity rises, the value of necessities falls, t shortens without lengthening the day — t′ still grows within the same 8-hour day.'}},
+  super:{lv:5, title:{vi:'Giá trị thặng dư siêu ngạch', en:'Extra (super) surplus value'},
+    text:{vi:'Xí nghiệp áp dụng kỹ thuật mới trước đối thủ thu phần chênh lệch tạm thời — động lực trực tiếp thúc đẩy từng nhà tư bản cải tiến kỹ thuật.',
+          en:'A firm that adopts new technique before rivals pockets a temporary difference — the direct drive pushing each capitalist to innovate.'}},
+  essence:{lv:6, title:{vi:'Bản chất bóc lột dưới hình thức bình đẳng', en:'Exploitation beneath the form of equality'},
+    text:{vi:'Trao đổi vẫn đúng giá trị, hợp đồng vẫn tự nguyện, bình đẳng trước pháp luật — nhưng người lao động vẫn tạo ra t′ mà giá trị đó bị nhà tư bản chiếm do sở hữu tư liệu sản xuất.',
+          en:'The exchange is still at value, the contract still voluntary, equal before the law — yet the worker still creates t′, and that value is captured by the capitalist through ownership of the means of production.'}}
+};
+function unlock(id){
+  if(!S.unlocked.has(id)){
+    S.unlocked.add(id);
+    chime();
+    toast((S.lang==='vi'?'🔓 Mở khoá: ':'🔓 Unlocked: ') + L(CONCEPTS[id].title));
+  }
+}
+
+/* =========================================================
+   NAV / SHELL
+   ========================================================= */
+function levelMeta(){
+  return [
+    {n:1, id:'L1', name:{vi:'Thợ cơ khí tự do', en:'The free mechanic'}, tag:'H–T–H'},
+    {n:2, id:'L2', name:{vi:'Tiền đẻ ra tiền?', en:'Money begets money?'}, tag:'T–H–T′'},
+    {n:3, id:'L3', name:{vi:'Việc làm đầu tiên', en:'The first job'}, tag:{vi:'Sức lao động', en:'Labour-power'}},
+    {n:4, id:'L4', name:{vi:'Xưởng ô tô', en:'The car workshop'}, tag:'c · v · m'},
+    {n:5, id:'L5', name:{vi:'Ba cách tăng thặng dư', en:'Three ways to raise surplus'}, tag:{vi:'m tuyệt đối/tương đối', en:'absolute/relative m'}},
+    {n:6, id:'L6', name:{vi:'Phiên toà: bóc lột?', en:'Tribunal: exploitation?'}, tag:{vi:'Kết luận', en:'Conclusion'}}
+  ];
+}
+function unlockNext(n){ if(S.maxLevelReached<n) S.maxLevelReached=n; }
+function goto(screen){ S.screen=screen; render(); window.scrollTo(0,0); }
+
+function render(){
+  const app=document.getElementById('app');
+  const meta=levelMeta();
+  app.innerHTML = `
+    <div class="topbar">
+      <div class="brand">
+        <span style="font-size:1.2rem;">🏭</span>
+        <span class="gearicon">⚙️</span>
+        <div><h1>${tr('gameTitle')}</h1><span>${tr('gameSub')}</span></div>
+      </div>
+      <div class="midchip">${S.screen.startsWith('L') ? (L(meta.find(m=>m.id===S.screen).name)) : tr('menuGreet')}</div>
+      <div class="icons">
+        <span class="role-badge">${S.role==='capital' ? (S.lang==='vi'?'🎩 Nhà tư bản':'🎩 Owner') : (S.lang==='vi'?'🧤 Công nhân':'🧤 Worker')}</span>
+        <span class="role-badge">${DCFG().emoji} ${L(DCFG().label)}</span>
+        <div class="lang-pill">
+          <button class="${S.lang==='vi'?'active':''}" onclick="setLang('vi')">VI</button>
+          <button class="${S.lang==='en'?'active':''}" onclick="setLang('en')">EN</button>
+        </div>
+        <button class="icon-btn" title="${tr('rules')}" onclick="showRules()">❓</button>
+        <button class="icon-btn" title="sound" onclick="toggleSound()">${S.sound?'🔈':'🔇'}</button>
+        <button class="icon-btn" title="restart" onclick="confirmRestart()">🔄</button>
+        <button class="icon-btn" title="home" onclick="confirmGoHome()">🏠</button>
+      </div>
+    </div>
+    <div class="layout">
+      <nav class="side">
+        <div class="side-list">
+        ${meta.map(m=>`<button class="navitem ${S.screen===m.id?'active':''}" ${m.n>S.maxLevelReached?'disabled':''} onclick="goto('${m.id}')">
+          <span class="lv-num">${m.n}</span> ${L(m.name)}
+        </button>`).join('')}
+        </div>
+        <h4>${tr('knowledgeLib').replace('📖 ','')}</h4>
+        <button class="side-btn" onclick="showLibrary()">📖 ${S.lang==='vi'?'Mở thư viện':'Open library'} (${S.unlocked.size}/9)</button>
+        <button class="side-btn" onclick="showRules()">❓ ${tr('rulesSide').replace('❓ ','')}</button>
+      </nav>
+      <main id="main">${S.screen==='menu' ? renderMenu() : renderLevelScreen(S.screen)}</main>
+    </div>
+  `;
+}
+function setLang(l){ S.lang=l; render(); }
+function toggleSound(){ S.sound=!S.sound; render(); }
+function confirmRestart(){
+  openModal(`<div class="tag">${S.lang==='vi'?'XÁC NHẬN':'CONFIRM'}</div>
+    <h3>${S.lang==='vi'?'Chơi lại từ đầu?':'Restart from the beginning?'}</h3>
+    <p class="small">${S.lang==='vi'?'Toàn bộ tiến trình hiện tại sẽ mất.':'All current progress will be lost.'}</p>
+    <div class="row" style="margin-top:12px;">
+      <button class="btn secondary" onclick="closeModal()">${S.lang==='vi'?'Huỷ':'Cancel'}</button>
+      <button class="btn" onclick="hardRestart()">${S.lang==='vi'?'Chơi lại':'Restart'}</button>
+    </div>`);
+}
+function hardRestart(){
+  closeModal();
+  S.unlocked=new Set(); S.maxLevelReached=1; S.history={}; S.role=null; S.difficulty=null;
+  S.L1=S.L2=S.L3=S.L4=S.L5=S.L6=null;
+  showStart();
+}
+function stageRule(n,titleVi,titleEn,bodyVi,bodyEn){
+  return `<div style="margin-bottom:14px; padding-bottom:12px; border-bottom:1px solid #e4d3a8;">
+    <div style="font-weight:800; color:var(--rust); font-size:.78rem; text-transform:uppercase; letter-spacing:.02em;">${S.lang==='vi'?'Màn':'Stage'} ${n}</div>
+    <div style="font-weight:700; margin:2px 0 4px;">${S.lang==='vi'?titleVi:titleEn}</div>
+    <div class="small">${S.lang==='vi'?bodyVi:bodyEn}</div>
+  </div>`;
+}
+function rulesBodyHTML(){
+  const c=DCFG();
+  const roleNote = S.role ? '' : (S.lang==='vi'?'<p class="small" style="opacity:.7;">Bạn chưa chọn vai — mô tả dưới đây áp dụng chung, phần khác nhau giữa hai vai được ghi rõ trong ngoặc.</p>':'<p class="small" style="opacity:.7;">You haven\u2019t picked a role yet — the notes below apply generally; differences between roles are noted in brackets.</p>');
+  return `
+  <p><b>${S.lang==='vi'?'Nhịp chơi':'Pace'}:</b> ${S.lang==='vi'?'mỗi lượt = 1 tháng. Đầu mỗi lượt, một thẻ sự kiện ngẫu nhiên xuất hiện — bạn chọn cách phản ứng, rồi xem kết quả.':'one turn = one month. Each turn opens with a random event card — you pick a response, then see the outcome.'}</p>
+  <p><b>${S.lang==='vi'?'Vai trò':'Role'}:</b> ${S.lang==='vi'?'bạn chọn làm <b>nhà tư bản</b> (điều hành xưởng) hoặc <b>công nhân</b> (thương lượng, phản ứng). Màn 1–2 chưa có quan hệ chủ–thợ nên cả hai vai trải nghiệm như nhau.':'play as the <b>workshop owner</b> or as a <b>worker</b>. Stages 1–2 have no employer–worker relation yet, so both roles play them the same way.'}</p>
+  <p><b>${S.lang==='vi'?'Độ khó hiện tại':'Current difficulty'}:</b> ${c.emoji} <b>${L(c.label)}</b> — ${S.lang==='vi'?'các mục tiêu bên dưới đã theo đúng độ khó này.':'the targets below already match this difficulty.'} ${!S.difficulty?(S.lang==='vi'?'(mặc định Vừa cho tới khi bạn chọn)':'(defaults to Normal until you pick one)'):''}</p>
+  ${roleNote}
+  <hr class="sep">
+  ${stageRule(1,'Thợ cơ khí tự do','The free mechanic',
+    `Tự gia công, tự bán, tự mua nhu yếu phẩm — 6 tháng. <b>Qua màn:</b> còn dư ≥ ${FMT(c.L1target)} sau tháng 6. <b>Thua:</b> âm tiền trước tháng 4.`,
+    `Machine parts, sell, buy necessities yourself — 6 months. <b>Clear:</b> end with ≥ ${FMT(c.L1target)}. <b>Fail:</b> go negative before month 4.`)}
+  ${stageRule(2,'Tiền đẻ ra tiền?','Money begets money?',
+    `5 vòng giao dịch để thấy lưu thông không tự tạo giá trị mới. <b>Không có thắng/thua</b> — đây là màn khám phá, luôn được đi tiếp sau khi trả lời câu hỏi cuối màn.`,
+    `5 rounds of trading to see that circulation creates no new value. <b>No win/lose</b> — an exploration stage; you move on after the closing question.`)}
+  ${stageRule(3,'Việc làm đầu tiên','The first job',
+    `<u>Nhà tư bản:</u> thương lượng lương với 2 ứng viên, tối đa 3 vòng. <b>Qua màn:</b> thuê được 1 người với mức ≥ giá trị sức lao động của họ. <b>Thua:</b> hết vòng hoặc bất mãn ≥ 50 mà chưa thuê được ai.<br><u>Công nhân:</u> nhận lời mời lương qua tối đa 4 vòng. <b>Qua màn:</b> chấp nhận 1 lời mời trước khi hết vòng. <b>Thua:</b> "sức chịu đựng" về 0 trước khi nhận việc.`,
+    `<u>Owner:</u> negotiate wages with 2 candidates, up to 3 rounds. <b>Clear:</b> hire someone at or above their labour-power value. <b>Fail:</b> run out of rounds or discontent reaches 50 with no hire.<br><u>Worker:</u> respond to wage offers over up to 4 rounds. <b>Clear:</b> accept an offer before rounds run out. <b>Fail:</b> "endurance" hits 0 first.`)}
+  ${stageRule(4,'Xưởng ô tô (c · v · m)','The car workshop (c · v · m)',
+    `Màn trung tâm — 6 tháng, có 2 thí nghiệm bắt buộc để thấy chỉ v tạo ra m.<br><u>Nhà tư bản:</u> <b>qua màn</b> khi m′ ≥ ${c.L4mrate}% <i>và</i> vốn ≥ ${FMT(c.L4target)} sau tháng 6. <b>Thua:</b> vốn âm 2 tháng liên tiếp.<br><u>Công nhân:</u> <b>qua màn</b> khi sức khoẻ cuối màn ≥ ${c.L4workhealth}. <b>Thua:</b> sức khoẻ ≤ 15 giữa chừng.`,
+    `The central stage — 6 months, 2 required experiments show only v creates m.<br><u>Owner:</u> <b>clear</b> when m′ ≥ ${c.L4mrate}% <i>and</i> capital ≥ ${FMT(c.L4target)} by month 6. <b>Fail:</b> capital negative two months running.<br><u>Worker:</u> <b>clear</b> when final health ≥ ${c.L4workhealth}. <b>Fail:</b> health drops to ≤ 15.`)}
+  ${stageRule(5,'Ba cách tăng giá trị thặng dư','Three ways to raise surplus value',
+    `6 tháng, chọn/phản ứng với 3 cách tăng m (tuyệt đối, tương đối, siêu ngạch).<br><u>Nhà tư bản:</u> <b>qua màn</b> khi đã dùng đủ cả 3 cách <i>và</i> bất mãn < ${c.L5discCap} <i>và</i> sức khoẻ TB ≥ ${c.L5health}. <b>Thua:</b> đình công 2 tháng liền, hoặc sức khoẻ TB ≤ 20.<br><u>Công nhân:</u> <b>qua màn</b> khi sức khoẻ TB ≥ ${c.L5health} <i>và</i> bất mãn < ${c.L5discWork} cuối màn. <b>Thua:</b> sức khoẻ ≤ 15 giữa chừng.`,
+    `6 months, choose/react to 3 ways of raising m (absolute, relative, super).<br><u>Owner:</u> <b>clear</b> when all 3 methods were used <i>and</i> discontent < ${c.L5discCap} <i>and</i> avg health ≥ ${c.L5health}. <b>Fail:</b> a strike two months running, or avg health ≤ 20.<br><u>Worker:</u> <b>clear</b> when avg health ≥ ${c.L5health} <i>and</i> discontent < ${c.L5discWork} at the end. <b>Fail:</b> health drops to ≤ 15.`)}
+  ${stageRule(6,'Phiên toà: bóc lột?','Tribunal: exploitation?',
+    `4 nhân chứng + 1 câu hỏi bất ngờ, dựa trên đúng số liệu ván bạn chơi. <b>Hồ sơ đủ căn cứ</b> khi điểm ≥ ${c.L6score}/5 — nếu chưa đủ, bạn được quay lại các màn trước để bổ sung rồi thử lại, không giới hạn số lần.`,
+    `4 witnesses + 1 surprise question, based on your own playthrough data. <b>Case complete</b> at score ≥ ${c.L6score}/5 — if not, revisit earlier stages and try again, no limit on attempts.`)}
+  <p class="small" style="opacity:.75; margin-top:4px;">${S.lang==='vi'?'Mỗi màn mở khoá dần các khái niệm KTCT — xem ở mục "Thư viện kiến thức" trong thanh bên.':'Each stage unlocks political-economy concepts — see the "Knowledge library" in the sidebar.'}</p>`;
+}
+function showRules(){
+  openModal(`<div class="tag">${tr('rulesTitle')}</div><h3>${tr('rulesTitle')}</h3>${rulesBodyHTML()}
+  <button class="btn wide" style="margin-top:14px;" onclick="closeModal()">${tr('close')}</button>`);
+}
+function showLibrary(){
+  const items = Object.entries(CONCEPTS).map(([id,c])=>{
+    const got = S.unlocked.has(id);
+    return `<div class="card ${got?'':'locked-card'}" style="margin-bottom:10px;">
+      <div class="pill ${got?'win':'info'}">${S.lang==='vi'?'Màn':'Stage'} ${c.lv}</div>
+      <h4 style="margin-top:6px;">${got ? L(c.title) : '🔒 ???'}</h4>
+      <p class="small">${got ? L(c.text) : (S.lang==='vi'?'Chơi tới màn '+c.lv+' để mở khoá.':'Play to stage '+c.lv+' to unlock.')}</p>
+    </div>`;
+  }).join('');
+  openModal(`<div class="tag">${tr('knowledgeLib')}</div><h3>${tr('knowledgeLib').replace('📖 ','')}</h3>${items}
+  <button class="btn wide" onclick="closeModal()">${tr('close')}</button>`);
+}
+function showConcept(id){
+  openModal(`<div class="tag">${S.lang==='vi'?'KIẾN THỨC':'CONCEPT'}</div><h3>${L(CONCEPTS[id].title)}</h3><p>${L(CONCEPTS[id].text)}</p>
+  <button class="btn wide" style="margin-top:14px;" onclick="closeModal()">${tr('close')}</button>`);
+}
+
+function renderMenu(){
+  const intro = S.role==='capital' ? tr('menuIntroCap') : tr('menuIntroWork');
+  return `
+    <div class="card hoverable">
+      <h3>${tr('menuGreet')}</h3>
+      <p>${intro}</p>
+      <button class="btn primary" onclick="goto('L1')">${tr('startL1')}</button>
+    </div>
+    <div class="row">
+      ${levelMeta().map(m=>`
+        <div class="col card hoverable" style="min-width:180px;">
+          <div class="pill info">${S.lang==='vi'?'Màn':'Stage'} ${m.n}</div>
+          <h4 style="margin-top:8px;">${L(m.name)}</h4>
+          <p class="small">${typeof m.tag==='string'?m.tag:L(m.tag)}</p>
+        </div>`).join('')}
+    </div>
+  `;
+}
+function renderLevelScreen(id){
+  switch(id){
+    case 'L1': return L1.render();
+    case 'L2': return L2.render();
+    case 'L3': return L3.render();
+    case 'L4': return L4.render();
+    case 'L5': return L5.render();
+    case 'L6': return L6.render();
+    default: return renderMenu();
+  }
+}
+function roadmap(activeN){
+  const meta=levelMeta();
+  return `<div class="roadmap">${meta.map((m,i)=>{
+    const done=m.n<activeN, current=m.n===activeN, unlocked=m.n<=S.maxLevelReached;
+    return `${i>0?`<div class="bar ${done?'done':''}"></div>`:''}<div class="node ${done?'done':''} ${current?'current':''}" style="${unlocked?'cursor:pointer':'cursor:default'}" ${unlocked?`onclick="goto('${m.id}')"`:''} title="${L(m.name)}">${m.n}</div>`;
+  }).join('')}</div>`;
+}
+function stepper(mod,key,step,min,max){
+  return `<div class="stepper-row">
+    <button type="button" class="step-btn" onclick="${mod}.adjust('${key}',${-step},${min},${max})">−</button>
+    <button type="button" class="step-btn" onclick="${mod}.adjust('${key}',${step},${min},${max})">+</button>
+  </div>`;
+}
+function statHTML(cls,icon,label,val,ofText,goalText,pct){
+  return `<div class="statbox ${cls}">
+    <div class="sh"><span class="lbl">${icon} ${label}</span>${goalText?`<span class="goal">${goalText}</span>`:''}</div>
+    <div class="val">${val}${ofText?` <span class="of">${ofText}</span>`:''}</div>
+    <div class="meter"><i style="width:${Math.max(0,Math.min(100,pct))}%"></i></div>
+  </div>`;
+}
+function renderInto(){ document.getElementById('main').innerHTML = renderLevelScreen(S.screen); }
+
+/* =========================================================
+   MÀN 1 — THỢ CƠ KHÍ TỰ DO (H – T – H)
+   ========================================================= */
+const L1 = (function(){
+  const deck = [
+    {tag:{vi:'Thị trường',en:'Market'}, title:{vi:'Khách quen đặt 10 phụ tùng',en:'A regular orders 10 parts'}, desc:{vi:'Một garage quen đặt thẳng 10 phụ tùng, không cần ra chợ bán lẻ.',en:'A regular garage orders 10 parts directly — no need to sell retail at the market.'}, choices:[
+      {label:{vi:'Nhận đơn (bán chắc 10 phụ tùng, giá thường)',en:'Take the order (10 parts sold at usual price)'}, effect:s=>{s.demandBonus=10;}},
+      {label:{vi:'Từ chối, giữ bán lẻ tự do',en:'Decline, keep selling freely at market'}, effect:s=>{}}
+    ]},
+    {tag:{vi:'Thị trường',en:'Market'}, title:{vi:'Trời mưa, chợ vắng',en:'Rain, market is empty'}, desc:{vi:'Mưa suốt buổi sáng, người đi chợ thưa hẳn.',en:'It rains all morning; far fewer people come to market.'}, choices:[
+      {label:{vi:'Hạ giá để đẩy hàng',en:'Cut the price to move stock'}, effect:s=>{s.priceOverride=Math.max(0.9,s.price-0.4); s.demandMult=0.8;}},
+      {label:{vi:'Giữ giá, chịu ế nhiều hơn',en:'Keep the price, accept more unsold stock'}, effect:s=>{s.demandMult=0.5;}}
+    ]},
+    {tag:{vi:'Thị trường',en:'Market'}, title:{vi:'Giá sắt tăng',en:'Iron price rises'}, desc:{vi:'Đại lý báo giá sắt tăng khoảng 30% do khan hiếm nguồn cung.',en:'The supplier reports iron prices up about 30% due to a supply shortage.'}, choices:[
+      {label:{vi:'Mua đủ sắt như dự tính, chịu giá cao',en:'Buy the planned amount, at the higher price'}, effect:s=>{s.yarnPriceMult=1.3;}},
+      {label:{vi:'Mua ít sắt hơn, gia công ít phụ tùng hơn tháng này',en:'Buy less iron, machine fewer parts this month'}, effect:s=>{s.yarnPriceMult=1.3; s.yarnCapCut=true;}}
+    ]},
+    {tag:{vi:'Đời sống',en:'Life'}, title:{vi:'Máy tiện kẹt trục',en:'The lathe jams'}, desc:{vi:'Máy tiện kêu lạch cạch, thợ sửa báo giá sửa gấp.',en:'The lathe starts rattling; a repairman quotes a rush fee.'}, choices:[
+      {label:{vi:'Sửa ngay ($30)',en:'Fix it now ($30)'}, effect:s=>{s.repairCost=30;}},
+      {label:{vi:'Cố dùng tạm, năng suất giảm',en:'Limp along, lower output'}, effect:s=>{s.demandMult=(s.demandMult||1)*0.85;}}
+    ]}
+  ];
+  function init(){ return {money:DCFG().L1start, yarn:20, turn:1, maxTurn:6, price:1.5, bolts:40, buyYarn:8, log:[], done:false, result:null}; }
+  function ensure(){ if(!S.L1) S.L1=init(); return S.L1; }
+
+  function render(){
+    const s=ensure();
+    if(s.done) return renderResult(s);
+    return `
+      ${roadmap(1)}
+      <div class="card hoverable">
+        <h3>${S.lang==='vi'?'Màn 1 · Thợ cơ khí tự do':'Stage 1 · The free mechanic'}</h3>
+        <p class="small">${S.lang==='vi'?'Bạn tự tay gia công phụ tùng trên máy tiện của mình, mang ra chợ bán, rồi dùng tiền mua gạo và đồ dùng. Không thuê ai, không làm thuê cho ai: <b>Hàng – Tiền – Hàng</b>.':'You machine parts on your own lathe, sell them at market, then use the money to buy rice and supplies. No one employed, no one employing you: <b>Commodity – Money – Commodity</b>.'}</p>
+        <p class="small" style="opacity:.75;">${tr('sameForRole')}</p>
+      </div>
+      <div class="statgrid">
+        ${statHTML('brass','🔧', S.lang==='vi'?'Tiền mặt':'Cash', FMT(s.money), tr('monthLbl')+' '+s.turn+'/'+s.maxTurn, (S.lang==='vi'?'Mục tiêu ':'Target ')+'≥'+FMT(DCFG().L1target), Math.min(100,s.money/DCFG().L1target*100))}
+        ${statHTML('indigo','🔩', S.lang==='vi'?'Sắt tồn kho':'Iron stock', s.yarn.toFixed(1)+' kg', null, null, Math.min(100,s.yarn/20*100))}
+      </div>
+      <div class="card">
+        <h3>${S.lang==='vi'?'Kế hoạch tháng':'Plan for month'} ${s.turn}</h3>
+        <div class="row">
+          <div class="col"><label>${S.lang==='vi'?'Số phụ tùng định gia công':'Parts to machine'}: <b>${s.bolts}</b></label>
+            <input type="range" min="10" max="80" value="${s.bolts}" oninput="L1.set('bolts',+this.value)">${stepper('L1','bolts',1,10,80)}</div>
+          <div class="col"><label>${S.lang==='vi'?'Giá bán mỗi phụ tùng':'Price per part'}: <b>$${s.price.toLocaleString('en-US')}</b></label>
+            <input type="range" min="0.9" max="2.6" step="0.05" value="${s.price}" oninput="L1.set('price',+this.value)">${stepper('L1','price',0.05,0.9,2.6)}</div>
+          <div class="col"><label>${S.lang==='vi'?'Mua sắt (kg, $4/kg)':'Buy iron (kg, $4/kg)'}: <b>${s.buyYarn}</b></label>
+            <input type="range" min="0" max="25" value="${s.buyYarn}" oninput="L1.set('buyYarn',+this.value)">${stepper('L1','buyYarn',1,0,25)}</div>
+        </div>
+        <p class="small">${S.lang==='vi'?'1 phụ tùng cần khoảng 0,2kg sắt. Phụ tùng không bán hết coi như mất trắng (hàng tồn giảm giá trị).':'Each part needs about 0.2kg of iron. Unsold parts are a straight loss.'}</p>
+        <button class="btn primary" onclick="L1.playTurn()">${S.lang==='vi'?'Tiến hành tháng':'Run month'} ${s.turn} →</button>
+      </div>
+      ${s.log.length? `<div class="card"><h3>${tr('logTitle')}</h3>${s.log.slice(-4).map(l=>`<p class="small">${l}</p>`).join('')}</div>`:''}
+    `;
+  }
+  function set(k,v){ S.L1[k]=v; renderInto(); }
+  function adjust(k,delta,min,max){ const s=S.L1; s[k]=Math.max(min,Math.min(max,s[k]+delta)); renderInto(); }
+
+  function playTurn(){
+    const s=ensure();
+    const card=deck[Math.floor(Math.random()*deck.length)];
+    openModal(`<div class="tag">${L(card.tag)} · ${tr('monthLbl')} ${s.turn}</div><h3>${L(card.title)}</h3><p>${L(card.desc)}</p>
+      ${card.choices.map((c,i)=>`<button class="choicebtn" onclick="L1.resolve(${i})">${L(c.label)}</button>`).join('')}`);
+    L1._card=card;
+  }
+  function resolve(i){
+    const s=ensure(); const card=L1._card;
+    const ctx={demandMult:1}; card.choices[i].effect(ctx); closeModal();
+    const maxByYarn=Math.floor((s.yarn+s.buyYarn)/0.2);
+    const actualBolts=Math.min(s.bolts, ctx.yarnCapCut?Math.floor(maxByYarn*0.6):maxByYarn);
+    const price=ctx.priceOverride||s.price;
+    let baseDemand=Math.max(5, Math.round(30+(2.1-price)/0.05));
+    const demand=Math.round(baseDemand*(ctx.demandMult||1))+(ctx.demandBonus||0);
+    const sold=Math.min(actualBolts,demand);
+    const revenue=sold*price;
+    const yarnCost=s.buyYarn*4*(ctx.yarnPriceMult||1);
+    const living=40; const repair=ctx.repairCost||0;
+    const net=revenue-yarnCost-living-repair;
+    s.yarn=Math.max(0,(s.yarn+s.buyYarn)-actualBolts*0.2);
+    s.money+=net;
+    s.log.push(`${tr('monthLbl')} ${s.turn}: ${L(card.title)} → ${S.lang==='vi'?'gia công':'machined'} ${actualBolts}, ${S.lang==='vi'?'bán':'sold'} ${sold}, ${net>=0?(S.lang==='vi'?'lãi':'profit'):(S.lang==='vi'?'lỗ':'loss')} ${FMT(Math.abs(net))}.`);
+    if(s.turn===1) unlock('hth');
+    s.turn++;
+    if(s.money<0 && s.turn<=4){ s.done=true; s.result='lose'; }
+    else if(s.turn>s.maxTurn){ s.done=true; s.result=s.money>=DCFG().L1target?'win':'lose'; }
+    renderInto();
+    if(s.done){ s.result==='win' ? confettiBurst() : buzz(); }
+  }
+  function renderResult(s){
+    if(s.result==='win'){
+      return `${roadmap(1)}<div class="card">${winArt()}<div class="pill win badge-pop">${S.lang==='vi'?'QUA MÀN':'STAGE CLEARED'}</div>
+      <h3>${S.lang==='vi'?'Bạn trụ vững 6 tháng, dư':'You survived 6 months with'} ${FMT(s.money)}</h3>
+      <p>${S.lang==='vi'?'Bạn tự làm, tự bán, rồi lấy tiền mua lại thứ mình cần — công thức <b>H – T – H</b>: tiền chỉ là khâu trung gian, mục đích cuối cùng vẫn là giá trị sử dụng.':'You made, sold, and bought back what you needed — the <b>C – M – C</b> formula: money is just the middle step; the goal is still use-value.'}</p></div>${quiz()}`;
+    }
+    return `${roadmap(1)}<div class="card">${loseArt()}<div class="pill lose">${S.lang==='vi'?'CHƯA QUA':'NOT CLEARED'}</div>
+    <h3>${S.lang==='vi'?'Hết vốn':'Ran out of money'}</h3><p class="small">${S.lang==='vi'?'Thường do giá bán quá thấp làm dư nhiều phụ tùng bị ế, hoặc gặp liên tiếp sự kiện bất lợi.':'Usually caused by too-low prices leaving too many unsold parts, or a run of unlucky events.'}</p>
+    <button class="btn" onclick="L1.retry()">${tr('retry')}</button></div>`;
+  }
+  function retry(){ S.L1=null; renderInto(); }
+  const quizQ=[
+    {q:{vi:'Mục đích cuối cùng của việc mang phụ tùng ra chợ bán trong màn này là gì?',en:'What is the ultimate goal of selling parts at market in this stage?'},
+     opts:[{vi:'Có tiền để làm giàu, tích luỹ tư bản',en:'Getting rich, accumulating capital'},{vi:'Đổi lấy thứ mình cần dùng — một dạng giá trị sử dụng khác',en:'Exchanging it for what you need — another use-value'},{vi:'Chiếm đoạt giá trị thặng dư của người khác',en:'Capturing someone else’s surplus value'}], correct:1},
+    {q:{vi:'Vì sao màn 1 chưa có bóc lột dù bạn có lời?',en:'Why is there no exploitation here even when you profit?'},
+     opts:[{vi:'Vì bạn bán giá rẻ',en:'Because you sell cheap'},{vi:'Vì bạn tự làm, tự hưởng toàn bộ thành quả, không ai làm thuê cho ai',en:'Because you do the work and keep all of it — no one is employed by anyone'},{vi:'Vì phụ tùng không phải hàng hoá',en:'Because a part is not a commodity'}], correct:1}
+  ];
+  function quiz(){
+    return `<div class="card"><h3>${S.lang==='vi'?'Kiểm tra nhanh':'Quick check'}</h3>${quizQ.map((q,qi)=>`
+      <div style="margin-bottom:14px;"><p><b>${qi+1}.</b> ${L(q.q)}</p>
+      ${q.opts.map((o,oi)=>`<button class="quiz-opt" onclick="L1.answer(${qi},${oi})" id="l1-q${qi}-o${oi}">${L(o)}</button>`).join('')}</div>`).join('')}
+      <button class="btn primary" onclick="L1.finish()">${S.lang==='vi'?'Sang màn 2':'Go to stage 2'} →</button></div>`;
+  }
+  function answer(qi,oi){
+    const c=quizQ[qi].correct;
+    document.getElementById(`l1-q${qi}-o${oi}`).classList.add(oi===c?'correct':'wrong');
+    if(oi!==c) document.getElementById(`l1-q${qi}-o${c}`).classList.add('correct');
+    oi===c?chime():buzz();
+  }
+  function finish(){ S.history.L1={money:S.L1.money}; unlockNext(2); goto('L2'); }
+  return {render,set,adjust,playTurn,resolve,retry,answer,finish,_card:null};
+})();
+
+/* =========================================================
+   MÀN 2 — TIỀN ĐẺ RA TIỀN? (T – H – T′)
+   ========================================================= */
+const L2 = (function(){
+  const npcs=[
+    {name:{vi:'Bác Sáu bán rau',en:'Old Mrs. Sau, veg seller'}, need:{vi:'cần tiền gấp',en:'needs cash urgently'}},
+    {name:{vi:'Cô Hạnh nội trợ',en:'Ms. Hanh, homemaker'}, need:{vi:'cần mua đồ kim khí gia dụng',en:'buying everyday hardware'}},
+    {name:{vi:'Chú Tư xe kéo',en:'Mr. Tu, cart puller'}, need:{vi:'nghe tin đồn khan hàng',en:'heard rumours of a shortage'}},
+    {name:{vi:'Anh Long thợ nề',en:'Long, a mason'}, need:{vi:'mua chịu, hẹn trả sau',en:'buying on credit'}},
+    {name:{vi:'Bà Liên, chủ đại lý phụ tùng',en:'Mrs. Lien, parts dealer'}, need:{vi:'muốn nhập sỉ giá tốt',en:'wants a good wholesale price'}}
+  ];
+  function init(){ return {money:100, turn:1, maxTurn:5, marketValue:500, log:[], done:false}; }
+  function ensure(){ if(!S.L2) S.L2=init(); return S.L2; }
+
+  function render(){
+    const s=ensure();
+    if(s.done) return result(s);
+    const npc=npcs[s.turn-1];
+    return `${roadmap(2)}
+    <div class="card hoverable">
+      <h3>${S.lang==='vi'?'Màn 2 · Tiền đẻ ra tiền?':'Stage 2 · Money begets money?'}</h3>
+      <p class="small">${S.lang==='vi'?'Giờ bạn dùng tiền để kiếm thêm tiền: mua phụ tùng rẻ, bán lại đắt hơn — <b>Tiền – Hàng – Tiền′</b>. Theo dõi ô "Tổng giá trị thị trường": nó có tăng theo lãi của bạn không?':'Now you use money to make more money: buy parts cheap, sell them dearer — <b>Money – Commodity – Money′</b>. Watch the "Total market value" box: does it grow along with your profit?'}</p>
+    </div>
+    <div class="statgrid">
+      ${statHTML('brass','🪙', S.lang==='vi'?'Tiền của bạn':'Your money', FMT(s.money), null, null, Math.min(100,s.money/200*100))}
+      ${statHTML('indigo','⚖️', S.lang==='vi'?'Tổng giá trị thị trường':'Total market value', FMT(s.marketValue), S.lang==='vi'?'(không đổi)':'(unchanged)', null, 100)}
+    </div>
+    <div class="card">
+      <h3>${S.lang==='vi'?'Vòng':'Round'} ${s.turn}/5 — ${S.lang==='vi'?'gặp':'meeting'} ${L(npc.name)}</h3>
+      <p class="small">${L(npc.name)} ${L(npc.need)}.</p>
+      <div class="row">
+        <button class="btn secondary" style="flex:1" onclick="L2.trade('cheap')">${S.lang==='vi'?'Mua rẻ – bán đắt':'Buy low – sell high'}</button>
+        <button class="btn secondary" style="flex:1" onclick="L2.trade('fair')">${S.lang==='vi'?'Buôn bán ngang giá':'Trade at fair value'}</button>
+        <button class="btn secondary" style="flex:1" onclick="L2.trade('spec')">${S.lang==='vi'?'Đầu cơ / cho vay':'Speculate / lend'}</button>
+      </div>
+    </div>
+    ${s.log.length? `<div class="card"><h3>${tr('logTitle')}</h3>${s.log.slice(-4).map(l=>`<p class="small">${l}</p>`).join('')}</div>`:''}`;
+  }
+  function trade(mode){
+    const s=ensure(); const npc=npcs[s.turn-1];
+    let gain=0, note='';
+    if(mode==='cheap'){ gain=6+Math.round(Math.random()*4);
+      note=S.lang==='vi'?`Bạn lời ${FMT(gain)} vì ${L(npc.name)} chịu thiệt tương ứng — tổng giá trị thị trường không đổi.`:`You gained ${FMT(gain)} because ${L(npc.name)} lost the same amount — total market value unchanged.`;
+    } else if(mode==='fair'){ gain=0.5;
+      note=S.lang==='vi'?'Trao đổi ngang giá, gần như không ai lời.':'A fair trade — almost no one profits.';
+    } else { gain=9+Math.round(Math.random()*5);
+      note=S.lang==='vi'?`Bạn thu lời từ chênh lệch/lãi vay với ${L(npc.name)} — chỉ là phân phối lại của cải sẵn có.`:`You profited from the spread/interest with ${L(npc.name)} — just a redistribution of existing wealth.`;
+    }
+    s.money+=gain; s.log.push(`${S.lang==='vi'?'Vòng':'Round'} ${s.turn}: ${note}`);
+    if(s.turn===2) unlock('thtprime');
+    s.turn++;
+    if(s.turn>s.maxTurn) s.done=true;
+    renderInto();
+  }
+  function result(s){
+    return `${roadmap(2)}<div class="card"><div class="pill info badge-pop">${S.lang==='vi'?'KẾT THÚC KHÁM PHÁ':'EXPLORATION DONE'}</div>
+    <h3>${S.lang==='vi'?'Sau 5 vòng, bạn có':'After 5 rounds, you have'} ${FMT(s.money)}</h3>
+    <p>${S.lang==='vi'?`Dù cách nào, tổng giá trị thị trường vẫn giữ nguyên ${FMT(s.marketValue)} — lưu thông không tự tạo ra giá trị mới, nó chỉ phân phối lại giá trị đã có.`:`Whichever way, total market value stayed at ${FMT(s.marketValue)} — circulation creates no new value, it only redistributes what already exists.`}</p>
+    <p><b>${S.lang==='vi'?'Vậy T′ > T chỉ có thể đúng nếu có một hàng hoá đặc biệt: khi tiêu dùng nó, tạo ra giá trị mới lớn hơn giá trị của chính nó.':'So M′ > M only works if there is a special commodity: consuming it creates new value greater than its own value.'}</b></p></div>${quiz()}`;
+  }
+  const quizQ=[
+    {q:{vi:'Nguồn gốc của giá trị thặng dư (m) nằm ở đâu?',en:'Where does surplus value (m) actually come from?'},
+     opts:[{vi:'Ở sự khéo léo mua rẻ bán đắt',en:'Skill at buying low and selling high'},{vi:'Ở một hàng hoá đặc biệt — sức lao động — tạo ra giá trị mới lớn hơn giá trị của chính nó',en:'A special commodity — labour-power — that creates new value greater than its own'},{vi:'Ở việc in thêm tiền',en:'Printing more money'}], correct:1}
+  ];
+  function quiz(){
+    return `<div class="card"><h3>${S.lang==='vi'?'Kiểm tra nhanh':'Quick check'}</h3>${quizQ.map((q,qi)=>`
+      <div><p><b>${qi+1}.</b> ${L(q.q)}</p>${q.opts.map((o,oi)=>`<button class="quiz-opt" onclick="L2.answer(${qi},${oi})" id="l2-q${qi}-o${oi}">${L(o)}</button>`).join('')}</div>`).join('')}
+      <button class="btn primary" onclick="L2.finish()">${S.lang==='vi'?'Sang màn 3':'Go to stage 3'} →</button></div>`;
+  }
+  function answer(qi,oi){ const c=quizQ[qi].correct; document.getElementById(`l2-q${qi}-o${oi}`).classList.add(oi===c?'correct':'wrong'); if(oi!==c) document.getElementById(`l2-q${qi}-o${c}`).classList.add('correct'); oi===c?chime():buzz(); }
+  function finish(){ S.history.L2={money:S.L2.money}; unlockNext(3); goto('L3'); }
+  return {render,trade,answer,finish};
+})();
+
+/* =========================================================
+   MÀN 3 — VIỆC LÀM ĐẦU TIÊN
+   ========================================================= */
+const L3 = (function(){
+  function initCap(){
+    return {mode:'capital',
+      candidates:[
+        {id:'A', name:{vi:'Chị Lan',en:'Lan'}, story:{vi:'thợ cơ khí mất máy tiện vì xưởng lớn cạnh tranh',en:'a mechanic who lost her lathe to bigger workshops'}, needWage:23, hireable:true, skill:1},
+        {id:'B', name:{vi:'Anh Dũng',en:'Dung'}, story:{vi:'nông dân mất đất canh tác, lên phố tìm việc',en:'a farmer who lost his land, come to the city'}, needWage:21, hireable:true, skill:.9},
+        {id:'C', name:{vi:'Ông Bình',en:'Binh'}, story:{vi:'có máy tiện riêng, tự gia công tự bán, từ chối làm thuê',en:'owns his own lathe, machines and sells for himself, refuses to be hired'}, needWage:null, hireable:false, skill:1.2}
+      ],
+      baseline:20, discontent:20, offer:23, hired:null, turn:1, maxTurn:3, done:false, log:[]};
+  }
+  function initWork(){
+    return {mode:'worker', baseline:20, endurance:70, turn:1, maxTurn:4, accepted:false, done:false, log:[],
+      offers:[19.5,21.5,20.5,23.5]};
+  }
+  function ensure(){ if(!S.L3) S.L3 = S.role==='capital'?initCap():initWork(); return S.L3; }
+
+  const deckShared=[
+    {title:{vi:'Giá gạo & tiền trọ tăng',en:'Rice & rent prices rise'}, desc:{vi:'Chi phí sinh hoạt tối thiểu nhích lên.',en:'The minimum cost of living creeps up.'}, wage:1.5},
+    {title:{vi:'Cần thêm tiền nuôi con nhỏ',en:'Needs more to raise a young child'}, desc:{vi:'Chi phí nuôi con khiến mức sống tối thiểu tăng.',en:'Childcare costs raise the minimum needed.'}, wage:1},
+    {title:{vi:'Học thêm kỹ thuật tiện chính xác',en:'Learns precision-machining technique'}, desc:{vi:'Tay nghề khá hơn, lao động phức tạp hơn.',en:'Skill improves — more complex labour.'}, wage:0}
+  ];
+
+  function render(){
+    const s=ensure();
+    if(s.done) return result(s);
+    return s.mode==='capital' ? renderCap(s) : renderWork(s);
+  }
+
+  function renderCap(s){
+    return `${roadmap(3)}
+    <div class="split">
+      <div class="panel capital you"><span class="youtag">${S.lang==='vi'?'BẠN':'YOU'}</span>
+        <h3>${S.lang==='vi'?'Góc chủ xưởng':'The owner’s desk'}</h3>
+        <p class="k">${S.lang==='vi'?'Bạn cần tuyển 1 người cho xưởng ô tô sắp mở rộng.':'You need to hire one mechanic for your expanding workshop.'}</p>
+        <div class="k" style="margin-top:10px;">${S.lang==='vi'?'Giá trị sức lao động tối thiểu hiện nay':'Current minimum value of labour-power'}</div>
+        <div class="v">${FMT(s.baseline)} / ${S.lang==='vi'?'ngày':'day'}</div>
+        <div class="k" style="margin-top:10px;">${S.lang==='vi'?'Bất mãn thị trường lao động':'Labour-market discontent'}</div>
+        <div class="meter"><i style="width:${Math.min(100,s.discontent)}%"></i></div>
+      </div>
+      <div class="panel worker">
+        <h3>${S.lang==='vi'?'Góc người tìm việc':'The job seekers'}</h3>
+        ${s.candidates.map(c=>`<div style="margin-top:10px; padding-top:10px; border-top:1px solid rgba(255,255,255,.15);">
+          <b>${L(c.name)}</b> — <span class="k">${L(c.story)}</span><br>
+          ${c.hireable? `<span class="k">${S.lang==='vi'?'Cần tối thiểu':'Needs at least'} ~${FMT(c.needWage)}/${S.lang==='vi'?'ngày':'day'}, ${S.lang==='vi'?'tay nghề':'skill'} ×${c.skill.toFixed(2)}</span>`
+            : `<span class="k">${S.lang==='vi'?'Không phải hàng hoá sức lao động — còn tư liệu sản xuất riêng.':'Not a labour-power commodity — still owns means of production.'}</span>`}
+        </div>`).join('')}
+      </div>
+    </div>
+    <div class="card">
+      <h3>${S.lang==='vi'?'Thương lượng — vòng':'Negotiation — round'} ${s.turn}/${s.maxTurn}</h3>
+      <label>${S.lang==='vi'?'Đề nghị lương/ngày':'Wage offer per day'}: <b>$${s.offer.toLocaleString('en-US')}</b></label>
+      <input type="range" min="15" max="32" step="0.5" value="${s.offer}" oninput="L3.set('offer',+this.value)">${stepper('L3','offer',0.5,15,32)}
+      <div class="row" style="margin-top:10px;">
+        <button class="btn" onclick="L3.negotiate('A')">${S.lang==='vi'?'Đề nghị với':'Offer to'} ${L(s.candidates[0].name)}</button>
+        <button class="btn" onclick="L3.negotiate('B')">${S.lang==='vi'?'Đề nghị với':'Offer to'} ${L(s.candidates[1].name)}</button>
+        <button class="btn secondary" onclick="L3.tryC()">${S.lang==='vi'?'Thử mời':'Try to hire'} ${L(s.candidates[2].name)}</button>
+      </div>
+    </div>
+    ${s.log.length? `<div class="card"><h3>${tr('logTitle')}</h3>${s.log.slice(-4).map(l=>`<p class="small">${l}</p>`).join('')}</div>`:''}`;
+  }
+  function set(k,v){ S.L3[k]=v; renderInto(); }
+  function adjust(k,delta,min,max){ const s=S.L3; s[k]=Math.max(min,Math.min(max,s[k]+delta)); renderInto(); }
+  function tryC(){
+    const s=ensure();
+    openModal(`<div class="tag">${S.lang==='vi'?'Vì sao không thuê được?':'Why can’t you hire him?'}</div><h3>${L(s.candidates[2].name)} ${S.lang==='vi'?'từ chối':'refuses'}</h3>
+    <p>${S.lang==='vi'?'Ông Bình có máy tiện riêng — tự sản xuất, tự bán, không buộc phải bán sức lao động để sống. Sức lao động chỉ thành hàng hoá khi người lao động tự do về thân thể <b>và</b> không có tư liệu sản xuất. Ông Bình chỉ thoả điều kiện đầu.':'Binh owns his own lathe — he produces and sells for himself, not forced to sell his labour-power to survive. Labour-power becomes a commodity only when the worker is free <b>and</b> owns no means of production. Binh only meets the first condition.'}</p>
+    <button class="btn wide" onclick="closeModal()">${S.lang==='vi'?'Đã hiểu':'Got it'}</button>`);
+    unlock('laborcom');
+  }
+  function negotiate(id){
+    const s=ensure(); const c=s.candidates.find(x=>x.id===id);
+    const card=deckShared[Math.floor(Math.random()*deckShared.length)];
+    s.baseline+=card.wage; closeModal();
+    if(s.offer>=c.needWage){
+      s.hired=c; s.discontent=Math.max(0,s.discontent-10);
+      s.log.push(`${L(card.title)}. ${S.lang==='vi'?'Bạn thuê được':'You hired'} ${L(c.name)} — ${FMT(s.offer)}/${S.lang==='vi'?'ngày':'day'}.`);
+      s.done=true;
+    } else {
+      s.discontent+=12;
+      s.log.push(`${L(card.title)}. ${L(c.name)} ${S.lang==='vi'?'từ chối vì lương thấp hơn mức sống tối thiểu':'refuses — offer below minimum living cost'} (${FMT(c.needWage)}).`);
+      s.turn++;
+      if(s.turn>s.maxTurn||s.discontent>=50){ s.done=true; s.hired=null; }
+    }
+    renderInto();
+    if(s.done) s.hired? confettiBurst() : buzz();
+  }
+
+  function renderWork(s){
+    const offer=s.offers[s.turn-1];
+    return `${roadmap(3)}
+    <div class="split">
+      <div class="panel worker you"><span class="youtag">${S.lang==='vi'?'BẠN':'YOU'}</span>
+        <h3>${S.lang==='vi'?'Bạn — thợ cơ khí mất máy tiện':'You — a mechanic who lost your lathe'}</h3>
+        <p class="k">${S.lang==='vi'?'Xưởng ô tô lớn cạnh tranh khiến máy tiện riêng của bạn không còn sống nổi. Giờ bạn phải đi tìm việc làm thuê.':'Big workshops undercut your own lathe; you can no longer make a living from it. Now you must find waged work.'}</p>
+        <div class="k" style="margin-top:10px;">${S.lang==='vi'?'Sức chịu đựng (còn trụ được bao lâu chưa có việc)':'Endurance (how long you can hold out unemployed)'}</div>
+        <div class="meter"><i style="width:${Math.min(100,s.endurance)}%"></i></div>
+      </div>
+      <div class="panel capital">
+        <h3>${S.lang==='vi'?'Chủ xưởng Tuấn':'Owner Tuan'}</h3>
+        <p class="k">${S.lang==='vi'?'Giá trị sức lao động tối thiểu để bạn sống':'Minimum value of your labour-power to live'}</p>
+        <div class="v">${FMT(s.baseline)} / ${S.lang==='vi'?'ngày':'day'}</div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>${S.lang==='vi'?'Lời mời — vòng':'Offer — round'} ${s.turn}/${s.maxTurn}</h3>
+      <p>${S.lang==='vi'?'Chủ xưởng đề nghị':'The owner offers'}: <b>${FMT(offer)}/${S.lang==='vi'?'ngày':'day'}</b></p>
+      <div class="row">
+        <button class="btn primary" onclick="L3.workDecide('accept')">${S.lang==='vi'?'Chấp nhận':'Accept'}</button>
+        <button class="btn secondary" onclick="L3.workDecide('negotiate')">${S.lang==='vi'?'Thương lượng đòi thêm':'Negotiate for more'}</button>
+        <button class="btn secondary" onclick="L3.workDecide('reject')">${S.lang==='vi'?'Từ chối, chờ cơ hội khác':'Refuse, wait for another chance'}</button>
+      </div>
+    </div>
+    ${s.log.length? `<div class="card"><h3>${tr('logTitle')}</h3>${s.log.slice(-4).map(l=>`<p class="small">${l}</p>`).join('')}</div>`:''}`;
+  }
+  function workDecide(choice){
+    const s=ensure(); const offer=s.offers[s.turn-1];
+    const card=deckShared[Math.floor(Math.random()*deckShared.length)];
+    s.baseline+=card.wage;
+    if(choice==='accept'){
+      s.accepted = offer>=s.baseline ? 'fair' : 'below';
+      s.finalWage=offer;
+      s.log.push(`${L(card.title)}. ${S.lang==='vi'?'Bạn nhận việc với':'You took the job at'} ${FMT(offer)}/${S.lang==='vi'?'ngày':'day'}.`);
+      s.done=true;
+    } else if(choice==='negotiate'){
+      const success = Math.random()<0.5;
+      if(success){ s.offers[s.turn-1] = offer+2; s.log.push(S.lang==='vi'?'Thương lượng thành công, chủ xưởng nâng giá đề nghị.':'Negotiation worked — the owner raised the offer.'); }
+      else { s.endurance-=8; s.log.push(S.lang==='vi'?'Chủ xưởng không nhượng bộ. Bạn mất thêm thời gian, sức chịu đựng giảm.':'The owner won’t budge. More time lost, endurance drops.'); s.turn++; }
+    } else {
+      s.endurance-=15;
+      s.log.push(`${L(card.title)}. ${S.lang==='vi'?'Bạn từ chối, tiếp tục chờ.':'You refuse and keep waiting.'}`);
+      s.turn++;
+    }
+    unlock('laborcom');
+    if(s.endurance<=0 || s.turn>s.maxTurn){ s.done=true; if(!s.accepted) s.accepted='none'; }
+    renderInto();
+    if(s.done) s.accepted && s.accepted!=='none' ? confettiBurst() : buzz();
+  }
+
+  function result(s){
+    if(s.mode==='capital'){
+      if(s.hired){
+        return `${roadmap(3)}<div class="card">${winArt()}<div class="pill win badge-pop">${S.lang==='vi'?'QUA MÀN':'STAGE CLEARED'}</div>
+        <h3>${S.lang==='vi'?'Bạn đã thuê được':'You hired'} ${L(s.hired.name)}</h3>
+        <p>${S.lang==='vi'?'Bạn trả đúng giá trị sức lao động — đủ để họ tái sản xuất sức lao động. Nhưng đây chỉ mua được quyền sử dụng sức lao động trong một ngày — phần giá trị nó thật sự tạo ra là câu chuyện của màn tiếp theo.':'You paid the value of labour-power — enough to reproduce it. But this only buys the right to use it for a day; what it actually creates is the next stage’s story.'}</p>
+        <button class="btn primary" onclick="L3.finish()">${S.lang==='vi'?'Sang màn 4':'Go to stage 4'} →</button></div>`;
+      }
+      return `${roadmap(3)}<div class="card">${loseArt()}<div class="pill lose">${S.lang==='vi'?'CHƯA THUÊ ĐƯỢC':'NO ONE HIRED'}</div><h3>${S.lang==='vi'?'Không ai chấp nhận mức lương bạn đưa ra':'No one accepted your offer'}</h3>
+      <button class="btn" onclick="L3.retry()">${tr('retry')}</button></div>`;
+    } else {
+      if(s.accepted && s.accepted!=='none'){
+        return `${roadmap(3)}<div class="card">${winArt()}<div class="pill win badge-pop">${S.lang==='vi'?'QUA MÀN':'STAGE CLEARED'}</div>
+        <h3>${S.lang==='vi'?'Bạn nhận việc với':'You took the job at'} ${FMT(s.finalWage)}/${S.lang==='vi'?'ngày':'day'}</h3>
+        <p>${S.lang==='vi'?'Bạn tự do về thân thể, không còn máy tiện riêng nên buộc phải bán sức lao động để sống — đúng hai điều kiện khiến sức lao động thành hàng hoá.':'You are personally free, but you own no lathe, so you must sell your labour-power to live — exactly the two conditions that make labour-power a commodity.'}</p>
+        <button class="btn primary" onclick="L3.finish()">${S.lang==='vi'?'Sang màn 4':'Go to stage 4'} →</button></div>`;
+      }
+      return `${roadmap(3)}<div class="card">${loseArt()}<div class="pill lose">${S.lang==='vi'?'KIỆT SỨC':'RAN OUT'}</div><h3>${S.lang==='vi'?'Sức chịu đựng cạn trước khi có việc':'Endurance ran out before finding work'}</h3>
+      <button class="btn" onclick="L3.retry()">${tr('retry')}</button></div>`;
+    }
+  }
+  function retry(){ S.L3=null; renderInto(); }
+  function finish(){
+    S.history.L3 = S.L3.mode==='capital' ? {hired:L(S.L3.hired?.name||{vi:'',en:''}), wage:S.L3.offer} : {hired:'you', wage:S.L3.finalWage};
+    unlockNext(4); goto('L4');
+  }
+  return {render,set,adjust,negotiate,tryC,workDecide,retry,finish};
+})();
+
+/* =========================================================
+   MÀN 4 — XƯỞNG Ô TÔ (c, v, m)
+   ========================================================= */
+const L4 = (function(){
+  const VPH=5;
+  function initCap(){ return {mode:'capital', capital:500, machines:1, workers:1, cottonKg:20, wage:23, turn:1, maxTurn:6, expDone:false, machineTestDone:false, hireTestDone:false, log:[], done:false}; }
+  function initWork(){ return {mode:'worker', turn:1, maxTurn:6, health:70, wage:23, hoursExtra:0, machines:2, workers:3, cottonKg:20, log:[], done:false, infoSeen:{m:false,h:false}}; }
+  function ensure(){ if(!S.L4) S.L4 = S.role==='capital'?initCap():initWork(); return S.L4; }
+
+  const deckCap=[
+    {title:{vi:'Máy tiện hỏng, phải thay',en:'A lathe breaks, must replace it'}, desc:{vi:'Một máy tiện cũ hỏng nặng.',en:'An old lathe fails badly.'}, effect:s=>{s.oneTimeC=(s.oneTimeC||0)+150;}},
+    {title:{vi:'Mất điện nửa ngày',en:'Power cut for half a day'}, desc:{vi:'Xưởng ngừng vài giờ.',en:'The workshop halts for hours.'}, effect:s=>{s.outputMult=(s.outputMult||1)*0.85;}},
+    {title:{vi:'Giá sắt giảm 15%',en:'Iron price drops 15%'}, desc:{vi:'Nguồn cung dồi dào.',en:'Supply is plentiful.'}, effect:s=>{s.cottonMult=(s.cottonMult||1)*0.85;}},
+    {title:{vi:'Thợ cơ khí tay nghề cao xin nghỉ',en:'A skilled mechanic quits'}, desc:{vi:'Chuyển sang xưởng khác trả cao hơn.',en:'Moves to a workshop paying more.'}, effect:s=>{s.workers=Math.max(1,s.workers-1);}},
+    {title:{vi:'Đơn hàng tăng mạnh',en:'Orders surge'}, desc:{vi:'Một đại lý ô tô đặt số lượng lớn.',en:'A car dealership places a big order.'}, effect:s=>{s.outputMult=(s.outputMult||1)*1.2;}}
+  ];
+  const deckWork=[
+    {title:{vi:'Chủ xưởng đề nghị tăng ca',en:'The owner asks for overtime'}, desc:{vi:'Đơn hàng gấp, cần thêm giờ.',en:'A rush order needs extra hours.'}},
+    {title:{vi:'Máy tiện gần bạn kêu lạ',en:'The lathe next to you sounds off'}, desc:{vi:'Có thể mất an toàn nếu không báo cáo.',en:'Could be unsafe if unreported.'}},
+    {title:{vi:'Đồng nghiệp rủ xin tăng lương',en:'A coworker suggests asking for a raise'}, desc:{vi:'Cùng nhau đề nghị chủ xưởng.',en:'Approach the owner together.'}}
+  ];
+
+  function computeWvm(workers,machines,wage,cottonKg,extraHours){
+    const c = machines*25 + cottonKg*workers*3.5;
+    const v = workers*wage;
+    const mHours = 4 + (extraHours||0);
+    const m = workers*mHours*VPH;
+    return {c,v,m,W:c+v+m,mHours};
+  }
+
+  function render(){
+    const s=ensure();
+    if(s.done) return result(s);
+    return s.mode==='capital' ? renderCap(s) : renderWork(s);
+  }
+
+  function renderCap(s){
+    const {c,v,m,W}=computeWvm(s.workers,s.machines,s.wage,s.cottonKg,0);
+    const mRate=v>0?Math.round(m/v*100):0, pRate=(c+v)>0?Math.round(m/(c+v)*100):0;
+    return `${roadmap(4)}
+    <div class="split">
+      <div class="panel capital you"><span class="youtag">${S.lang==='vi'?'BẠN':'YOU'}</span>
+        <h3>${S.lang==='vi'?'Sổ sách chủ xưởng':'Owner’s ledger'}</h3>
+        <div class="k">${S.lang==='vi'?'Vốn hiện có':'Current capital'}</div><div class="v">${FMT(s.capital)}</div>
+        <div class="k" style="margin-top:8px;">m′</div><div class="v">${mRate}%</div>
+        <div class="k" style="margin-top:8px;">p′</div><div class="v">${pRate}%</div>
+      </div>
+      <div class="panel worker">
+        <h3>${S.lang==='vi'?'Trạng thái thợ cơ khí':'Mechanics’ status'}</h3>
+        <div class="k">${S.lang==='vi'?'Số công nhân':'Workers'}</div><div class="v">${s.workers}</div>
+        <div class="laborbar" style="margin-top:8px;"><div class="t" style="width:50%">t = 4h</div><div class="t2" style="width:50%">t′ = 4h</div></div>
+      </div>
+    </div>
+    <div class="card"><h3>W = c + v + m</h3>
+      <div class="wbar"><div class="c" style="width:${Math.max(6,c/W*100)}%">c</div><div class="v" style="width:${Math.max(6,v/W*100)}%">v</div><div class="m" style="width:${Math.max(6,m/W*100)}%">m</div></div>
+      <div class="wlegend"><span class="c">c = ${FMT(c)}</span><span class="v">v = ${FMT(v)}</span><span class="m">m = ${FMT(m)}</span></div>
+    </div>
+    ${!s.expDone?experimentCap(s):''}
+    <div class="card">
+      <h3>${S.lang==='vi'?'Quyết định tháng':'Decisions for month'} ${s.turn}</h3>
+      <div class="row">
+        <div class="col"><label>${S.lang==='vi'?'Số máy tiện':'Lathes'}: <b>${s.machines}</b></label><input type="range" min="1" max="6" value="${s.machines}" oninput="L4.set('machines',+this.value)">${stepper('L4','machines',1,1,6)}</div>
+        <div class="col"><label>${S.lang==='vi'?'Số công nhân':'Workers'}: <b>${s.workers}</b></label><input type="range" min="1" max="6" value="${s.workers}" oninput="L4.set('workers',+this.value)">${stepper('L4','workers',1,1,6)}</div>
+        <div class="col"><label>${S.lang==='vi'?'Lương/ngày':'Wage/day'}: <b>$${s.wage.toLocaleString('en-US')}</b></label><input type="range" min="18" max="32" step="0.5" value="${s.wage}" oninput="L4.set('wage',+this.value)">${stepper('L4','wage',0.5,18,32)}</div>
+      </div>
+      <button class="btn primary" style="margin-top:10px;" onclick="L4.playTurn()">${S.lang==='vi'?'Tiến hành tháng':'Run month'} ${s.turn} →</button>
+    </div>
+    ${s.log.length? `<div class="card"><h3>${tr('logTitle')}</h3>${s.log.slice(-4).map(l=>`<p class="small">${l}</p>`).join('')}</div>`:''}`;
+  }
+  function experimentCap(s){
+    return `<div class="card" style="border-left:4px solid var(--brass);">
+      <h3>${S.lang==='vi'?'Thí nghiệm bắt buộc':'Required experiment'}</h3>
+      <div class="row">
+        <button class="btn secondary" ${s.machineTestDone?'disabled':''} onclick="L4.testMachine()">${S.lang==='vi'?'1) Chỉ mua thêm 2 máy tiện':'1) Only buy 2 more lathes'}</button>
+        <button class="btn secondary" ${s.hireTestDone?'disabled':''} onclick="L4.testHire()">${S.lang==='vi'?'2) Chỉ thuê thêm 1 công nhân':'2) Only hire 1 more worker'}</button>
+      </div>
+    </div>`;
+  }
+  function testMachine(){
+    const s=ensure();
+    const before=computeWvm(s.workers,s.machines,s.wage,s.cottonKg,0), after=computeWvm(s.workers,s.machines+2,s.wage,s.cottonKg,0);
+    openModal(`<div class="tag">${S.lang==='vi'?'Thí nghiệm 1':'Experiment 1'}</div><h3>${S.lang==='vi'?'Thêm 2 máy tiện, không thuê thêm ai':'Add 2 lathes, no new hires'}</h3>
+    <p>m: <b>${FMT(before.m)}</b> → <b>${FMT(after.m)}</b>. ${after.m===before.m?(S.lang==='vi'?'Không đổi — máy chỉ làm c tăng.':'Unchanged — machines only raise c.'):''}</p>
+    <button class="btn wide" onclick="closeModal()">${S.lang==='vi'?'Ghi nhận':'Noted'}</button>`);
+    s.machineTestDone=true; if(s.machineTestDone&&s.hireTestDone){s.expDone=true; unlock('cvm');} renderInto();
+  }
+  function testHire(){
+    const s=ensure();
+    const before=computeWvm(s.workers,s.machines,s.wage,s.cottonKg,0), after=computeWvm(s.workers+1,s.machines,s.wage,s.cottonKg,0);
+    openModal(`<div class="tag">${S.lang==='vi'?'Thí nghiệm 2':'Experiment 2'}</div><h3>${S.lang==='vi'?'Thuê thêm 1 công nhân, giữ nguyên số máy tiện':'Hire 1 more worker, same lathes'}</h3>
+    <p>m: <b>${FMT(before.m)}</b> → <b>${FMT(after.m)}</b>. ${after.m>before.m?(S.lang==='vi'?'Tăng! Lao động sống làm m tăng.':'It rises! Living labour is what grows m.'):''}</p>
+    <button class="btn wide" onclick="closeModal()">${S.lang==='vi'?'Ghi nhận':'Noted'}</button>`);
+    s.hireTestDone=true; if(s.machineTestDone&&s.hireTestDone){s.expDone=true; unlock('cvm');} renderInto();
+  }
+  function set(k,v){ S.L4[k]=v; renderInto(); }
+  function adjust(k,delta,min,max){ const s=S.L4; s[k]=Math.max(min,Math.min(max,s[k]+delta)); renderInto(); }
+  function playTurn(){
+    const s=ensure();
+    const card=deckCap[Math.floor(Math.random()*deckCap.length)];
+    openModal(`<div class="tag">${tr('monthLbl')} ${s.turn}</div><h3>${L(card.title)}</h3><p>${L(card.desc)}</p>
+      <button class="choicebtn" onclick="L4.resolve()">${S.lang==='vi'?'Tiếp tục sản xuất':'Continue production'}</button>`);
+    L4._card=card;
+  }
+  function resolve(){
+    const s=ensure(); const card=L4._card;
+    s.outputMult=1; s.cottonMult=1; s.oneTimeC=0; card.effect(s); closeModal();
+    const {c:baseC,v,m,W}=computeWvm(s.workers,s.machines,s.wage,s.cottonKg,0);
+    const c=baseC*(s.cottonMult||1)+(s.oneTimeC||0);
+    const revenue=(c+v+m)*(s.outputMult||1)*1.05;
+    const net=revenue-(c+v);
+    s.capital+=net; unlock('rate');
+    s.log.push(`${tr('monthLbl')} ${s.turn}: ${L(card.title)}. m′=${v>0?Math.round(m/v*100):0}% → ${net>=0?(S.lang==='vi'?'lãi':'profit'):(S.lang==='vi'?'lỗ':'loss')} ${FMT(Math.abs(net))}.`);
+    s.turn++;
+    s.negStreak = net<0 ? (s.negStreak||0)+1 : 0;
+    if(s.negStreak>=2){ s.done=true; s.result='lose'; }
+    else if(s.turn>s.maxTurn){
+      const {v:v2,m:m2}=computeWvm(s.workers,s.machines,s.wage,s.cottonKg,0);
+      const mRate=v2>0?m2/v2*100:0;
+      s.done=true; s.result=(mRate>=DCFG().L4mrate&&s.capital>=DCFG().L4target)?'win':'lose';
+    }
+    renderInto();
+    if(s.done) s.result==='win'?confettiBurst():buzz();
+  }
+
+  function renderWork(s){
+    const {c,v,m,W,mHours}=computeWvm(s.workers,s.machines,s.wage,s.cottonKg,s.hoursExtra);
+    const mRate=v>0?Math.round(m/v*100):0;
+    return `${roadmap(4)}
+    <div class="split">
+      <div class="panel worker you"><span class="youtag">${S.lang==='vi'?'BẠN':'YOU'}</span>
+        <h3>${S.lang==='vi'?'Bạn — thợ cơ khí':'You — a mechanic'}</h3>
+        <div class="k">${S.lang==='vi'?'Sức khoẻ':'Health'}</div><div class="meter"><i style="width:${s.health}%"></i></div>
+        <div class="k" style="margin-top:8px;">${S.lang==='vi'?'Lương/ngày':'Wage/day'}</div><div class="v">${FMT(s.wage)}</div>
+      </div>
+      <div class="panel capital">
+        <h3>${S.lang==='vi'?'Sổ sách xưởng (bạn nhìn thấy)':'The workshop’s ledger (you can see it)'}</h3>
+        <div class="k">m′ ${S.lang==='vi'?'hiện nay':'right now'}</div><div class="v">${mRate}%</div>
+        <div class="laborbar" style="margin-top:8px;"><div class="t" style="width:${4/(4+mHours)*100}%">t=4h</div><div class="t2" style="width:${mHours/(4+mHours)*100}%">t′=${mHours}h</div></div>
+      </div>
+    </div>
+    <div class="card"><h3>W = c + v + m ${S.lang==='vi'?'của cả xưởng':'for the whole workshop'}</h3>
+      <div class="wbar"><div class="c" style="width:${Math.max(6,c/W*100)}%">c</div><div class="v" style="width:${Math.max(6,v/W*100)}%">v</div><div class="m" style="width:${Math.max(6,m/W*100)}%">m</div></div>
+      <div class="wlegend"><span class="c">c = ${FMT(c)}</span><span class="v">v = ${FMT(v)}</span><span class="m">m = ${FMT(m)}</span></div>
+    </div>
+    <div class="card">
+      <h3>${tr('monthLbl')} ${s.turn}/${s.maxTurn}</h3>
+      <p><b>${deckWork[(s.turn-1)%deckWork.length] ? L(deckWork[(s.turn-1)%deckWork.length].title):''}</b> — ${deckWork[(s.turn-1)%deckWork.length]?L(deckWork[(s.turn-1)%deckWork.length].desc):''}</p>
+      <div class="row">
+        <button class="btn secondary" onclick="L4.workTurn('overtime')">${S.lang==='vi'?'Nhận tăng ca (+2h, thêm thu nhập)':'Accept overtime (+2h, more pay)'}</button>
+        <button class="btn secondary" onclick="L4.workTurn('refuse')">${S.lang==='vi'?'Từ chối, giữ sức khoẻ':'Refuse, protect health'}</button>
+        <button class="btn secondary" onclick="L4.workTurn('raise')">${S.lang==='vi'?'Đề nghị tăng lương':'Ask for a raise'}</button>
+      </div>
+    </div>
+    <div class="row">
+      <button class="btn small secondary" onclick="L4.infoMachine()">💡 ${S.lang==='vi'?'So sánh: xưởng thêm máy':'Compare: workshop adds machines'}</button>
+      <button class="btn small secondary" onclick="L4.infoHire()">💡 ${S.lang==='vi'?'So sánh: xưởng thuê thêm người':'Compare: workshop hires more'}</button>
+    </div>
+    ${s.log.length? `<div class="card" style="margin-top:14px;"><h3>${tr('logTitle')}</h3>${s.log.slice(-4).map(l=>`<p class="small">${l}</p>`).join('')}</div>`:''}`;
+  }
+  function infoMachine(){
+    const s=ensure();
+    const before=computeWvm(s.workers,s.machines,s.wage,s.cottonKg,s.hoursExtra), after=computeWvm(s.workers,s.machines+2,s.wage,s.cottonKg,s.hoursExtra);
+    openModal(`<div class="tag">${S.lang==='vi'?'Sổ sách':'Ledger'}</div><h3>${S.lang==='vi'?'Nếu xưởng mua thêm 2 máy':'If the workshop buys 2 more lathes'}</h3>
+    <p>m: <b>${FMT(before.m)}</b> → <b>${FMT(after.m)}</b> (${S.lang==='vi'?'không đổi — máy chỉ chuyển giá trị, không tự sinh thêm':'unchanged — machines only transfer value'}).</p>
+    <button class="btn wide" onclick="closeModal()">${S.lang==='vi'?'Ghi nhận':'Noted'}</button>`);
+    s.infoSeen.m=true; if(s.infoSeen.m&&s.infoSeen.h) unlock('cvm'); renderInto();
+  }
+  function infoHire(){
+    const s=ensure();
+    const before=computeWvm(s.workers,s.machines,s.wage,s.cottonKg,s.hoursExtra), after=computeWvm(s.workers+1,s.machines,s.wage,s.cottonKg,s.hoursExtra);
+    openModal(`<div class="tag">${S.lang==='vi'?'Sổ sách':'Ledger'}</div><h3>${S.lang==='vi'?'Nếu xưởng thuê thêm 1 người như bạn':'If the workshop hires one more worker like you'}</h3>
+    <p>m: <b>${FMT(before.m)}</b> → <b>${FMT(after.m)}</b> (${S.lang==='vi'?'tăng! chính lao động sống làm m tăng':'it rises! living labour is what grows m'}).</p>
+    <button class="btn wide" onclick="closeModal()">${S.lang==='vi'?'Ghi nhận':'Noted'}</button>`);
+    s.infoSeen.h=true; if(s.infoSeen.m&&s.infoSeen.h) unlock('cvm'); renderInto();
+  }
+  function workTurn(choice){
+    const s=ensure(); unlock('rate');
+    if(choice==='overtime'){ s.hoursExtra=Math.min(4,s.hoursExtra+2); s.health-=8; s.wage+=1.5; s.log.push(S.lang==='vi'?'Bạn nhận tăng ca — thêm thu nhập, sức khoẻ giảm.':'You accepted overtime — more pay, less health.'); }
+    else if(choice==='refuse'){ s.health+=5; s.log.push(S.lang==='vi'?'Bạn từ chối tăng ca, giữ sức khoẻ.':'You refused overtime, protecting your health.'); }
+    else { const ok=Math.random()<0.4; if(ok){ s.wage+=2; s.log.push(S.lang==='vi'?'Đề nghị được chấp nhận, lương tăng.':'Your request was granted — wage rises.'); } else { s.health-=3; s.log.push(S.lang==='vi'?'Chủ xưởng từ chối tăng lương.':'The owner refused the raise.'); } }
+    s.health=Math.max(0,Math.min(100,s.health));
+    s.turn++;
+    if(s.health<=15){ s.done=true; s.result='lose'; }
+    else if(s.turn>s.maxTurn){ s.done=true; s.result = s.health>=DCFG().L4workhealth ? 'win':'partial'; }
+    renderInto();
+    if(s.done) s.result==='win'?confettiBurst():buzz();
+  }
+
+  function result(s){
+    if(s.mode==='capital'){
+      if(s.result==='win'){
+        return `${roadmap(4)}<div class="card">${winArt()}<div class="pill win badge-pop">${S.lang==='vi'?'QUA MÀN':'STAGE CLEARED'}</div>
+        <h3>${S.lang==='vi'?'Vốn đạt':'Capital reached'} ${FMT(s.capital)}, m′ ≥ ${DCFG().L4mrate}%</h3>
+        <p>${S.lang==='vi'?'p′ làm lợi nhuận trông như sinh ra từ cả c lẫn v — nhưng qua hai thí nghiệm, chỉ v (lao động sống) thật sự tạo ra m.':'p′ makes profit look like it comes from both c and v — but the experiments showed only v (living labour) truly creates m.'}</p>
+        <button class="btn primary" onclick="L4.finish()">${S.lang==='vi'?'Sang màn 5':'Go to stage 5'} →</button></div>`;
+      }
+      return `${roadmap(4)}<div class="card">${loseArt()}<div class="pill lose">${S.lang==='vi'?'PHÁ SẢN':'BANKRUPT'}</div><h3>${S.lang==='vi'?'Vốn cạn hai tháng liền':'Capital negative two months running'}</h3>
+      <button class="btn" onclick="L4.retry()">${tr('retry')}</button></div>`;
+    } else {
+      if(s.result==='win'||s.result==='partial'){
+        return `${roadmap(4)}<div class="card">${s.result==='win'?winArt():''}<div class="pill ${s.result==='win'?'win badge-pop':'info'}">${s.result==='win'?(S.lang==='vi'?'QUA MÀN':'STAGE CLEARED'):(S.lang==='vi'?'HOÀN THÀNH':'FINISHED')}</div>
+        <h3>${S.lang==='vi'?'Sau 6 tháng, sức khoẻ':'After 6 months, health'}: ${s.health}</h3>
+        <p>${S.lang==='vi'?'Dù bạn chọn nhận hay từ chối tăng ca, m của xưởng vẫn luôn dương — phần giá trị đó không thuộc về bạn, dù bạn được trả đúng lương thoả thuận.':'Whether you accepted or refused overtime, the workshop’s m was always positive — that value was never yours, even though you were paid the agreed wage.'}</p>
+        <button class="btn primary" onclick="L4.finish()">${S.lang==='vi'?'Sang màn 5':'Go to stage 5'} →</button></div>`;
+      }
+      return `${roadmap(4)}<div class="card">${loseArt()}<div class="pill lose">${S.lang==='vi'?'KIỆT SỨC':'BURNED OUT'}</div><h3>${S.lang==='vi'?'Sức khoẻ xuống quá thấp':'Health dropped too low'}</h3>
+      <button class="btn" onclick="L4.retry()">${tr('retry')}</button></div>`;
+    }
+  }
+  function retry(){ S.L4=null; renderInto(); }
+  function finish(){
+    const s=S.L4;
+    const {c,v,m}=computeWvm(s.workers,s.machines,s.wage,s.cottonKg,s.hoursExtra||0);
+    S.history.L4={capital:s.capital||null, c,v,m, mRate:v>0?Math.round(m/v*100):0};
+    unlockNext(5); goto('L5');
+  }
+  return {render,set,adjust,playTurn,resolve,testMachine,testHire,workTurn,infoMachine,infoHire,retry,finish,_card:null};
+})();
+
+/* =========================================================
+   MÀN 5 — BA CÁCH TĂNG GIÁ TRỊ THẶNG DƯ
+   ========================================================= */
+const L5 = (function(){
+  function initCap(){ return {mode:'capital', turn:1, maxTurn:6, hours:8, tHours:4, health:70, discontent:20, capital:(S.history.L4?.capital)||800, usedAbsolute:false, usedRelative:false, usedSuper:false, superBoostTurns:0, healthLog:[], log:[], done:false}; }
+  function initWork(){ return {mode:'worker', turn:1, maxTurn:6, health:70, discontent:20, wage:23, sawAbsolute:false, sawRelative:false, sawSuper:false, healthLog:[], log:[], done:false}; }
+  function ensure(){ if(!S.L5) S.L5 = S.role==='capital'?initCap():initWork(); return S.L5; }
+
+  const eventPool=[
+    {title:{vi:'Giá gạo, thịt, điện giảm',en:'Rice, meat, electricity get cheaper'}, desc:{vi:'Nông nghiệp được mùa, hàng thiết yếu rẻ đi.',en:'A good harvest makes necessities cheaper.'}, kind:'relative-trigger'},
+    {title:{vi:'Đối thủ mua dây chuyền mới',en:'A rival buys new machinery'}, desc:{vi:'Giá thị trường bắt đầu giảm theo.',en:'Market prices start to drop.'}, kind:'super-pressure'},
+    {title:{vi:'Đơn hàng gấp dồn dập',en:'Rush orders pile up'}, desc:{vi:'Cám dỗ tăng ca.',en:'The temptation to add overtime.'}, kind:'neutral'},
+    {title:{vi:'Công đoàn đề nghị đối thoại',en:'The union asks to talk'}, desc:{vi:'Đại diện thợ cơ khí xin gặp bàn về giờ làm.',en:'Mechanic reps want to discuss hours.'}, kind:'neutral'}
+  ];
+
+  function render(){
+    const s=ensure();
+    if(s.done) return result(s);
+    return s.mode==='capital' ? renderCap(s) : renderWork(s);
+  }
+
+  function renderCap(s){
+    const event=s._event||(s._event=eventPool[Math.floor(Math.random()*eventPool.length)]);
+    return `${roadmap(5)}
+    <div class="split">
+      <div class="panel capital you"><span class="youtag">${S.lang==='vi'?'BẠN':'YOU'}</span>
+        <h3>${S.lang==='vi'?'Ba cần gạt của chủ xưởng':'The owner’s three levers'}</h3>
+        <div class="k">${S.lang==='vi'?'Vốn':'Capital'}</div><div class="v">${FMT(s.capital)}</div>
+        <div class="k" style="margin-top:8px;">${S.lang==='vi'?'Đã thử':'Tried'}: ${s.usedAbsolute?'✔':'✗'} ${S.lang==='vi'?'tuyệt đối':'absolute'} · ${s.usedRelative?'✔':'✗'} ${S.lang==='vi'?'tương đối':'relative'} · ${s.usedSuper?'✔':'✗'} ${S.lang==='vi'?'siêu ngạch':'super'}</div>
+      </div>
+      <div class="panel worker">
+        <h3>${S.lang==='vi'?'Thợ cơ khí':'The mechanics'}</h3>
+        <div class="k">${S.lang==='vi'?'Sức khoẻ TB':'Avg health'}</div><div class="meter"><i style="width:${s.health}%"></i></div>
+        <div class="k" style="margin-top:8px;">${S.lang==='vi'?'Bất mãn':'Discontent'}</div><div class="meter"><i style="width:${Math.min(100,s.discontent)}%"></i></div>
+        <div class="k" style="margin-top:8px;">${S.lang==='vi'?'Ngày làm':'Workday'}: ${s.hours}h (t=${s.tHours}h)</div>
+      </div>
+    </div>
+    <div class="card"><h3>${tr('monthLbl')} ${s.turn}</h3><p><b>${L(event.title)}</b> — ${L(event.desc)}</p></div>
+    <div class="card"><h3>${S.lang==='vi'?'Chọn cách tăng thặng dư':'Choose a way to raise surplus'}</h3>
+      <div class="row">
+        <button class="btn secondary" onclick="L5.apply('absolute')">${S.lang==='vi'?'Tuyệt đối: kéo dài ngày làm':'Absolute: lengthen the day'}</button>
+        <button class="btn secondary" ${event.kind!=='relative-trigger'?'disabled':''} onclick="L5.apply('relative')">${S.lang==='vi'?'Tương đối: tận dụng giá sinh hoạt giảm':'Relative: use cheaper living costs'}</button>
+        <button class="btn secondary" onclick="L5.apply('super')">${S.lang==='vi'?'Siêu ngạch: đầu tư máy mới':'Super: invest in new machines'}</button>
+        <button class="btn secondary" onclick="L5.apply('none')">${S.lang==='vi'?'Giữ nguyên':'Keep as is'}</button>
+      </div>
+    </div>
+    ${s.log.length? `<div class="card"><h3>${tr('logTitle')}</h3>${s.log.slice(-4).map(l=>`<p class="small">${l}</p>`).join('')}</div>`:''}`;
+  }
+  function apply(kind){
+    const s=ensure(); const event=s._event;
+    let note='', capD=0,healthD=0,discD=0;
+    if(kind==='absolute'){ s.usedAbsolute=true; s.hours=Math.min(12,s.hours+2); unlock('absolute'); note=S.lang==='vi'?'Kéo dài ngày làm — m′ tăng nhanh, sức khoẻ & bất mãn tăng theo.':'Lengthened the day — m′ rises fast, health & discontent rise too.'; capD=90; healthD=-12; discD=10; }
+    else if(kind==='relative'){ if(event.kind==='relative-trigger'){ s.usedRelative=true; s.tHours=Math.max(2,s.tHours-1); unlock('relative'); note=S.lang==='vi'?'Giá sinh hoạt giảm giúp t rút ngắn — t′ tăng mà thợ không mệt thêm.':'Cheaper living lets t shorten — t′ rises without extra fatigue.'; capD=70; healthD=3; discD=-3; } else { note=S.lang==='vi'?'Chưa có điều kiện, chưa dùng được cách này.':'Conditions not met, cannot use this yet.'; } }
+    else if(kind==='super'){ s.usedSuper=true; s.superBoostTurns=3; unlock('super'); note=S.lang==='vi'?'Đầu tư máy mới trước đối thủ — thu chênh lệch tạm thời.':'Invested ahead of rivals — a temporary edge.'; capD=120; healthD=-3; discD=2; }
+    else { note=S.lang==='vi'?'Giữ nguyên vận hành.':'Kept operations unchanged.'; capD=30; healthD=4; discD=-2; }
+    s.capital+=capD; s.health=Math.max(0,Math.min(100,s.health+healthD)); s.discontent=Math.max(0,s.discontent+discD);
+    s.log.push(`${tr('monthLbl')} ${s.turn}: ${note}`); s.healthLog.push(s.health);
+    s.turn++; s._event=null;
+    if(s.superBoostTurns>0){ s.superBoostTurns--; }
+    checkEndCap(s); renderInto();
+    if(s.done) s.result==='win'?confettiBurst():buzz();
+  }
+  function checkEndCap(s){
+    s.strikeStreak = s.discontent>=100 ? (s.strikeStreak||0)+1 : 0;
+    if(s.strikeStreak>=2){ s.done=true; s.result='lose_strike'; return; }
+    const avg=s.healthLog.reduce((a,b)=>a+b,0)/Math.max(1,s.healthLog.length);
+    if(avg<=20 && s.healthLog.length>=3){ s.done=true; s.result='lose_health'; return; }
+    if(s.turn>s.maxTurn){ s.done=true; const ok=s.usedAbsolute&&s.usedRelative&&s.usedSuper&&s.discontent<DCFG().L5discCap&&avg>=DCFG().L5health; s.result=ok?'win':'partial'; }
+  }
+
+  function renderWork(s){
+    const event=s._event||(s._event=eventPool[Math.floor(Math.random()*eventPool.length)]);
+    let methodNote='';
+    if(event.kind==='relative-trigger'){ methodNote=S.lang==='vi'?'(chủ xưởng có thể dùng cách "tương đối")':'(the owner may use the "relative" method)'; }
+    else if(event.kind==='super-pressure'){ methodNote=S.lang==='vi'?'(chủ xưởng có thể dùng cách "siêu ngạch")':'(the owner may use the "super" method)'; }
+    return `${roadmap(5)}
+    <div class="split">
+      <div class="panel worker you"><span class="youtag">${S.lang==='vi'?'BẠN':'YOU'}</span>
+        <h3>${S.lang==='vi'?'Bạn — thợ cơ khí':'You — a mechanic'}</h3>
+        <div class="k">${S.lang==='vi'?'Sức khoẻ':'Health'}</div><div class="meter"><i style="width:${s.health}%"></i></div>
+        <div class="k" style="margin-top:8px;">${S.lang==='vi'?'Bất mãn':'Discontent'}</div><div class="meter"><i style="width:${Math.min(100,s.discontent)}%"></i></div>
+      </div>
+      <div class="panel capital">
+        <h3>${S.lang==='vi'?'Xưởng Ô Tô Thịnh Phát':'Thinh Phat Motor Works'}</h3>
+        <p class="k">${S.lang==='vi'?'Đã quan sát':'Observed'}: ${s.sawAbsolute?'✔':'✗'} ${S.lang==='vi'?'tuyệt đối':'absolute'} · ${s.sawRelative?'✔':'✗'} ${S.lang==='vi'?'tương đối':'relative'} · ${s.sawSuper?'✔':'✗'} ${S.lang==='vi'?'siêu ngạch':'super'}</p>
+      </div>
+    </div>
+    <div class="card"><h3>${tr('monthLbl')} ${s.turn}</h3><p><b>${L(event.title)}</b> — ${L(event.desc)} <span class="small">${methodNote}</span></p></div>
+    <div class="card"><h3>${S.lang==='vi'?'Chủ xưởng vừa ra quyết định — bạn phản ứng thế nào?':'The owner just made a call — how do you respond?'}</h3>
+      <div class="row">
+        <button class="btn secondary" onclick="L5.workReact('accept')">${S.lang==='vi'?'Chấp nhận, tiếp tục làm':'Accept, keep working'}</button>
+        <button class="btn secondary" onclick="L5.workReact('resist')">${S.lang==='vi'?'Phản đối, bảo vệ sức khoẻ':'Push back, protect your health'}</button>
+        <button class="btn secondary" onclick="L5.workReact('share')">${S.lang==='vi'?'Đề nghị chia sẻ lợi ích':'Ask to share the gains'}</button>
+      </div>
+    </div>
+    ${s.log.length? `<div class="card"><h3>${tr('logTitle')}</h3>${s.log.slice(-4).map(l=>`<p class="small">${l}</p>`).join('')}</div>`:''}`;
+  }
+  function workReact(choice){
+    const s=ensure(); const event=s._event;
+    if(event.kind==='relative-trigger'){ s.sawRelative=true; unlock('relative'); }
+    else if(event.kind==='super-pressure'){ s.sawSuper=true; unlock('super'); }
+    else if(Math.random()<0.5){ s.sawAbsolute=true; unlock('absolute'); }
+    let note='',healthD=0,discD=0,wageD=0;
+    if(choice==='accept'){ note=S.lang==='vi'?'Bạn chấp nhận, giữ hoà khí nhưng sức khoẻ hao mòn dần.':'You accept — keeps the peace, but health wears down.'; healthD=-6; }
+    else if(choice==='resist'){ note=S.lang==='vi'?'Bạn phản đối để bảo vệ sức khoẻ, bất mãn của chủ xưởng với bạn tăng.':'You push back to protect your health; the owner grows less pleased.'; healthD=6; discD=8; }
+    else { const ok=Math.random()<0.35; if(ok){ note=S.lang==='vi'?'Chủ xưởng đồng ý chia một phần lợi ích tăng năng suất.':'The owner agrees to share a bit of the productivity gain.'; wageD=1.5; } else { note=S.lang==='vi'?'Chủ xưởng từ chối chia sẻ lợi ích.':'The owner refuses to share the gain.'; healthD=-2; } }
+    s.wage+=wageD; s.health=Math.max(0,Math.min(100,s.health+healthD)); s.discontent=Math.max(0,s.discontent+discD);
+    s.log.push(`${tr('monthLbl')} ${s.turn}: ${note}`); s.healthLog.push(s.health);
+    s.turn++; s._event=null;
+    if(s.health<=15){ s.done=true; s.result='lose_health'; }
+    else if(s.turn>s.maxTurn){ const avg=s.healthLog.reduce((a,b)=>a+b,0)/Math.max(1,s.healthLog.length); s.done=true; s.result=(avg>=DCFG().L5health&&s.discontent<DCFG().L5discWork)?'win':'partial'; }
+    renderInto();
+    if(s.done) s.result==='win'?confettiBurst():buzz();
+  }
+
+  function result(s){
+    const avg=Math.round((s.healthLog||[]).reduce((a,b)=>a+b,0)/Math.max(1,(s.healthLog||[]).length));
+    if(s.mode==='capital'){
+      if(s.result==='win') return `${roadmap(5)}<div class="card">${winArt()}<div class="pill win badge-pop">${S.lang==='vi'?'QUA MÀN':'STAGE CLEARED'}</div><h3>${S.lang==='vi'?'Bạn đã trải nghiệm đủ cả ba cách':'You experienced all three methods'}</h3><p>${S.lang==='vi'?'Cả ba đều làm m tăng theo những cách khác nhau — kể cả khi trả đúng giá trị sức lao động, m vẫn > 0.':'All three raise m in different ways — even paying exactly at value, m stays above zero.'}</p><button class="btn primary" onclick="L5.finish()">${S.lang==='vi'?'Sang màn 6':'Go to stage 6'} →</button></div>`;
+      if(s.result==='lose_strike') return `${roadmap(5)}<div class="card">${loseArt()}<div class="pill lose">${S.lang==='vi'?'ĐÌNH CÔNG':'STRIKE'}</div><h3>${S.lang==='vi'?'Thợ cơ khí đình công':'The mechanics strike'}</h3><button class="btn" onclick="L5.retry()">${tr('retry')}</button></div>`;
+      if(s.result==='lose_health') return `${roadmap(5)}<div class="card">${loseArt()}<div class="pill lose">${S.lang==='vi'?'KIỆT SỨC':'BURNOUT'}</div><h3>${S.lang==='vi'?'Sức khoẻ trung bình quá thấp':'Average health too low'}</h3><button class="btn" onclick="L5.retry()">${tr('retry')}</button></div>`;
+      return `${roadmap(5)}<div class="card"><div class="pill info">${S.lang==='vi'?'CHƯA TRỌN VẸN':'INCOMPLETE'}</div><h3>${S.lang==='vi'?'Sức khoẻ TB':'Avg health'} ${avg}, ${S.lang==='vi'?'bất mãn':'discontent'} ${s.discontent}</h3><button class="btn primary" onclick="L5.finish()">${S.lang==='vi'?'Sang màn 6':'Go to stage 6'} →</button> <button class="btn secondary" onclick="L5.retry()">${tr('retry')}</button></div>`;
+    } else {
+      if(s.result==='win'||s.result==='partial') return `${roadmap(5)}<div class="card">${s.result==='win'?winArt():''}<div class="pill ${s.result==='win'?'win badge-pop':'info'}">${s.result==='win'?(S.lang==='vi'?'QUA MÀN':'STAGE CLEARED'):(S.lang==='vi'?'HOÀN THÀNH':'FINISHED')}</div><h3>${S.lang==='vi'?'Bạn đã sống qua cả ba kiểu tăng thặng dư từ phía người lao động':'You lived through all three kinds of rising surplus from the worker’s side'}</h3><button class="btn primary" onclick="L5.finish()">${S.lang==='vi'?'Sang màn 6':'Go to stage 6'} →</button></div>`;
+      return `${roadmap(5)}<div class="card">${loseArt()}<div class="pill lose">${S.lang==='vi'?'KIỆT SỨC':'BURNOUT'}</div><h3>${S.lang==='vi'?'Sức khoẻ xuống quá thấp':'Health dropped too low'}</h3><button class="btn" onclick="L5.retry()">${tr('retry')}</button></div>`;
+    }
+  }
+  function retry(){ S.L5=null; renderInto(); }
+  function finish(){
+    S.history.L5 = S.L5.mode==='capital' ? {usedAbsolute:S.L5.usedAbsolute,usedRelative:S.L5.usedRelative,usedSuper:S.L5.usedSuper,discontent:S.L5.discontent} : {usedAbsolute:S.L5.sawAbsolute,usedRelative:S.L5.sawRelative,usedSuper:S.L5.sawSuper,discontent:S.L5.discontent};
+    unlockNext(6); goto('L6');
+  }
+  return {render,apply,workReact,retry,finish};
+})();
+
+/* =========================================================
+   MÀN 6 — PHIÊN TOÀ
+   ========================================================= */
+const L6 = (function(){
+  const witnesses=[
+    {id:'capital', side:{vi:'Nhà tư bản (chủ xưởng)',en:'The capitalist (workshop owner)'}, claim:{vi:'"Tôi bỏ vốn mua máy, nguyên liệu, chịu rủi ro phá sản, quản lý cả xưởng — lợi nhuận là phần thưởng chính đáng."',en:'"I put up the capital, bear the risk of bankruptcy, manage the whole workshop — profit is a fair reward."'}, correct:'weak', rebuttal:{vi:'Máy móc và nguyên liệu (c) chỉ chuyển nguyên giá trị sẵn có vào sản phẩm, không tự sinh thêm — rủi ro và quản lý là có thật, nhưng không phải nguồn tạo ra m.',en:'Machines and materials (c) only transfer their existing value into the product — real risk and management, but not the source of m.'}},
+    {id:'worker', side:{vi:'Người thợ cơ khí',en:'The mechanic'}, claim:{vi:'"Tôi được trả đúng như thoả thuận — nhưng tôi làm ra nhiều giá trị hơn số tiền lương tôi nhận."',en:'"I’m paid exactly as agreed — but I create more value than the wage I receive."'}, correct:'strong', rebuttal:{vi:'Đúng với dữ liệu bạn thu thập: lương trả đúng giá trị sức lao động, nhưng giá trị sử dụng của nó khi làm việc lớn hơn giá trị của bản thân nó.',en:'Matches your own data: the wage equals the value of labour-power, but its use-value when working exceeds its own value.'}},
+    {id:'market', side:{vi:'Nhà kinh tế thị trường',en:'The market economist'}, claim:{vi:'"Lợi nhuận là phần thưởng cho vốn, rủi ro, và đổi mới sáng tạo."',en:'"Profit rewards capital, risk, and innovation."'}, correct:'partial', rebuttal:{vi:'Đổi mới tạo lợi thế cạnh tranh tạm thời (siêu ngạch), nhưng không giải thích được nguồn m ổn định, lâu dài.',en:'Innovation does yield a temporary edge (super surplus), but doesn’t explain a stable, ongoing source of m.'}},
+    {id:'marxist', side:{vi:'Nhà kinh tế Mác-xít',en:'The Marxist economist'}, claim:{vi:'"Trao đổi vẫn ngang giá, hợp đồng tự nguyện — nhưng bản chất là bóc lột vì m do lao động sống tạo ra bị chiếm hữu nhờ sở hữu tư liệu sản xuất."',en:'"The exchange is still equal, the contract voluntary — but it is exploitation in essence, because m created by living labour is captured through ownership of the means of production."'}, correct:'strong', rebuttal:{vi:'Khớp với toàn bộ dữ liệu bạn thu thập từ màn 1 đến 5.',en:'Matches all the data you gathered from stages 1 to 5.'}}
+  ];
+  const surpriseQ=[
+    {q:{vi:'"Nếu chủ xưởng tự làm quản lý và tự trả lương quản lý cho mình thì sao?"',en:'"What if the owner does the managing and pays himself a manager’s wage?"'},
+     opts:[{vi:'Khi đó không còn bóc lột',en:'Then there is no more exploitation'},{vi:'Lương quản lý trả cho công việc quản lý thật; m từ công nhân làm thuê vẫn song song tồn tại',en:'The manager’s wage pays for real managing work; m from hired workers still exists alongside it'},{vi:'Lợi nhuận biến thành 0',en:'Profit becomes zero'}], correct:1},
+    {q:{vi:'"Nếu tăng lương gấp đôi thì có hết bóc lột không?"',en:'"Would doubling wages end exploitation?"'},
+     opts:[{vi:'Có, vì lương đã cao',en:'Yes, since pay is now high'},{vi:'Chưa chắc — còn m nếu vẫn còn t′ mà giá trị đó không thuộc về người lao động',en:'Not necessarily — m persists if t′ still exists and that value still isn’t the worker’s'},{vi:'Không liên quan đến bóc lột',en:'Unrelated to exploitation'}], correct:1}
+  ];
+  function shuffle(a){ a=[...a]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; }
+  function init(){ return {order:shuffle(witnesses.map(w=>w.id)), idx:0, score:0, phase:'witness', surprise:null, done:false}; }
+  function ensure(){ if(!S.L6) S.L6=init(); return S.L6; }
+
+  function render(){
+    const s=ensure();
+    if(s.done) return finalCard(s);
+    if(s.phase==='surprise') return surpriseCard(s);
+    if(s.idx>=s.order.length){ s.phase='surprise'; s.surprise=surpriseQ[Math.floor(Math.random()*surpriseQ.length)]; return surpriseCard(s); }
+    const w=witnesses.find(x=>x.id===s.order[s.idx]);
+    const roleLine = S.role==='capital' ? (S.lang==='vi'?'Là chủ xưởng vừa trải qua hành trình trên, bạn ngồi nghe từng lời khai.':'As the owner who just lived through everything above, you sit and hear each testimony.') : (S.lang==='vi'?'Là thợ cơ khí vừa trải qua hành trình trên, bạn ngồi nghe từng lời khai.':'As the mechanic who just lived through everything above, you sit and hear each testimony.');
+    return `${roadmap(6)}
+    <div class="card" style="background:#efe4c6; border-color:#d6bf85;">
+      <h3>${S.lang==='vi'?'Phiên toà: Hợp tác hay bóc lột?':'Tribunal: Cooperation or exploitation?'}</h3>
+      <p class="small">${roleLine}</p>
+    </div>
+    <div class="card hoverable">
+      <div class="pill info">${S.lang==='vi'?'Nhân chứng':'Witness'} ${s.idx+1}/4</div>
+      <h3>${L(w.side)}</h3><p style="font-style:italic;">${L(w.claim)}</p>
+      <div class="row" style="margin-top:10px;">
+        <button class="btn secondary" onclick="L6.judge('${w.id}','stand')">${S.lang==='vi'?'Lập luận này đứng vững':'This argument holds up'}</button>
+        <button class="btn secondary" onclick="L6.judge('${w.id}','fail')">${S.lang==='vi'?'Chưa đủ căn cứ':'Not enough grounds'}</button>
+      </div>
+    </div>
+    ${caseFile()}`;
+  }
+  function caseFile(){
+    const h4=S.history.L4;
+    return `<div class="card"><h3>${S.lang==='vi'?'Hồ sơ vụ án':'Case file'}</h3><ul class="tight">
+      <li>${S.lang==='vi'?'Màn 1':'Stage 1'}: ${S.history.L1?FMT(S.history.L1.money):'—'}</li>
+      <li>${S.lang==='vi'?'Màn 3':'Stage 3'}: ${S.history.L3?FMT(S.history.L3.wage)+'/'+(S.lang==='vi'?'ngày':'day'):'—'}</li>
+      <li>${S.lang==='vi'?'Màn 4':'Stage 4'}: c=${h4?FMT(h4.c):'—'}, v=${h4?FMT(h4.v):'—'}, m=${h4?FMT(h4.m):'—'}, m′=${h4?h4.mRate+'%':'—'}</li>
+      <li>${S.lang==='vi'?'Màn 5 — thử đủ 3 cách':'Stage 5 — tried all 3 methods'}: ${S.history.L5?(S.history.L5.usedAbsolute&&S.history.L5.usedRelative&&S.history.L5.usedSuper?(S.lang==='vi'?'có':'yes'):(S.lang==='vi'?'chưa đủ':'not quite')):'—'}</li>
+    </ul></div>`;
+  }
+  function judge(id,choice){
+    const s=ensure(); const w=witnesses.find(x=>x.id===id);
+    const ok=(choice==='stand'&&(w.correct==='strong'||w.correct==='partial'))||(choice==='fail'&&w.correct==='weak');
+    if(ok){s.score++; chime();} else buzz();
+    openModal(`<div class="tag">${ok?(S.lang==='vi'?'Phán quyết hợp lý':'Sound judgement'):(S.lang==='vi'?'Cần xem lại':'Worth reconsidering')}</div><h3>${L(w.side)}</h3><p>${L(w.rebuttal)}</p>
+      <button class="btn wide" onclick="L6.nextWitness()">${S.lang==='vi'?'Nhân chứng tiếp theo':'Next witness'}</button>`);
+  }
+  function nextWitness(){ closeModal(); const s=ensure(); s.idx++; renderInto(); }
+  function surpriseCard(s){
+    const q=s.surprise;
+    return `${roadmap(6)}<div class="card"><div class="pill info">${S.lang==='vi'?'Câu hỏi bất ngờ từ khán giả':'A surprise question from the gallery'}</div><h3>${L(q.q)}</h3>
+      ${q.opts.map((o,i)=>`<button class="quiz-opt" onclick="L6.answerSurprise(${i})" id="l6s-${i}">${L(o)}</button>`).join('')}</div>`;
+  }
+  function answerSurprise(i){
+    const s=ensure(); const q=s.surprise;
+    document.getElementById(`l6s-${i}`).classList.add(i===q.correct?'correct':'wrong');
+    if(i!==q.correct) document.getElementById(`l6s-${q.correct}`).classList.add('correct');
+    if(i===q.correct){ s.score++; chime(); } else buzz();
+    setTimeout(()=>{ s.done=true; renderInto(); if(s.score>=DCFG().L6score) confettiBurst(); }, 1300);
+  }
+  function finalCard(s){
+    const win=s.score>=DCFG().L6score;
+    return `${roadmap(6)}<div class="card">${win?winArt():''}<div class="pill ${win?'win badge-pop':'info'}">${win?(S.lang==='vi'?'HỒ SƠ ĐỦ CĂN CỨ':'CASE FILE COMPLETE'):(S.lang==='vi'?'HỒ SƠ CHƯA ĐỦ':'CASE FILE INCOMPLETE')}</div>
+      <h3>${S.lang==='vi'?'Điểm vận dụng':'Applied score'}: ${s.score}/5</h3></div>
+    <div class="card" style="border-left:5px solid var(--rust);">
+      <h3>${S.lang==='vi'?'Kết luận':'Conclusion'}</h3>
+      <p><b>${S.lang==='vi'?'Về hình thức':'In form'}:</b> ${S.lang==='vi'?'quan hệ chủ xưởng – thợ cơ khí là hợp tác tự nguyện, bình đẳng trước pháp luật, trao đổi ngang giá.':'the owner–mechanic relation is voluntary cooperation, equal before the law, an exchange at value.'}</p>
+      <p><b>${S.lang==='vi'?'Về bản chất':'In essence'}</b> (${S.lang==='vi'?'theo KTCT Mác-Lênin':'per Marxist political economy'}): ${S.lang==='vi'?'vẫn là quan hệ bóc lột giá trị thặng dư — người thợ cơ khí lao động t′ mà giá trị đó không thuộc về họ, do nhà tư bản sở hữu tư liệu sản xuất.':'it remains a relation of surplus-value exploitation — the mechanic labours t′, but that value is not theirs, because the capitalist owns the means of production.'}</p>
+      <div class="knowledge-note"><b>${S.lang==='vi'?'Ghi chú cân bằng':'Balance note'}:</b> ${S.lang==='vi'?'các trường phái khác coi lợi nhuận là phần thưởng chính đáng cho vốn, rủi ro, đổi mới. Ở Việt Nam hiện nay kinh tế tư nhân được thừa nhận và khuyến khích; vấn đề là điều tiết hợp lý và bảo vệ quyền lợi người lao động.':'other schools see profit as a fair reward for capital, risk and innovation. In Vietnam today private enterprise is recognised and encouraged; the real question is sensible regulation and protecting workers’ rights.'}</div>
+    </div>
+    ${!win?`<div class="card"><button class="btn" onclick="L6.retry()">${S.lang==='vi'?'Xem lại các màn để bổ sung hồ sơ':'Revisit earlier stages to build a stronger case'}</button></div>`:''}
+    <div class="card"><button class="btn secondary" onclick="L6.restartGame()">${S.lang==='vi'?'Chơi lại toàn bộ':'Play again from the start'}</button></div>`;
+  }
+  function retry(){ S.L6=null; goto('menu'); }
+  function restartGame(){ hardRestart(); }
+  return {render,judge,nextWitness,answerSurprise,retry,restartGame};
+})();
+
+/* =========================================================
+   START / ROLE SCREEN WIRING
+   ========================================================= */
+function buildHeroFx(){
+  const el=document.getElementById('hero-bgfx');
+  const gears=[{cls:'gear',top:'8%',left:'6%'},{cls:'gear g2',top:'60%',left:'82%'},{cls:'gear g3',top:'72%',left:'10%'},{cls:'gear g2',top:'14%',left:'86%'}];
+  let html=gears.map(g=>`<span class="${g.cls}" style="top:${g.top}; left:${g.left};">⚙️</span>`).join('');
+  for(let i=0;i<10;i++){
+    html+=`<span class="puff" style="left:${(Math.random()*94)}%; animation-delay:${(Math.random()*8).toFixed(1)}s;"></span>`;
+  }
+  for(let i=0;i<8;i++){
+    const icons=['🔧','🔩'];
+    html+=`<span class="thread" style="top:${10+Math.random()*75}%; left:${5+Math.random()*88}%; animation-delay:${(Math.random()*6).toFixed(1)}s;">${icons[i%2]}</span>`;
+  }
+  el.innerHTML=html;
+}
+function refreshStartTexts(){
+  document.getElementById('s-kicker').textContent=tr('startKicker');
+  document.getElementById('s-title').textContent=tr('gameTitle');
+  document.getElementById('s-sub').textContent=tr('startSub');
+  document.getElementById('s-play').textContent=tr('play');
+  document.getElementById('s-rules').textContent=tr('rules');
+  document.getElementById('s-home').textContent=S.lang==='vi'?'← Về trang chủ':'← Back to site';
+  document.getElementById('s-credit').textContent=tr('credit');
+  document.getElementById('lang-toggle-start').innerHTML=`
+    <button class="${S.lang==='vi'?'active':''}" onclick="setLangStart('vi')">VI</button>
+    <button class="${S.lang==='en'?'active':''}" onclick="setLangStart('en')">EN</button>`;
+}
+function setLangStart(l){ S.lang=l; refreshStartTexts(); }
+function showStart(){
+  document.getElementById('role-screen').style.display='none';
+  document.getElementById('diff-screen').style.display='none';
+  document.getElementById('app').style.display='none';
+  document.getElementById('start-screen').style.display='flex';
+  buildHeroFx(); refreshStartTexts();
+}
+document.getElementById('s-play').addEventListener('click', ()=>{ showRoleScreen(); });
+document.getElementById('s-rules').addEventListener('click', ()=>{ showRules(); });
+document.getElementById('s-home').addEventListener('click', ()=>{ goHome(); });
+
+function goHome(){
+  const fx=document.createElement('div');
+  fx.style.cssText='position:fixed;inset:0;background:var(--ink);z-index:99999;opacity:0;transition:opacity .45s ease;pointer-events:all;';
+  document.body.appendChild(fx);
+  requestAnimationFrame(()=>{ fx.style.opacity='1'; });
+  try{ sessionStorage.setItem('returningFromGame','1'); }catch(e){}
+  setTimeout(()=>{ window.location.href='index.html'; }, 480);
+}
+function confirmGoHome(){
+  openModal(`<div class="tag">${S.lang==='vi'?'XÁC NHẬN':'CONFIRM'}</div>
+    <h3>${S.lang==='vi'?'Quay lại trang web?':'Back to the website?'}</h3>
+    <p class="small">${S.lang==='vi'?'Tiến trình chơi hiện tại sẽ mất.':'Your current progress will be lost.'}</p>
+    <div class="row" style="margin-top:12px;">
+      <button class="btn secondary" onclick="closeModal()">${S.lang==='vi'?'Huỷ':'Cancel'}</button>
+      <button class="btn" onclick="goHome()">${S.lang==='vi'?'Quay lại':'Go back'}</button>
+    </div>`);
+}
+
+function showRoleScreen(){
+  document.getElementById('start-screen').style.display='none';
+  document.getElementById('role-screen').style.display='flex';
+  const rc=document.getElementById('role-cards');
+  document.getElementById('r-kicker').textContent=tr('roleKicker');
+  document.getElementById('r-title').textContent=tr('roleTitle');
+  document.getElementById('r-sub').textContent=tr('roleSub');
+  rc.innerHTML=`
+    <div class="role-card" id="rc-capital" onclick="pickRole('capital')">
+      <div class="emoji">🎩</div><h3>${tr('roleCapTitle')}</h3><p>${tr('roleCapDesc')}</p>
+    </div>
+    <div class="role-card" id="rc-worker" onclick="pickRole('worker')">
+      <div class="emoji">🧤</div><h3>${tr('roleWorkTitle')}</h3><p>${tr('roleWorkDesc')}</p>
+    </div>`;
+  document.getElementById('r-continue').textContent=tr('continue');
+  document.getElementById('r-back').textContent=tr('back');
+  document.getElementById('r-continue').disabled = !S.role;
+  if(S.role) document.getElementById('rc-'+S.role).classList.add('selected');
+}
+function pickRole(role){
+  S.role=role;
+  document.querySelectorAll('.role-card').forEach(c=>c.classList.remove('selected'));
+  document.getElementById('rc-'+role).classList.add('selected');
+  document.getElementById('r-continue').disabled=false;
+}
+document.getElementById('r-continue').addEventListener('click', ()=>{
+  if(!S.role) return;
+  document.getElementById('role-screen').style.display='none';
+  showDiffScreen();
+});
+document.getElementById('r-back').addEventListener('click', showStart);
+
+function diffMiniTable(cfg){
+  return `<div class="diff-table">
+    <div><span>${S.lang==='vi'?'Màn 1':'Stage 1'}</span><span>≥ ${FMT(cfg.L1target)}</span></div>
+    <div><span>${S.lang==='vi'?'Màn 4 (m′)':'Stage 4 (m′)'}</span><span>≥ ${cfg.L4mrate}%</span></div>
+    <div><span>${S.lang==='vi'?'Màn 5 (sức khoẻ)':'Stage 5 (health)'}</span><span>≥ ${cfg.L5health}</span></div>
+    <div><span>${S.lang==='vi'?'Màn 6 (điểm)':'Stage 6 (score)'}</span><span>≥ ${cfg.L6score}/5</span></div>
+  </div>`;
+}
+function showDiffScreen(){
+  document.getElementById('diff-screen').style.display='flex';
+  document.getElementById('d-kicker').textContent=tr('diffKicker');
+  document.getElementById('d-title').textContent=tr('diffTitle');
+  document.getElementById('d-sub').textContent=tr('diffSub');
+  document.getElementById('d-warn').textContent=tr('diffWarn');
+  const dc=document.getElementById('diff-cards');
+  dc.innerHTML = Object.keys(DIFF).map(key=>{
+    const cfg=DIFF[key];
+    return `<div class="diff-card" id="dc-${key}" onclick="pickDifficulty('${key}')">
+      <div class="emoji">${cfg.emoji}</div><h3>${L(cfg.label)}</h3><p>${L(cfg.desc)}</p>
+      ${diffMiniTable(cfg)}
+    </div>`;
+  }).join('');
+  document.getElementById('d-continue').textContent=tr('continue');
+  document.getElementById('d-back').textContent=tr('back');
+  document.getElementById('d-continue').disabled = !S.difficulty;
+  if(S.difficulty) document.getElementById('dc-'+S.difficulty).classList.add('selected');
+}
+function pickDifficulty(key){
+  S.difficulty=key;
+  document.querySelectorAll('.diff-card').forEach(c=>c.classList.remove('selected'));
+  document.getElementById('dc-'+key).classList.add('selected');
+  document.getElementById('d-continue').disabled=false;
+  blip(500,.05);
+}
+document.getElementById('d-continue').addEventListener('click', ()=>{
+  if(!S.difficulty) return;
+  document.getElementById('diff-screen').style.display='none';
+  document.getElementById('app').style.display='flex';
+  goto('menu');
+});
+document.getElementById('d-back').addEventListener('click', ()=>{
+  document.getElementById('diff-screen').style.display='none';
+  document.getElementById('role-screen').style.display='flex';
+});
+
+/* boot */
+setTimeout(()=>{ const af=document.getElementById('arrive-fx'); if(af){ af.classList.add('hide'); setTimeout(()=>af.remove(),550); } }, 150);
+showStart();
+</script>
+</body>
+</html>

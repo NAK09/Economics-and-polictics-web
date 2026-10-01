@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sơ đồ tư duy Kinh tế Chính trị Mác - Lênin">
+    <meta name="author" content="Nguyễn Anh Khoa - Nhóm 1 ĐH Quốc Tế">
+    
+    <title>Sơ Đồ Tư Duy - Chương 3 | ĐH Quốc Tế</title>
+    
+    <link rel="icon" href="./Logo-HCMIU.png" type="image/png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        darkBg: '#0f172a',
+                        darkCard: '#1e293b',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+
+    <style>
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #facc15; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #eab308; }
+
+        /* Preloader */
+        #preloader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #4a0404; z-index: 99999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: opacity 0.6s ease-out, visibility 0.6s ease-out;
+        }
+        .spinner {
+            width: 50px; height: 50px; border: 5px solid rgba(250, 204, 21, 0.2);
+            border-top-color: #facc15; border-radius: 50%;
+            animation: spin 0.8s linear infinite; margin-bottom: 20px;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* Mực vàng Highlight */
+        mark { background-color: #fef08a; color: #991b1b; padding: 0 2px; border-radius: 3px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); font-weight: 700; }
+
+        /* Hiệu ứng kính */
+        .liquid-glass-container {
+            background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3), inset 0 0 20px rgba(255,255,255,0.1);
+        }
+        .liquid-text {
+            background: linear-gradient(to right, #facc15 20%, #ffffff 50%, #facc15 80%);
+            background-size: 200% auto; color: transparent;
+            -webkit-background-clip: text; background-clip: text;
+            animation: liquidShine 4s linear infinite; filter: drop-shadow(0px 6px 12px rgba(250, 204, 21, 0.5));
+        }
+        @keyframes liquidShine { to { background-position: 200% center; } }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* KIỂU DÁNG CHUYÊN BIỆT CHO MINDMAP TỎA HƯỚNG MỚI */
+        #view-tree-container { cursor: grab; }
+        #view-tree-container:active { cursor: grabbing; }
+        .tree-node-hover:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 15px 30px rgba(0,0,0,0.1); z-index: 50; }
+    </style>
+</head>
+<body class="font-sans antialiased bg-gray-50 dark:bg-darkBg text-gray-800 dark:text-gray-100 relative transition-colors duration-300 flex flex-col min-h-screen overflow-x-hidden">
+
+    <div id="preloader">
+        <div class="spinner"></div>
+        <h2 class="text-yellow-400 font-serif font-bold text-lg tracking-widest uppercase">
+            <span class="lang-vi">ĐANG TẢI DỮ LIỆU...</span>
+            <span class="lang-en hidden">LOADING RESOURCES...</span>
+        </h2>
+    </div>
+
+    <!-- THANH ĐIỀU HƯỚNG -->
+    <nav class="fixed top-0 left-0 w-full z-50 p-4 md:px-8 flex justify-between items-center bg-black/50 backdrop-blur-xl border-b border-white/10 shadow-lg transition-all duration-300">
+        <a href="index.html" class="flex items-center gap-3 sfx-btn group">
+            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(250,204,21,0.5)] border-2 border-yellow-400 overflow-hidden transition-transform group-hover:scale-110">
+                <img src="./Logo-HCMIU.png" alt="Logo ĐH Quốc Tế" class="w-10 h-10 object-contain" onerror="this.src='https://upload.wikimedia.org/wikipedia/vi/thumb/9/90/Logo_Đại_học_Quốc_tế%2C_ĐHQG-HCM.svg/1200px-Logo_Đại_học_Quốc_tế%2C_ĐHQG-HCM.svg.png'">
+            </div>
+            <div class="hidden sm:block text-white font-bold leading-tight drop-shadow-md">
+                <span class="text-lg font-serif tracking-wider"><span class="lang-vi">ĐẠI HỌC QUỐC TẾ</span><span class="lang-en hidden">INTERNATIONAL UNIVERSITY</span></span><br>
+                <span class="text-yellow-400 text-xs"><span class="lang-vi">Đại học Quốc gia TP.HCM</span><span class="lang-en hidden">Vietnam National University - HCMC</span></span>
+            </div>
+        </a>
+
+        <div class="flex items-center gap-4 sm:gap-6">
+            <button onclick="toggleDarkMode()" class="w-10 h-10 rounded-full bg-black/40 border border-white/20 flex items-center justify-center text-white hover:text-yellow-400 hover:bg-white/10 transition-all sfx-btn">
+                <i id="theme-icon" class="fa-solid fa-moon text-lg"></i>
+            </button>
+            <div class="flex items-center gap-2 text-sm font-bold bg-black/40 px-3 py-1.5 rounded-full border border-white/20 select-none backdrop-blur-md">
+                <span id="btn-lang-vi" onclick="switchLanguage('vi')" class="cursor-pointer text-yellow-400 hover:scale-110 transition-transform sfx-btn">VN</span>
+                <span class="text-white/50">|</span>
+                <span id="btn-lang-en" onclick="switchLanguage('en')" class="cursor-pointer text-white hover:text-yellow-400 hover:scale-110 transition-transform sfx-btn">EN</span>
+            </div>
+            <a href="index.html" class="flex items-center gap-2 px-5 py-2 rounded-full bg-[#3d2424] hover:bg-[#2a1717] border border-[#5a3a3a] transition-all text-white font-bold shadow-lg sfx-btn">
+                <i class="fa-solid fa-house group-hover:-translate-x-1 transition-transform"></i>
+                <span class="hidden sm:inline"><span class="lang-vi">Trang Chủ</span><span class="lang-en hidden">Home</span></span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- HEADER -->
+    <header class="relative w-full pt-32 pb-16 flex items-center justify-center overflow-hidden bg-red-950">
+        <div class="absolute inset-0 z-0">
+            <img src="./image_b6f8e2.jpg" alt="Background" class="w-full h-full object-cover opacity-40 mix-blend-overlay" onerror="this.src='https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'">
+            <div class="absolute inset-0 bg-gradient-to-b from-red-900/70 via-red-900/80 to-gray-50 dark:to-darkBg"></div>
+            <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-yellow-500/20 rounded-full blur-[80px] animate-pulse pointer-events-none"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-72 h-72 bg-red-500/20 rounded-full blur-[100px] animate-pulse pointer-events-none" style="animation-delay: 2s;"></div>
+        </div>
+
+        <div class="relative z-10 text-center px-6 max-w-4xl mx-auto liquid-glass-container rounded-[2rem] py-10" data-aos="zoom-in">
+            <div class="w-16 h-16 mx-auto bg-gradient-to-br from-yellow-300 to-yellow-500 rounded-2xl flex items-center justify-center text-red-950 text-3xl mb-4 shadow-[0_0_20px_rgba(250,204,21,0.5)]">
+                <i class="fa-solid fa-network-wired"></i>
+            </div>
+            <h1 class="text-3xl md:text-5xl font-serif font-black mb-4 uppercase tracking-wide leading-tight liquid-text">
+                <span class="lang-vi">SƠ ĐỒ TƯ DUY - CHƯƠNG 3</span>
+                <span class="lang-en hidden">MIND MAP - CHAPTER 3</span>
+            </h1>
+            <p class="text-lg md:text-xl text-white/90 font-bold drop-shadow-md">
+                <span class="lang-vi">Sản xuất hàng hóa và các quy luật kinh tế</span>
+                <span class="lang-en hidden">Commodity production and economic laws</span>
+            </p>
+        </div>
+    </header>
+
+    <!-- KHU VỰC HỌC TẬP -->
+    <main class="py-12 px-4 md:px-8 max-w-[1400px] mx-auto relative z-10 flex-grow w-full">
+        
+        <!-- BẢNG ĐIỀU KHIỂN -->
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-10" data-aos="fade-up">
+            <div class="flex bg-white dark:bg-darkCard p-1.5 rounded-full shadow-lg border border-gray-100 dark:border-gray-700 w-full md:w-auto z-20 relative">
+                <!-- Nút Bảng lưới mặc định Tắt -->
+                <button onclick="switchView('grid')" id="btn-grid" class="flex-1 md:flex-none px-6 py-2.5 rounded-full font-bold text-sm transition-all duration-300 sfx-btn flex items-center justify-center gap-2 text-gray-500 dark:text-gray-400 hover:text-red-800 dark:hover:text-yellow-400 bg-transparent">
+                    <i class="fa-solid fa-table-cells-large"></i>
+                    <span class="lang-vi">Bảng Lưới Thẻ</span><span class="lang-en hidden">Grid View</span>
+                </button>
+                <!-- Nút Tỏa trực quan mặc định Bật -->
+                <button onclick="switchView('tree')" id="btn-tree" class="flex-1 md:flex-none px-6 py-2.5 rounded-full font-bold text-sm transition-all duration-300 sfx-btn flex items-center justify-center gap-2 bg-gradient-to-r from-red-900 to-red-800 text-yellow-400 shadow-md">
+                    <i class="fa-solid fa-diagram-project"></i>
+                    <span class="lang-vi">Tỏa Trực Quan</span><span class="lang-en hidden">Radial Map</span>
+                </button>
+            </div>
+            
+            <div class="flex gap-3 w-full md:w-auto items-center">
+                <!-- Search -->
+                <div class="w-full md:w-80 relative z-20">
+                    <input type="text" id="searchInput" placeholder="Tìm kiếm nhanh (VD: Hàng hóa, Cạnh tranh)..." class="w-full bg-white dark:bg-darkCard border border-gray-200 dark:border-gray-700 rounded-full px-5 py-3 pl-12 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-yellow-400 dark:text-white transition-all shadow-sm lang-vi-ph">
+                    <input type="text" id="searchInputEn" placeholder="Quick search (e.g. Market, Value)..." class="w-full bg-white dark:bg-darkCard border border-gray-200 dark:border-gray-700 rounded-full px-5 py-3 pl-12 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-yellow-400 dark:text-white transition-all shadow-sm hidden lang-en-ph">
+                    <i class="fa-solid fa-magnifying-glass absolute left-5 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- GÓC NHÌN 1: BẢNG LƯỚI THẺ (Mặc định ẩn) -->
+        <div id="view-grid" class="hidden flex-col gap-12 w-full transition-all duration-500">
+            <!-- Nội dung render bởi JS -->
+        </div>
+
+        <!-- GÓC NHÌN 2: CÂY TỎA TRỰC QUAN (Mặc định hiện) -->
+        <div id="view-tree-container" class="w-full h-[75vh] bg-[#f8fafc] dark:bg-[#0b1121] rounded-[2rem] overflow-hidden shadow-[inset_0_0_50px_rgba(0,0,0,0.05)] border border-gray-200 dark:border-gray-700 flex flex-col relative transition-all duration-500">
+            <!-- Control bar cho Sơ đồ -->
+            <div class="absolute bottom-6 right-6 z-30 flex gap-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md p-2 rounded-full shadow-xl border border-gray-200 dark:border-gray-700">
+                <button onclick="treeZoom(0.15)" class="w-10 h-10 rounded-full bg-gray-100 hover:bg-yellow-400 dark:bg-gray-700 dark:hover:bg-yellow-500 hover:text-black transition-colors flex items-center justify-center sfx-btn"><i class="fa-solid fa-plus"></i></button>
+                <button onclick="treeZoom(-0.15)" class="w-10 h-10 rounded-full bg-gray-100 hover:bg-yellow-400 dark:bg-gray-700 dark:hover:bg-yellow-500 hover:text-black transition-colors flex items-center justify-center sfx-btn"><i class="fa-solid fa-minus"></i></button>
+                <button onclick="treeReset()" class="w-10 h-10 rounded-full bg-gray-100 hover:bg-yellow-400 dark:bg-gray-700 dark:hover:bg-yellow-500 hover:text-black transition-colors flex items-center justify-center sfx-btn"><i class="fa-solid fa-expand-arrows-alt"></i></button>
+                <button onclick="toggleFullscreen()" class="w-10 h-10 rounded-full bg-gray-900 text-yellow-400 hover:bg-black transition-colors flex items-center justify-center sfx-btn"><i class="fa-solid fa-expand"></i></button>
+            </div>
+            
+            <!-- Hiển thị mức Thu (Zoom) -->
+            <div class="absolute top-6 left-6 z-30 pointer-events-none">
+                <p class="text-sm font-bold text-gray-500 dark:text-gray-400 bg-white/70 dark:bg-black/70 px-4 py-2 rounded-full backdrop-blur-md shadow-sm border border-gray-200 dark:border-gray-700">
+                    <i class="fa-solid fa-search-plus text-yellow-500 mr-1"></i> 
+                    <span class="lang-vi">Mức thu: </span><span class="lang-en hidden">Zoom: </span>
+                    <span id="zoom-level-display">85%</span>
+                </p>
+            </div>
+            
+            <!-- Vùng Canvas chứa Node & Đường vẽ SVG. Tọa độ Tuyệt đối căn giữa chuẩn 100% -->
+            <div class="w-full h-full relative overflow-hidden">
+                <div id="tree-canvas" class="absolute transition-transform duration-75 flex items-center justify-center" style="width: 3000px; height: 2000px; left: 50%; top: 50%; transform-origin: center;">
+                    <!-- SVG Lớp dưới cùng để vẽ nét cong uyển chuyển -->
+                    <svg id="mindmap-svg" class="absolute inset-0 w-full h-full pointer-events-none z-0"></svg>
+                    <!-- Chứa toàn bộ các khối Node -->
+                    <div id="tree-html-container" class="relative z-10 w-full flex items-center justify-center gap-32">
+                        <!-- Nội dung render bởi JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- MODAL HIỂN THỊ CHI TIẾT (Được fix để xài trong Fullscreen) -->
+    <div id="modal-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[9999] hidden flex-col justify-center items-center p-4 opacity-0 transition-opacity duration-300">
+        <div id="modal-content" class="bg-white dark:bg-darkCard rounded-[2rem] w-full max-w-3xl max-h-[90vh] flex flex-col relative transform scale-95 transition-transform duration-300 shadow-[0_30px_60px_rgba(0,0,0,0.5)] border border-gray-100 dark:border-gray-700 overflow-hidden">
+            <div class="px-8 py-6 flex justify-between items-start border-b border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50 relative">
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-400 via-red-600 to-yellow-400"></div>
+                <div class="flex items-start gap-5">
+                    <div class="w-14 h-14 bg-red-100 dark:bg-red-900/30 rounded-2xl flex items-center justify-center text-red-700 dark:text-red-400 text-2xl shrink-0 shadow-sm">
+                        <i id="modal-icon" class="fa-solid fa-layer-group"></i>
+                    </div>
+                    <div>
+                        <span id="modal-tag" class="text-red-600 dark:text-yellow-400 text-[11px] font-black px-2 py-1 rounded bg-red-50 dark:bg-gray-800 tracking-widest uppercase mb-2 inline-block border border-red-100 dark:border-gray-700">TAG</span>
+                        <h2 id="modal-title" class="font-serif font-black text-2xl md:text-3xl text-gray-900 dark:text-white uppercase leading-tight">TITLE</h2>
+                    </div>
+                </div>
+                <button onclick="closeModal()" class="w-10 h-10 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full flex items-center justify-center text-gray-500 transition-colors shrink-0 sfx-btn"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="p-8 overflow-y-auto flex-grow flex flex-col gap-6">
+                <div>
+                    <h4 class="text-gray-400 dark:text-gray-500 font-bold text-xs uppercase tracking-widest mb-2 flex items-center gap-2"><i class="fa-solid fa-bullseye"></i> <span class="lang-vi">Bản chất cốt lõi</span><span class="lang-en hidden">Core Essence</span></h4>
+                    <p id="modal-core" class="font-semibold text-gray-900 dark:text-gray-100 text-lg md:text-xl leading-relaxed"></p>
+                </div>
+                <div class="w-full h-px bg-gray-100 dark:bg-gray-800"></div>
+                <div>
+                    <h4 class="text-gray-400 dark:text-gray-500 font-bold text-xs uppercase tracking-widest mb-3 flex items-center gap-2"><i class="fa-solid fa-list"></i> <span class="lang-vi">Luận điểm chi tiết</span><span class="lang-en hidden">Detailed Points</span></h4>
+                    <ul id="modal-details" class="flex flex-col gap-3"></ul>
+                </div>
+                <div class="bg-gray-50 dark:bg-gray-900/50 rounded-2xl p-5 border-l-4 border-yellow-400 mt-2">
+                    <h4 class="text-yellow-600 dark:text-yellow-500 font-bold text-xs uppercase tracking-widest mb-2 flex items-center gap-2"><i class="fa-solid fa-lightbulb"></i> <span class="lang-vi">Điểm khóa</span><span class="lang-en hidden">Key Takeaway</span></h4>
+                    <p id="modal-tip" class="font-semibold text-gray-700 dark:text-gray-300 text-[15px] leading-relaxed"></p>
+                </div>
+            </div>
+            <div class="px-8 py-5 bg-gray-50 dark:bg-gray-900/80 border-t border-gray-100 dark:border-gray-800 flex justify-between items-center">
+                <button onclick="navModal(-1)" class="w-10 h-10 md:w-auto md:px-5 md:py-2.5 rounded-full font-bold text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors sfx-btn text-sm flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-arrow-left"></i> <span class="hidden md:inline"><span class="lang-vi">Thẻ trước</span><span class="lang-en hidden">Prev</span></span>
+                </button>
+                <div class="font-bold text-gray-400 text-sm tracking-widest"><span id="modal-counter"></span></div>
+                <button onclick="navModal(1)" class="w-10 h-10 md:w-auto md:px-5 md:py-2.5 rounded-full font-bold bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors shadow-md sfx-btn text-sm flex items-center justify-center gap-2">
+                    <span class="hidden md:inline"><span class="lang-vi">Thẻ tiếp</span><span class="lang-en hidden">Next</span></span> <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NÚT AI BOT (ĐỒNG BỘ INDEX) -->
+    <button onclick="toggleChatbot()" class="fixed bottom-8 right-8 z-50 flex h-[70px] w-[70px] items-center justify-center rounded-full bg-gradient-to-r from-yellow-400 to-yellow-500 shadow-[0_0_25px_rgba(250,204,21,0.5)] transition-all hover:scale-110 border-4 border-white dark:border-gray-800 group sfx-btn">
+        <i class="fa-solid fa-robot text-3xl text-red-900 group-hover:animate-bounce"></i>
+    </button>
+
+    <!-- GIAO DIỆN CHATBOT -->
+    <div id="ai-chatbot-window" class="fixed bottom-28 right-8 w-80 sm:w-96 bg-gray-50 dark:bg-darkCard border border-yellow-500/30 rounded-2xl shadow-[0_15px_40px_rgba(127,29,29,0.25)] flex-col z-50 overflow-hidden hidden transition-all origin-bottom-right font-sans">
+        <div class="bg-gradient-to-r from-red-950 via-red-900 to-red-800 border-b-2 border-yellow-400 p-4 flex justify-between items-center relative overflow-hidden">
+            <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
+            <div class="flex items-center gap-3 relative z-10">
+                <div class="w-10 h-10 bg-gradient-to-b from-yellow-300 to-yellow-500 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(250,204,21,0.4)] border border-yellow-200">
+                    <i class="fa-solid fa-robot text-red-950 text-lg"></i>
+                </div>
+                <div class="leading-tight">
+                    <div class="font-serif font-black text-yellow-400 text-lg uppercase tracking-wide drop-shadow-sm">
+                        <span class="lang-vi">AI MÁC - LÊNIN</span><span class="lang-en hidden">AI MARX - LENIN</span>
+                    </div>
+                    <div class="text-[11px] font-medium text-white/90">
+                        <span class="lang-vi">Trợ lý Kinh tế Chính trị đáng yêu</span><span class="lang-en hidden">Lovely Economy Assistant</span>
+                    </div>
+                </div>
+            </div>
+            <div class="flex gap-2 relative z-10">
+                <button onclick="clearChat()" class="w-8 h-8 text-white/70 hover:text-white hover:bg-white/10 rounded-lg flex items-center justify-center transition-colors sfx-btn" title="Xóa hội thoại"><i class="fa-regular fa-trash-can text-sm"></i></button>
+                <button onclick="toggleChatbot()" class="w-8 h-8 text-white/70 hover:text-yellow-400 hover:bg-white/10 rounded-lg flex items-center justify-center transition-colors sfx-btn"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+        </div>
+
+        <div id="chat-logs" class="p-4 h-72 overflow-y-auto flex flex-col gap-4 bg-white dark:bg-gray-900"></div>
+
+        <div class="flex gap-2 p-3 overflow-x-auto border-t border-gray-100 dark:border-gray-800 scrollbar-hide whitespace-nowrap bg-gray-50 dark:bg-gray-800">
+            <button onclick="sendSuggestion('Hàng hóa là gì?', 'What is a commodity?')" class="px-4 py-1.5 bg-white dark:bg-gray-700 border border-red-200 dark:border-gray-600 text-red-800 dark:text-yellow-400 rounded-full text-xs font-bold shadow-sm hover:bg-red-50 transition-colors sfx-btn">
+                <span class="lang-vi">🌸 Hàng hóa là gì?</span><span class="lang-en hidden">🌸 What is commodity?</span>
+            </button>
+            <button onclick="sendSuggestion('Hai thuộc tính của hàng hóa?', 'Two attributes of commodity?')" class="px-4 py-1.5 bg-white dark:bg-gray-700 border border-red-200 dark:border-gray-600 text-red-800 dark:text-yellow-400 rounded-full text-xs font-bold shadow-sm hover:bg-red-50 transition-colors sfx-btn">
+                <span class="lang-vi">💡 2 thuộc tính hàng hóa?</span><span class="lang-en hidden">💡 2 Commodity traits?</span>
+            </button>
+        </div>
+
+        <div class="p-3 bg-white dark:bg-darkCard border-t border-gray-200 dark:border-gray-700 flex gap-3 items-center">
+            <input type="text" id="userQueryInput" onkeypress="if(event.key === 'Enter') handleSendChat()" placeholder="Nhập câu hỏi..." class="flex-1 bg-gray-100 dark:bg-gray-700 dark:text-white px-4 py-2.5 rounded-full text-sm font-medium focus:outline-none focus:ring-2 focus:ring-red-800/20 transition-all lang-vi-ph">
+            <button onclick="handleSendChat()" class="w-10 h-10 shrink-0 bg-gradient-to-b from-red-800 to-red-950 rounded-full flex items-center justify-center hover:from-red-700 hover:to-red-900 shadow-md transition-transform active:scale-95 sfx-btn"><i class="fa-solid fa-paper-plane text-yellow-400 -ml-1"></i></button>
+        </div>
+    </div>
+
+    <!-- SCRIPTS CORE -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        const sfxClick = new Howl({ src: ['https://actions.google.com/sounds/v1/ui/button_click.ogg'], volume: 0.4 });
+        const sfxPop = new Howl({ src: ['https://actions.google.com/sounds/v1/ui/pop_up_01.ogg'], volume: 0.4 });
+        let currentLang = 'vi';
+
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            setTimeout(() => {
+                preloader.style.opacity = '0';
+                preloader.style.visibility = 'hidden';
+                AOS.init({ once: true, offset: 50 });
+                
+                // Vẽ và căn giữa sơ đồ ngay khi load xong vì Sơ đồ là mặc định
+                updateTransform();
+                setTimeout(() => drawLines(), 100);
+            }, 600);
+        });
+
+        document.querySelectorAll('.sfx-btn').forEach(el => el.addEventListener('click', () => sfxClick.play()));
+
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            html.classList.toggle('dark');
+            document.getElementById('theme-icon').className = html.classList.contains('dark') ? "fa-solid fa-sun text-lg text-yellow-400" : "fa-solid fa-moon text-lg";
+            // Vẽ lại nét cong khi đổi giao diện để cập nhật màu Stroke
+            if(!document.getElementById('view-tree-container').classList.contains('hidden')) drawLines();
+        }
+
+        // CHUYỂN ĐỔI NGÔN NGỮ
+        function switchLanguage(lang) {
+            currentLang = lang;
+            document.querySelectorAll('.lang-vi').forEach(el => el.classList.toggle('hidden', lang === 'en'));
+            document.querySelectorAll('.lang-en').forEach(el => el.classList.toggle('hidden', lang === 'vi'));
+            
+            document.querySelectorAll('.lang-vi-ph').forEach(el => el.placeholder = (lang==='vi') ? el.getAttribute('placeholder') : 'Type your question...');
+            document.querySelectorAll('.lang-en-ph').forEach(el => el.classList.toggle('hidden', true));
+
+            const viBtn = document.getElementById('btn-lang-vi'), enBtn = document.getElementById('btn-lang-en');
+            if (lang === 'en') {
+                viBtn.classList.replace('text-yellow-400', 'text-white'); enBtn.classList.replace('text-white', 'text-yellow-400');
+                document.getElementById('userQueryInput').placeholder = 'Type your question...';
+                document.getElementById('searchInput').placeholder = 'Quick search (e.g. Market, Value)...';
+            } else {
+                viBtn.classList.replace('text-white', 'text-yellow-400'); enBtn.classList.replace('text-yellow-400', 'text-white');
+                document.getElementById('userQueryInput').placeholder = 'Nhập câu hỏi của bạn...';
+                document.getElementById('searchInput').placeholder = 'Tìm kiếm nhanh (VD: Hàng hóa, Cạnh tranh)...';
+            }
+            renderChat(); 
+            // Cập nhật lại đường vẽ SVG vì chữ thay đổi có thể làm thay đổi kích thước thẻ
+            setTimeout(drawLines, 50);
+        }
+
+        // CHUYỂN ĐỔI TAB (GRID VÀ TREE)
+        function switchView(view) {
+            const vGrid = document.getElementById('view-grid'), vTree = document.getElementById('view-tree-container');
+            const btnGrid = document.getElementById('btn-grid'), btnTree = document.getElementById('btn-tree');
+            const activeClass = "flex-1 md:flex-none px-6 py-2.5 rounded-full font-bold text-sm transition-all duration-300 sfx-btn flex items-center justify-center gap-2 bg-gradient-to-r from-red-900 to-red-800 text-yellow-400 shadow-md";
+            const inactiveClass = "flex-1 md:flex-none px-6 py-2.5 rounded-full font-bold text-sm transition-all duration-300 sfx-btn flex items-center justify-center gap-2 text-gray-500 dark:text-gray-400 hover:text-red-800 dark:hover:text-yellow-400 bg-transparent";
+
+            if(view === 'grid') {
+                vGrid.classList.remove('hidden'); vTree.classList.remove('flex'); vTree.classList.add('hidden');
+                btnGrid.className = activeClass; btnTree.className = inactiveClass;
+            } else {
+                vTree.classList.remove('hidden'); vTree.classList.add('flex'); vGrid.classList.add('hidden');
+                btnTree.className = activeClass; btnGrid.className = inactiveClass;
+                // Phải vẽ lại lines sau khi unhide để thẻ lấy được Width/Height
+                setTimeout(() => { treeReset(); drawLines(); }, 50);
+            }
+        }
+
+        // DATABASE CHƯƠNG 3
+        const mindmapData = [
+            {
+                sectionName: { vi: "I. ĐIỀU KIỆN, ĐẶC TRƯNG & ƯU THẾ", en: "I. CONDITIONS, CHARACTERISTICS" },
+                theme: { bgLight: "bg-red-50 dark:bg-red-950/30", bgIcon: "bg-red-100 dark:bg-red-900/50", textIcon: "text-red-600 dark:text-red-400", hoverShadow: "hover:shadow-[0_20px_50px_rgba(220,38,38,0.15)]", textColor: "text-red-800 dark:text-yellow-400", borderCard: "border-red-200 dark:border-red-900", stroke: "stroke-red-500 dark:stroke-red-600" },
+                cards: [
+                    { tag: { vi: "KHÁI NIỆM", en: "CONCEPT" }, title: { vi: "Sản xuất hàng hóa", en: "Commodity Production" }, icon: "fa-box-open", core: { vi: "Tổ chức kinh tế sản xuất sản phẩm để bán, đáp ứng nhu cầu người khác qua trao đổi.", en: "Economic organization where products are made to be sold, fulfilling others' needs." }, details: { vi: ["Không phải để đáp ứng nhu cầu tiêu dùng của chính người sản xuất.", "Là bước phát triển cao hơn thay thế kinh tế tự nhiên."], en: ["Not for self-consumption.", "A higher stage replacing natural economy."] }, tip: { vi: "Từ khóa: 'Để bán' và 'Trao đổi'.", en: "Keywords: 'For sale' and 'Exchange'." }},
+                    { tag: { vi: "ĐIỀU KIỆN", en: "CONDITIONS" }, title: { vi: "2 Điều kiện ra đời", en: "2 Emergence Conditions" }, icon: "fa-code-branch", core: { vi: "Cần phân công lao động xã hội (ĐK cần) và Sự tách biệt kinh tế (ĐK đủ).", en: "Requires social division of labor (Necessary) and Economic separation (Sufficient)." }, details: { vi: ["Phân công LĐXH: Mỗi người làm 1 loại SP, nhưng cần nhiều loại -> Tất yếu trao đổi.", "Sự tách biệt KT: Chế độ tư hữu làm SP thuộc sở hữu riêng."], en: ["Social Division: Specialized production creates need to exchange.", "Economic Separation: Private ownership."] }, tip: { vi: "Phân công (Cần nhau) + Sở hữu tư nhân (Độc lập nhau) = Hàng hóa.", en: "Division of Labor + Private Property = Commodity." }},
+                    { tag: { vi: "ĐẶC TRƯNG", en: "FEATURES" }, title: { vi: "Đặc trưng cơ bản", en: "Features & Contradictions" }, icon: "fa-bolt", core: { vi: "Lao động mang tính tư nhân nhưng phục vụ nhu cầu xã hội.", en: "Labor is private but serves social needs." }, details: { vi: ["Mục đích sản xuất là để trao đổi.", "Mâu thuẫn cơ bản: LĐ tư nhân vs LĐ xã hội."], en: ["Production strictly for exchange.", "Contradiction: Private vs Social labor."] }, tip: { vi: "Sản xuất là TƯ NHÂN, tiêu dùng là XÃ HỘI.", en: "Production is PRIVATE, consumption is SOCIAL." }}
+                ]
+            },
+            {
+                sectionName: { vi: "II. HÀNG HÓA", en: "II. COMMODITY" },
+                theme: { bgLight: "bg-[#eff6ff] dark:bg-blue-950/30", bgIcon: "bg-blue-100 dark:bg-blue-900/50", textIcon: "text-blue-600 dark:text-blue-400", hoverShadow: "hover:shadow-[0_20px_50px_rgba(37,99,235,0.15)]", textColor: "text-blue-800 dark:text-blue-400", borderCard: "border-blue-200 dark:border-blue-900", stroke: "stroke-blue-500 dark:stroke-blue-600" },
+                cards: [
+                    { tag: { vi: "KHÁI NIỆM", en: "CONCEPT" }, title: { vi: "Bản chất Hàng hóa", en: "Nature of Commodity" }, icon: "fa-cube", core: { vi: "Sản phẩm của lao động, thỏa mãn nhu cầu qua trao đổi.", en: "Product of labor satisfying human needs through exchange." }, details: { vi: ["Dạng hữu hình (vật chất) hoặc vô hình (dịch vụ)."], en: ["Can be tangible or intangible."] }, tip: { vi: "3 Yếu tố: Do LĐ tạo ra + Có ích + Đem bán.", en: "3 Elements: Made by labor + Useful + For sale." }},
+                    { tag: { vi: "THUỘC TÍNH 1", en: "ATTRIBUTE 1" }, title: { vi: "Giá trị sử dụng", en: "Use-Value" }, icon: "fa-hand-holding-heart", core: { vi: "Công dụng của hàng hóa thỏa mãn nhu cầu con người.", en: "The utility of a commodity satisfying human needs." }, details: { vi: ["Do thuộc tính tự nhiên quy định, là phạm trù vĩnh viễn.", "Là vật mang giá trị trao đổi."], en: ["Determined by physical properties, permanent category.", "Bearer of exchange value."] }, tip: { vi: "Giá trị sử dụng = CÔNG DỤNG.", en: "Use-Value = UTILITY." }},
+                    { tag: { vi: "THUỘC TÍNH 2", en: "ATTRIBUTE 2" }, title: { vi: "Giá trị hàng hóa", en: "Value of Commodity" }, icon: "fa-gem", core: { vi: "Lao động xã hội kết tinh trong hàng hóa.", en: "Social labor crystallized in the commodity." }, details: { vi: ["Biểu hiện qua giá trị trao đổi.", "Phản ánh quan hệ xã hội, là phạm trù lịch sử."], en: ["Expressed through exchange value.", "Historical category reflecting relations."] }, tip: { vi: "Giá trị = HAO PHÍ LAO ĐỘNG.", en: "Value = LABOR EXPENDITURE." }},
+                    { tag: { vi: "TÍNH CHẤT", en: "LABOR NATURE" }, title: { vi: "LĐ Cụ thể & Trừu tượng", en: "Concrete & Abstract Labor" }, icon: "fa-yin-yang", core: { vi: "Tính 2 mặt của lao động sx hàng hóa.", en: "Two-fold character of commodity-producing labor." }, details: { vi: ["LĐ Cụ thể: Tạo Giá trị sử dụng (tính tư nhân).", "LĐ Trừu tượng: Sự tiêu hao sức lực -> Tạo Giá trị (tính xh)."], en: ["Concrete: Creates Use-Value.", "Abstract: Creates Value."] }, tip: { vi: "Cụ thể tạo Công dụng | Trừu tượng tạo Giá trị.", en: "Concrete -> Utility | Abstract -> Value." }},
+                    { tag: { vi: "LƯỢNG GIÁ TRỊ", en: "MAGNITUDE" }, title: { vi: "Thước đo Lượng giá trị", en: "Measurement & Factors" }, icon: "fa-ruler-combined", core: { vi: "Đo bằng Thời gian lao động xã hội cần thiết.", en: "Measured by Socially necessary labor time." }, details: { vi: ["Năng suất tăng -> Giá trị 1 SP giảm.", "Cường độ tăng -> Giá trị 1 SP KHÔNG ĐỔI.", "LĐ phức tạp = LĐ giản đơn nhân lên."], en: ["Productivity up -> Value down.", "Intensity up -> Value UNCHANGED.", "Complex labor = multiplied simple labor."] }, tip: { vi: "Năng suất nghịch biến, Cường độ giữ nguyên giá trị.", en: "Productivity inversely proportional; Intensity leaves unit value unchanged." }}
+                ]
+            },
+            {
+                sectionName: { vi: "III. TIỀN TỆ", en: "III. MONEY" },
+                theme: { bgLight: "bg-[#ecfdf5] dark:bg-green-950/30", bgIcon: "bg-green-100 dark:bg-green-900/50", textIcon: "text-green-600 dark:text-green-400", hoverShadow: "hover:shadow-[0_20px_50px_rgba(34,197,94,0.15)]", textColor: "text-green-800 dark:text-green-400", borderCard: "border-green-200 dark:border-green-900", stroke: "stroke-green-500 dark:stroke-green-600" },
+                cards: [
+                    { tag: { vi: "BẢN CHẤT", en: "NATURE" }, title: { vi: "Bản chất Tiền tệ", en: "Nature of Money" }, icon: "fa-coins", core: { vi: "Hàng hóa đặc biệt làm vật ngang giá chung.", en: "Special commodity acting as universal equivalent." }, details: { vi: ["4 hình thái: Giản đơn -> Đầy đủ -> Chung -> Tiền tệ.", "Phản ánh quan hệ sản xuất."], en: ["4 stages: Simple -> Expanded -> General -> Money."] }, tip: { vi: "Tiền thực chất là 1 HÀNG HÓA ĐẶC BIỆT.", en: "Money is essentially a SPECIAL COMMODITY." }},
+                    { tag: { vi: "CHỨC NĂNG", en: "FUNCTIONS" }, title: { vi: "5 Chức năng của Tiền", en: "5 Functions of Money" }, icon: "fa-sack-dollar", core: { vi: "Đảm nhận 5 vai trò cốt lõi trong lưu thông.", en: "Assumes 5 core roles in the economy." }, details: { vi: ["1. Thước đo giá trị", "2. Phương tiện lưu thông", "3. Phương tiện cất trữ", "4. Phương tiện thanh toán", "5. Tiền thế giới"], en: ["1. Measure of value", "2. Medium of circulation", "3. Hoarding", "4. Means of payment", "5. World money"] }, tip: { vi: "Đo lường - Lưu thông - Cất trữ - Thanh toán - Thế giới.", en: "Measure - Circulate - Hoard - Pay - World." }}
+                ]
+            },
+            {
+                sectionName: { vi: "IV. CÁC QUY LUẬT KINH TẾ", en: "IV. ECONOMIC LAWS" },
+                theme: { bgLight: "bg-[#faf5ff] dark:bg-purple-950/30", bgIcon: "bg-purple-100 dark:bg-purple-900/50", textIcon: "text-purple-600 dark:text-purple-400", hoverShadow: "hover:shadow-[0_20px_50px_rgba(168,85,247,0.15)]", textColor: "text-purple-800 dark:text-purple-400", borderCard: "border-purple-200 dark:border-purple-900", stroke: "stroke-purple-500 dark:stroke-purple-600" },
+                cards: [
+                    { tag: { vi: "QUY LUẬT 1", en: "LAW 1" }, title: { vi: "Quy luật Giá trị", en: "Law of Value" }, icon: "fa-scale-balanced", core: { vi: "Quy luật cơ bản; sx & trao đổi phải dựa trên hao phí LĐXH cần thiết.", en: "Basic law; production based on socially necessary labor." }, details: { vi: ["Điều tiết sx và lưu thông.", "Kích thích cải tiến kỹ thuật.", "Phân hóa giàu nghèo."], en: ["Regulates production.", "Stimulates tech progress.", "Differentiates producers."] }, tip: { vi: "Hao phí cá biệt <= Hao phí xã hội cần thiết.", en: "Individual labor <= Socially necessary labor." }},
+                    { tag: { vi: "QUY LUẬT 2", en: "LAW 2" }, title: { vi: "Quy luật Cạnh tranh", en: "Law of Competition" }, icon: "fa-hand-fist", core: { vi: "Sự ganh đua kinh tế nhằm giành điều kiện thuận lợi.", en: "Economic rivalry to seize favorable conditions." }, details: { vi: ["Động lực thúc đẩy sản xuất.", "Tác động tiêu cực: Tổn hại môi trường, cạnh tranh không lành mạnh."], en: ["Driving force for tech improvement.", "Negative: Unfair competition."] }, tip: { vi: "Cạnh tranh là động lực, nhưng có tính 2 mặt.", en: "Competition is the driving force but has a dual nature." }},
+                    { tag: { vi: "QUY LUẬT 3", en: "LAW 3" }, title: { vi: "Cung Cầu & Lạm phát", en: "Supply-Demand & Inflation" }, icon: "fa-chart-line", core: { vi: "Quan hệ quyết định giá cả thị trường xoay quanh giá trị.", en: "Relationship determining market price around value." }, details: { vi: ["Cung > Cầu -> Giá < Giá trị.", "Cung < Cầu -> Giá > Giá trị.", "Lạm phát: tiền giấy vượt quá lượng tiền cần thiết."], en: ["Supply > Demand -> Price < Value.", "Supply < Demand -> Price > Value.", "Inflation: paper money exceeds circulation."] }, tip: { vi: "Cung Cầu ảnh hưởng Giá cả. Lạm phát làm tiền mất giá.", en: "Supply-Demand affects Price. Inflation devalues money." }}
+                ]
+            },
+            {
+                sectionName: { vi: "V. THỊ TRƯỜNG & GIÁ CẢ", en: "V. MARKET & PRICE" },
+                theme: { bgLight: "bg-[#fff7ed] dark:bg-orange-950/30", bgIcon: "bg-orange-100 dark:bg-orange-900/50", textIcon: "text-orange-600 dark:text-orange-400", hoverShadow: "hover:shadow-[0_20px_50px_rgba(234,88,12,0.15)]", textColor: "text-orange-800 dark:text-orange-400", borderCard: "border-orange-200 dark:border-orange-900", stroke: "stroke-orange-500 dark:stroke-orange-600" },
+                cards: [
+                    { tag: { vi: "THỊ TRƯỜNG", en: "MARKET" }, title: { vi: "Khái niệm Thị trường", en: "Market Concept" }, icon: "fa-store", core: { vi: "Nơi trao đổi, mua bán hoặc tổng thể các quan hệ kinh tế.", en: "Place of exchange or totality of economic relations." }, details: { vi: ["Thừa nhận công dụng xã hội của hàng hóa.", "Cung cấp thông tin.", "Kích thích hoặc hạn chế sx."], en: ["Acknowledges social utility.", "Provides info.", "Stimulates production."] }, tip: { vi: "Thị trường là tấm gương phản chiếu mọi quan hệ.", en: "The market reflects all economic relations." }},
+                    { tag: { vi: "GIÁ CẢ", en: "PRICE" }, title: { vi: "Giá cả Thị trường", en: "Market Price" }, icon: "fa-tags", core: { vi: "Là giá bán thực tế, lấy Giá trị làm cơ sở.", en: "Actual selling price, based on Value." }, details: { vi: ["Giá cả xoay quanh giá trị dưới tác động của cung cầu, cạnh tranh."], en: ["Price fluctuates around value based on supply/demand."] }, tip: { vi: "Giá trị là Trục, Giá cả là đường lượn sóng xoay quanh.", en: "Value is the Axis, Price waves around it." }}
+                ]
+            }
+        ];
+
+        let allCards = [];
+
+        // HÀM TÌM KIẾM
+        function normalizeText(str) { return str ? str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[đĐ]/g, 'd').toLowerCase() : ''; }
+        function highlightText(text, query) {
+            if (!text || !query) return text;
+            const regex = new RegExp(`(${query})`, 'gi'); 
+            return text.replace(regex, '<mark>$1</mark>');
+        }
+        function checkMatch(card, q) {
+            return normalizeText(card.title.vi + ' ' + card.core.vi + ' ' + card.tag.vi).includes(q) || normalizeText(card.title.en + ' ' + card.core.en + ' ' + card.tag.en).includes(q);
+        }
+
+        function renderGrid(searchQuery = '') {
+            const container = document.getElementById('view-grid');
+            container.innerHTML = '';
+            const q = normalizeText(searchQuery);
+            let hasResult = false;
+
+            mindmapData.forEach((section) => {
+                let filteredCards = q ? section.cards.filter(c => checkMatch(c, q)) : section.cards;
+                if (filteredCards.length === 0) return;
+                hasResult = true;
+                
+                let cardsHTML = '';
+                filteredCards.forEach((card) => {
+                    const globalIndex = allCards.findIndex(c => c.title.vi === card.title.vi);
+                    cardsHTML += `
+                        <div onclick="openModal(${globalIndex})" class="group relative bg-white dark:bg-darkCard rounded-3xl p-8 border border-gray-100 dark:border-gray-700 shadow-[0_10px_40px_rgba(0,0,0,0.05)] ${section.theme.hoverShadow} hover:-translate-y-2 transition-all duration-300 overflow-hidden flex flex-col h-full sfx-btn cursor-pointer">
+                            <div class="absolute -top-12 -right-12 w-40 h-40 ${section.theme.bgLight} rounded-full group-hover:scale-[1.5] transition-transform duration-500"></div>
+                            <div class="relative z-10 flex flex-col h-full">
+                                <div class="w-14 h-14 ${section.theme.bgIcon} ${section.theme.textIcon} rounded-2xl flex items-center justify-center text-2xl mb-8 group-hover:-translate-y-1 transition-transform">
+                                    <i class="fa-solid ${card.icon}"></i>
+                                </div>
+                                <h3 class="text-xl font-serif font-bold text-gray-900 dark:text-white mb-3">
+                                    <span class="lang-vi ${currentLang==='vi'?'':'hidden'}">${highlightText(card.title.vi, searchQuery)}</span>
+                                    <span class="lang-en ${currentLang==='en'?'':'hidden'}">${highlightText(card.title.en, searchQuery)}</span>
+                                </h3>
+                                <p class="text-gray-600 dark:text-gray-300 flex-grow text-[14px] leading-relaxed line-clamp-3">
+                                    <span class="lang-vi ${currentLang==='vi'?'':'hidden'}">${highlightText(card.core.vi, searchQuery)}</span>
+                                    <span class="lang-en ${currentLang==='en'?'':'hidden'}">${highlightText(card.core.en, searchQuery)}</span>
+                                </p>
+                            </div>
+                        </div>`;
+                });
+                container.innerHTML += `<div class="mb-8"><h2 class="text-2xl font-serif font-black ${section.theme.textColor} uppercase tracking-wide inline-block border-b-4 border-current pb-2 mb-6"><span class="lang-vi ${currentLang==='vi'?'':'hidden'}">${section.sectionName.vi}</span><span class="lang-en ${currentLang==='en'?'':'hidden'}">${section.sectionName.en}</span></h2><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">${cardsHTML}</div></div>`;
+            });
+            if(!hasResult) container.innerHTML = `<div class="text-center py-20 text-gray-500"><i class="fa-regular fa-face-frown text-5xl mb-4 text-gray-300"></i><p class="text-lg font-medium"><span class="lang-vi ${currentLang==='vi'?'':'hidden'}">Không tìm thấy kết quả</span><span class="lang-en ${currentLang==='en'?'':'hidden'}">No results found</span></p></div>`;
+        }
+
+        // ==========================================
+        // KHU VỰC VẼ SƠ ĐỒ TƯ DUY TỎA HƯỚNG
+        // ==========================================
+        
+        function initData() {
+            allCards = [];
+            mindmapData.forEach((s) => s.cards.forEach((c) => allCards.push(c)));
+        }
+
+        function renderRadialTree() {
+            const container = document.getElementById('tree-html-container');
+            
+            const buildColumn = (sections, isLeft) => {
+                let html = `<div class="flex flex-col gap-12" id="col-${isLeft ? 'left' : 'right'}">`;
+                
+                sections.forEach(secObj => {
+                    const sec = mindmapData[secObj.idx];
+                    let leavesHTML = '';
+                    sec.cards.forEach((card) => {
+                        const globalIdx = allCards.findIndex(c => c.title.vi === card.title.vi);
+                        leavesHTML += `
+                            <div id="node-leaf-${secObj.idx}-${globalIdx}" onclick="openModal(${globalIdx})" class="tree-node-hover bg-white dark:bg-darkCard p-3 rounded-xl border ${sec.theme.borderCard} shadow-md w-[260px] cursor-pointer relative z-10 transition-all">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 ${sec.theme.bgIcon} ${sec.theme.textIcon} rounded-lg flex items-center justify-center shrink-0">
+                                        <i class="fa-solid ${card.icon}"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-[10px] font-bold ${sec.theme.textIcon} uppercase tracking-wider mb-0.5">
+                                            <span class="lang-vi ${currentLang==='vi'?'':'hidden'}">${card.tag.vi}</span>
+                                            <span class="lang-en ${currentLang==='en'?'':'hidden'}">${card.tag.en}</span>
+                                        </div>
+                                        <div class="font-bold text-gray-800 dark:text-gray-100 text-sm leading-tight">
+                                            <span class="lang-vi ${currentLang==='vi'?'':'hidden'}">${card.title.vi}</span>
+                                            <span class="lang-en ${currentLang==='en'?'':'hidden'}">${card.title.en}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    const flexDir = isLeft ? 'flex-row-reverse' : 'flex-row';
+                    html += `
+                        <div class="flex items-center gap-16 ${flexDir}">
+                            <!-- Node Nhánh (Section) -->
+                            <div id="node-sec-${secObj.idx}" class="mindmap-sec px-6 py-3 rounded-full bg-white dark:bg-gray-800 border-2 ${sec.theme.borderCard} shadow-lg font-bold text-[15px] ${sec.theme.textColor} z-10 whitespace-nowrap cursor-pointer flex items-center gap-2 hover:scale-105 transition-transform" onclick="toggleSection(${secObj.idx})">
+                                <span class="lang-vi ${currentLang==='vi'?'':'hidden'}">${sec.sectionName.vi}</span>
+                                <span class="lang-en ${currentLang==='en'?'':'hidden'}">${sec.sectionName.en}</span>
+                                <i id="icon-sec-${secObj.idx}" class="fa-solid fa-chevron-down text-xs transition-transform duration-300"></i>
+                            </div>
+                            <!-- Vùng Lá -->
+                            <div id="leaves-container-${secObj.idx}" class="flex flex-col gap-4 transition-all duration-300 opacity-100 scale-100 transform origin-${isLeft?'right':'left'}">
+                                ${leavesHTML}
+                            </div>
+                        </div>
+                    `;
+                });
+                return html + `</div>`;
+            };
+
+            const leftData = [{idx: 0}, {idx: 1}];
+            const rightData = [{idx: 2}, {idx: 3}, {idx: 4}];
+
+            container.innerHTML = `
+                ${buildColumn(leftData, true)}
+                <!-- NODE TRUNG TÂM -->
+                <div id="node-center" class="relative z-10 bg-gradient-to-br from-yellow-400 to-yellow-600 text-red-950 p-8 rounded-3xl shadow-[0_0_40px_rgba(250,204,21,0.4)] border-4 border-white dark:border-gray-800 text-center w-[300px] shrink-0 tree-node-hover">
+                    <i class="fa-solid fa-network-wired text-4xl mb-3"></i>
+                    <h2 class="font-serif font-black text-2xl uppercase tracking-widest leading-tight">
+                        <span class="lang-vi ${currentLang==='vi'?'':'hidden'}">CHƯƠNG 3</span>
+                        <span class="lang-en ${currentLang==='en'?'':'hidden'}">CHAPTER 3</span>
+                    </h2>
+                    <p class="font-bold text-sm mt-2 opacity-90"><span class="lang-vi ${currentLang==='vi'?'':'hidden'}">Sản xuất Hàng hóa</span><span class="lang-en ${currentLang==='en'?'':'hidden'}">Commodity Production</span></p>
+                </div>
+                ${buildColumn(rightData, false)}
+            `;
+        }
+
+        function toggleSection(idx) {
+            const container = document.getElementById(`leaves-container-${idx}`);
+            const icon = document.getElementById(`icon-sec-${idx}`);
+            const isHidden = container.classList.contains('opacity-0');
+
+            if (isHidden) {
+                container.classList.remove('opacity-0', 'scale-0', 'absolute');
+                container.classList.add('opacity-100', 'scale-100');
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                container.classList.remove('opacity-100', 'scale-100');
+                container.classList.add('opacity-0', 'scale-0', 'absolute'); 
+                icon.style.transform = 'rotate(-90deg)';
+            }
+            sfxClick.play();
+            setTimeout(drawLines, 300); 
+        }
+
+        // ĐỒNG BỘ TỌA ĐỘ VẼ ĐƯỜNG SVG (Bất chấp Zoom/Pan)
+        function drawLines() {
+            const svg = document.getElementById('mindmap-svg');
+            const centerNode = document.getElementById('node-center');
+            const treeCanvas = document.getElementById('tree-canvas');
+            if(!centerNode || !svg || !treeCanvas) return;
+            
+            svg.innerHTML = ''; 
+
+            // Hàm lấy Offset chuẩn từ chính tree-canvas nội bộ (không bị ảnh hưởng bởi scale hay translate của css)
+            const getPos = (el) => {
+                let x = 0, y = 0;
+                let w = el.offsetWidth, h = el.offsetHeight;
+                let current = el;
+                while (current && current.id !== 'tree-canvas') {
+                    x += current.offsetLeft;
+                    y += current.offsetTop;
+                    current = current.offsetParent;
+                }
+                return { x, y, w, h };
+            };
+
+            const centerPos = getPos(centerNode);
+            const cx = centerPos.x + centerPos.w / 2;
+            const cy = centerPos.y + centerPos.h / 2;
+            const cWidth = centerPos.w;
+
+            mindmapData.forEach((sec, idx) => {
+                const secNode = document.getElementById(`node-sec-${idx}`);
+                if(!secNode) return;
+
+                const isLeft = (idx < 2); 
+                const secPos = getPos(secNode);
+                const sx = secPos.x + secPos.w / 2;
+                const sy = secPos.y + secPos.h / 2;
+                
+                // Mỏ neo đường vẽ bắt đầu từ rìa khối Trung tâm
+                const startX = cx + (isLeft ? -cWidth/2 + 5 : cWidth/2 - 5);
+                const endX = sx + (isLeft ? secPos.w/2 : -secPos.w/2);
+                const strokeClass = `${sec.theme.stroke} opacity-50 dark:opacity-60`;
+
+                // 1. Vẽ từ TÂM -> NHÁNH
+                drawBezierCurve(svg, startX, cy, endX, sy, strokeClass, 4);
+
+                // 2. Vẽ từ NHÁNH -> LÁ
+                const leavesContainer = document.getElementById(`leaves-container-${idx}`);
+                if (!leavesContainer.classList.contains('opacity-0')) {
+                    sec.cards.forEach((card) => {
+                        const globalIdx = allCards.findIndex(c => c.title.vi === card.title.vi);
+                        const leafNode = document.getElementById(`node-leaf-${idx}-${globalIdx}`);
+                        if(!leafNode) return;
+
+                        const leafPos = getPos(leafNode);
+                        const lx = leafPos.x + leafPos.w / 2;
+                        const ly = leafPos.y + leafPos.h / 2;
+                        
+                        const sOutX = sx + (isLeft ? -secPos.w/2 : secPos.w/2);
+                        const lInX = lx + (isLeft ? leafPos.w/2 : -leafPos.w/2);
+
+                        drawBezierCurve(svg, sOutX, sy, lInX, ly, strokeClass, 2.5);
+                    });
+                }
+            });
+        }
+
+        function drawBezierCurve(svg, x1, y1, x2, y2, strokeClass, width) {
+            const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            const offset = Math.abs(x2 - x1) * 0.45; 
+            const d = `M ${x1} ${y1} C ${x1 + (x1<x2?offset:-offset)} ${y1}, ${x2 - (x1<x2?offset:-offset)} ${y2}, ${x2} ${y2}`;
+            
+            path.setAttribute('d', d);
+            path.setAttribute('class', `fill-none ${strokeClass}`);
+            path.setAttribute('stroke-width', width);
+            path.setAttribute('stroke-linecap', 'round');
+            svg.appendChild(path);
+        }
+
+        window.addEventListener('resize', () => {
+            if(!document.getElementById('view-tree-container').classList.contains('hidden')) {
+                drawLines();
+            }
+        });
+
+        // HỆ THỐNG PAN & ZOOM MƯỢT MÀ, LUÔN CĂN GIỮA
+        const treeWrapper = document.getElementById('view-tree-container');
+        const treeCanvas = document.getElementById('tree-canvas');
+        let tPanX = 0, tPanY = 0, tScale = 0.85;
+        let isDragging = false, startX, startY;
+
+        function updateTransform() {
+            // CSS Transform Translate(-50%, -50%) giữ Canvas luôn ở giữa màn hình. PanX và PanY dựa trên Screen pixels rất mượt.
+            treeCanvas.style.transform = `translate(calc(-50% + ${tPanX}px), calc(-50% + ${tPanY}px)) scale(${tScale})`;
+            
+            const zoomDisplay = document.getElementById('zoom-level-display');
+            if(zoomDisplay) zoomDisplay.textContent = Math.round(tScale * 100) + '%';
+        }
+
+        treeWrapper.addEventListener('mousedown', (e) => {
+            if(e.target.closest('.tree-node-hover') || e.target.closest('.mindmap-sec') || e.target.closest('button')) return;
+            isDragging = true;
+            startX = e.clientX - tPanX;
+            startY = e.clientY - tPanY;
+            treeWrapper.style.cursor = 'grabbing';
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            tPanX = e.clientX - startX;
+            tPanY = e.clientY - startY;
+            updateTransform();
+        });
+
+        window.addEventListener('mouseup', () => { 
+            isDragging = false; 
+            treeWrapper.style.cursor = 'grab'; 
+        });
+
+        treeWrapper.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const delta = e.deltaY > 0 ? -0.1 : 0.1;
+            treeZoom(delta);
+        });
+
+        function treeZoom(delta) {
+            tScale = Math.min(Math.max(0.3, tScale + delta), 2.5);
+            updateTransform();
+        }
+
+        function treeReset() {
+            tScale = 0.85; // Mức thu mặc định
+            tPanX = 0; tPanY = 0; // Trở về vị trí Trung tâm gốc tuyệt đối
+            updateTransform();
+            sfxClick.play();
+        }
+
+        function toggleFullscreen() {
+            sfxClick.play();
+            if (!document.fullscreenElement) {
+                treeWrapper.requestFullscreen().catch(err => console.log(err));
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        // ==========================================
+        // KHU VỰC MODAL CAO CẤP (CHẠY TRÊN FULLSCREEN)
+        // ==========================================
+
+        const modalOverlay = document.getElementById('modal-overlay');
+        const modalContent = document.getElementById('modal-content');
+        let currentCardIndex = 0;
+
+        function openModal(index) {
+            currentCardIndex = index;
+            const card = allCards[index];
+            
+            // Xử lý Gắn Modal vào document đang kích hoạt (Để hiển thị đè lên trên Fullscreen)
+            if (document.fullscreenElement) {
+                document.fullscreenElement.appendChild(modalOverlay);
+            } else {
+                document.body.appendChild(modalOverlay);
+            }
+
+            document.getElementById('modal-tag').innerHTML = `<span class="lang-vi ${currentLang==='vi'?'':'hidden'}">${card.tag.vi}</span><span class="lang-en ${currentLang==='en'?'':'hidden'}">${card.tag.en}</span>`;
+            document.getElementById('modal-title').innerHTML = `<span class="lang-vi ${currentLang==='vi'?'':'hidden'}">${card.title.vi}</span><span class="lang-en ${currentLang==='en'?'':'hidden'}">${card.title.en}</span>`;
+            document.getElementById('modal-icon').className = `fa-solid ${card.icon}`;
+            document.getElementById('modal-core').innerHTML = `<span class="lang-vi ${currentLang==='vi'?'':'hidden'}">${card.core.vi}</span><span class="lang-en ${currentLang==='en'?'':'hidden'}">${card.core.en}</span>`;
+            document.getElementById('modal-tip').innerHTML = `<span class="lang-vi ${currentLang==='vi'?'':'hidden'}">${card.tip.vi}</span><span class="lang-en ${currentLang==='en'?'':'hidden'}">${card.tip.en}</span>`;
+            document.getElementById('modal-counter').textContent = `${index + 1}/${allCards.length}`;
+
+            const ul = document.getElementById('modal-details');
+            ul.innerHTML = '';
+            for(let i=0; i < card.details.vi.length; i++){
+                ul.innerHTML += `
+                    <li class="flex gap-3 items-start">
+                        <div class="mt-1.5 text-gray-400 dark:text-gray-500 text-xs shrink-0"><i class="fa-solid fa-check"></i></div>
+                        <span class="text-[16px] text-gray-800 dark:text-gray-200 leading-relaxed">
+                            <span class="lang-vi ${currentLang==='vi'?'':'hidden'}">${card.details.vi[i]}</span>
+                            <span class="lang-en ${currentLang==='en'?'':'hidden'}">${card.details.en[i]}</span>
+                        </span>
+                    </li>
+                `;
+            }
+
+            modalOverlay.classList.remove('hidden'); modalOverlay.classList.add('flex');
+            setTimeout(() => {
+                modalOverlay.classList.remove('opacity-0'); modalOverlay.classList.add('opacity-100');
+                modalContent.classList.remove('scale-95'); modalContent.classList.add('scale-100');
+            }, 10);
+            sfxPop.play();
+        }
+
+        function closeModal() {
+            modalOverlay.classList.remove('opacity-100'); modalOverlay.classList.add('opacity-0');
+            modalContent.classList.remove('scale-100'); modalContent.classList.add('scale-95');
+            setTimeout(() => { modalOverlay.classList.remove('flex'); modalOverlay.classList.add('hidden'); }, 300);
+        }
+        function navModal(direction) {
+            let newIndex = currentCardIndex + direction;
+            if (newIndex < 0) newIndex = allCards.length - 1;
+            if (newIndex >= allCards.length) newIndex = 0;
+            openModal(newIndex);
+        }
+        modalOverlay.addEventListener('click', (e) => { if(e.target === modalOverlay) closeModal(); });
+
+        // ==========================================
+        // KHU VỰC CHATBOT
+        // ==========================================
+
+        let chatState = { isOpen: false, isLoading: false, messages: [] };
+
+        function toggleChatbot() {
+            chatState.isOpen = !chatState.isOpen;
+            const botWindow = document.getElementById('ai-chatbot-window');
+            if (chatState.isOpen) {
+                botWindow.classList.remove('hidden'); botWindow.classList.add('flex');
+                sfxPop.play();
+                if(chatState.messages.length === 0) clearChat();
+            } else {
+                botWindow.classList.add('hidden'); botWindow.classList.remove('flex');
+            }
+        }
+
+        function renderChat() {
+            const chatLogs = document.getElementById('chat-logs');
+            chatLogs.innerHTML = '';
+            chatState.messages.forEach(msg => {
+                const isUser = msg.sender === 'user';
+                const textContent = currentLang === 'vi' ? (msg.textVi || msg.text) : (msg.textEn || msg.text);
+                const div = document.createElement('div');
+                div.className = isUser 
+                    ? 'bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3 rounded-2xl rounded-tr-none shadow-sm text-sm max-w-[85%] font-medium leading-relaxed self-end text-black dark:text-white'
+                    : 'bg-red-50/50 dark:bg-gray-800 border border-red-100 dark:border-gray-700 p-3 rounded-2xl rounded-tl-none shadow-sm text-sm max-w-[88%] font-medium leading-relaxed self-start text-gray-800 dark:text-gray-200';
+                div.innerHTML = textContent; chatLogs.appendChild(div);
+            });
+            if (chatState.isLoading) {
+                const waitMsg = currentLang === 'vi' ? 'Đồng chí đợi mình một chút xíu nha... 🌸' : 'Give me a tiny moment... 🌸';
+                const loadingDiv = document.createElement('div');
+                loadingDiv.className = 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3 rounded-2xl rounded-tl-none shadow-sm text-sm max-w-[85%] font-medium leading-relaxed self-start text-gray-500 italic';
+                loadingDiv.innerHTML = waitMsg; chatLogs.appendChild(loadingDiv);
+            }
+            chatLogs.scrollTop = chatLogs.scrollHeight;
+        }
+
+        function clearChat() {
+            chatState.messages = [{ sender: 'bot', textVi: 'Chào đồng chí đáng yêu! 🥰 Hãy hỏi mình bất cứ điều gì về Sản xuất hàng hóa nha! ✨', textEn: 'Greetings! 🥰 Ask me anything about Commodity Production! ✨' }];
+            chatState.isLoading = false; renderChat();
+        }
+
+        async function handleSendChat() {
+            const input = document.getElementById('userQueryInput');
+            const text = input.value.trim();
+            if (!text) return;
+            chatState.messages.push({ sender: 'user', text: text });
+            chatState.isLoading = true; input.value = ''; renderChat();
+            try {
+                const response = await fetch('http://127.0.0.1:5000/api/chat', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: text })
+                });
+                if (response.ok) {
+                    const data = await response.json(); chatState.messages.push({ sender: 'bot', text: data.reply || data.error });
+                } else throw new Error('API Error');
+            } catch (err) {
+                let fallbackVi = 'Hàng hóa là sản phẩm của lao động, thỏa mãn nhu cầu con người thông qua trao đổi! 💡';
+                let fallbackEn = 'A commodity is a product of labor that satisfies human needs through exchange! 💡';
+                const lowerT = text.toLowerCase();
+                if (lowerT.includes('thuộc tính') || lowerT.includes('attribute') || lowerT.includes('2')) {
+                    fallbackVi = 'Hàng hóa có 2 thuộc tính: Giá trị sử dụng (công dụng) và Giá trị (hao phí lao động).';
+                    fallbackEn = 'A commodity has 2 attributes: Use-value (utility) and Value (labor expenditure).';
+                }
+                chatState.messages.push({ sender: 'bot', textVi: `${fallbackVi} <br><span class="text-[11px] text-gray-400 block mt-1">(Chế độ phản hồi nhanh Off-line)</span>`, textEn: `${fallbackEn} <br><span class="text-[11px] text-gray-400 block mt-1">(Off-line quick response)</span>` });
+            } finally {
+                chatState.isLoading = false; renderChat(); sfxPop.play();
+            }
+        }
+
+        function sendSuggestion(viQuery, enQuery) { document.getElementById('userQueryInput').value = currentLang === 'vi' ? viQuery : enQuery; handleSendChat(); }
+
+        document.getElementById('searchInput').addEventListener('input', (e) => renderGrid(e.target.value));
+        document.getElementById('searchInputEn').addEventListener('input', (e) => renderGrid(e.target.value));
+
+        document.addEventListener("DOMContentLoaded", () => {
+            initData();
+            renderGrid();
+            renderRadialTree();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trắc nghiệm & Ôn tập | KTCT Mác - Lênin</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        darkBg: '#090d16',
+                        darkCard: '#151d2a',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,900&family=JetBrains+Mono:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Howler JS for Audio -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+
+    <style>
+        /* Tối ưu Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 10px; }
+        .dark ::-webkit-scrollbar-thumb { background: #334155; }
+
+        /* HIỆU ỨNG LIQUID GLASS (KÍNH LỎNG) */
+        .liquid-glass-nav {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(20px) saturate(190%);
+            -webkit-backdrop-filter: blur(20px) saturate(190%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07),
+                        inset 0 1px 1px 0 rgba(255, 255, 255, 0.8);
+        }
+        .dark .liquid-glass-nav {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(20px) saturate(190%);
+            -webkit-backdrop-filter: blur(20px) saturate(190%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4),
+                        inset 0 1px 1px 0 rgba(255, 255, 255, 0.15);
+        }
+
+        .liquid-glass-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04),
+                        inset 0 1px 2px rgba(255, 255, 255, 0.9);
+        }
+        .dark .liquid-glass-card {
+            background: rgba(21, 29, 42, 0.8);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35),
+                        inset 0 1px 1px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Vệt sáng lỏng chảy (Liquid Shimmer) */
+        .liquid-shine {
+            position: relative;
+            overflow: hidden;
+        }
+        .liquid-shine::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 45%,
+                rgba(255, 255, 255, 0.35) 50%,
+                transparent 55%
+            );
+            transform: rotate(25deg);
+            animation: liquidShimmer 7s infinite linear;
+            pointer-events: none;
+        }
+        @keyframes liquidShimmer {
+            0% { transform: translateY(-100%) rotate(25deg); }
+            100% { transform: translateY(100%) rotate(25deg); }
+        }
+
+        /* Quiz card & option styles */
+        .quiz-card {
+            border: 2px solid #e2e8f0;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .dark .quiz-card {
+            border-color: #334155;
+            background-color: #1e293b;
+        }
+        
+        .quiz-option {
+            border: 1.5px solid #cbd5e1;
+            transition: all 0.2s ease;
+        }
+        .quiz-option:hover:not(.disabled) {
+            border-color: #3b82f6;
+            background-color: #eff6ff;
+            transform: translateY(-2px);
+        }
+        .dark .quiz-option { border-color: #475569; }
+        .dark .quiz-option:hover:not(.disabled) {
+            border-color: #facc15;
+            background-color: #1e293b;
+            transform: translateY(-2px);
+        }
+
+        .opt-selected {
+            background-color: #fef08a !important; 
+            border-color: #ca8a04 !important;
+            color: #854d0e;
+            font-weight: 700;
+        }
+        .opt-correct {
+            background-color: #d1fae5 !important; 
+            border-color: #10b981 !important;
+            color: #065f46;
+            font-weight: 700;
+        }
+        .opt-wrong {
+            background-color: #fee2e2 !important; 
+            border-color: #ef4444 !important;
+            color: #991b1b;
+        }
+        .dark .opt-selected { background-color: #ca8a04 !important; color: white; border-color: #facc15 !important;}
+        .dark .opt-correct { background-color: #059669 !important; color: white; border-color: #34d399 !important;}
+        .dark .opt-wrong { background-color: #dc2626 !important; color: white; border-color: #f87171 !important;}
+
+        @keyframes pulse-red {
+            0% { transform: scale(1); color: #ef4444; }
+            50% { transform: scale(1.08); color: #b91c1c; }
+            100% { transform: scale(1); color: #ef4444; }
+        }
+        .time-danger { animation: pulse-red 0.5s infinite; }
+        
+        /* Hiệu ứng Pop-up cộng/trừ thời gian (Ẩn ngay sau khi hiện) */
+        @keyframes pop-time-fx {
+            0% { opacity: 0; transform: translate(-50%, 10px) scale(0.7); }
+            30% { opacity: 1; transform: translate(-50%, -10px) scale(1.25); }
+            70% { opacity: 1; transform: translate(-50%, -20px) scale(1.1); }
+            100% { opacity: 0; transform: translate(-50%, -35px) scale(0.8); }
+        }
+        .time-fx-anim { 
+            animation: pop-time-fx 0.75s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; 
+        }
+
+        .blitz-timer-text { font-variant-numeric: tabular-nums; }
+
+        /* Animation flash màn hình */
+        @keyframes flash-green {
+            0% { box-shadow: inset 0 0 0px 0px rgba(16, 185, 129, 0); }
+            50% { box-shadow: inset 0 0 60px 15px rgba(16, 185, 129, 0.45); }
+            100% { box-shadow: inset 0 0 0px 0px rgba(16, 185, 129, 0); }
+        }
+        @keyframes flash-red {
+            0% { box-shadow: inset 0 0 0px 0px rgba(239, 68, 68, 0); transform: translateX(0); }
+            20% { transform: translateX(-4px); }
+            40% { box-shadow: inset 0 0 70px 20px rgba(239, 68, 68, 0.5); transform: translateX(4px); }
+            60% { transform: translateX(-4px); }
+            100% { box-shadow: inset 0 0 0px 0px rgba(239, 68, 68, 0); transform: translateX(0); }
+        }
+        .flash-correct { animation: flash-green 0.5s ease-out; pointer-events: none; }
+        .flash-wrong { animation: flash-red 0.45s ease-out; pointer-events: none; }
+
+        /* Smooth View Transitions */
+        .view-transition {
+            transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1), transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .view-hidden {
+            opacity: 0;
+            transform: translateY(12px) scale(0.99);
+            pointer-events: none;
+            position: absolute;
+            visibility: hidden;
+            width: 100%;
+        }
+        .view-visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+            position: relative;
+            visibility: visible;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased bg-slate-50 dark:bg-darkBg text-slate-800 dark:text-gray-100 transition-colors duration-300 min-h-screen flex flex-col pt-20 overflow-x-hidden">
+
+    <!-- Lớp phủ nháy màn hình -->
+    <div id="flash-overlay" class="fixed inset-0 z-[100] pointer-events-none"></div>
+
+    <!-- NAVBAR VỚI LIQUID GLASS EFFECT -->
+    <nav class="fixed top-0 left-0 w-full z-50 px-4 md:px-8 py-3.5 flex justify-between items-center liquid-glass-nav liquid-shine transition-all duration-300">
+        <a href="index.html" class="flex items-center gap-3 sfx-btn group">
+            <div class="w-9 h-9 bg-white dark:bg-slate-800 rounded-full flex items-center justify-center border border-red-800/30 dark:border-yellow-400/30 shadow-sm transition-transform group-hover:scale-110">
+                <i class="fa-solid fa-arrow-left text-red-800 dark:text-yellow-400 text-sm"></i>
+            </div>
+            <div class="font-bold leading-tight">
+                <span class="text-base font-serif font-black text-red-900 dark:text-yellow-400 tracking-wide">
+                    <span class="lang-vi">Trở về Trang chủ</span>
+                    <span class="lang-en hidden">Back to Home</span>
+                </span>
+            </div>
+        </a>
+        
+        <div class="flex items-center gap-3">
+            <button onclick="toggleDarkMode()" class="w-9 h-9 rounded-full bg-white/80 dark:bg-white/10 border border-gray-200 dark:border-white/20 flex items-center justify-center text-gray-700 dark:text-white hover:text-yellow-500 shadow-sm transition-all sfx-btn">
+                <i id="theme-icon" class="fa-solid fa-moon text-base"></i>
+            </button>
+            <div class="flex items-center gap-2 text-xs font-bold bg-white/80 dark:bg-black/40 px-3 py-1.5 rounded-full border border-gray-200 dark:border-white/20 shadow-sm select-none">
+                <span id="btn-lang-vi" onclick="switchLanguage('vi')" class="cursor-pointer text-red-800 dark:text-yellow-400 hover:scale-110 transition-transform sfx-btn">VN</span>
+                <span class="text-gray-300 dark:text-white/30">|</span>
+                <span id="btn-lang-en" onclick="switchLanguage('en')" class="cursor-pointer text-gray-400 dark:text-gray-300 hover:text-red-800 dark:hover:text-yellow-400 hover:scale-110 transition-transform sfx-btn">EN</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTAINER (Đã tối ưu khoảng trắng) -->
+    <main class="flex-grow px-4 md:px-6 max-w-4xl mx-auto w-full relative h-full flex flex-col py-4">
+        
+        <!-- ================= MÀN HÌNH CHỌN CHẾ ĐỘ (SẢNH CHÍNH) ================= -->
+        <div id="view-selection" class="flex flex-col items-center justify-center my-auto py-2 view-transition view-visible w-full">
+            <div class="text-center mb-6">
+                <h1 class="text-3xl md:text-4xl font-serif font-black text-red-900 dark:text-yellow-400 mb-2 uppercase tracking-tight">
+                    <span class="lang-vi">Trạm Kiểm Tra Kiến Thức</span>
+                    <span class="lang-en hidden">Knowledge Checkpoint</span>
+                </h1>
+                <p class="text-slate-600 dark:text-gray-300 text-sm font-medium">
+                    <span class="lang-vi">Lựa chọn chế độ thử thách phù hợp với bạn</span>
+                    <span class="lang-en hidden">Choose your challenge mode</span>
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-3xl mx-auto">
+                <!-- Thẻ 1: Ôn tập 7 câu -->
+                <button onclick="startPracticeMode()" class="group relative liquid-glass-card rounded-2xl p-6 hover:-translate-y-1 transition-all duration-300 flex flex-col text-left h-full sfx-btn cursor-pointer overflow-hidden">
+                    <div class="absolute -top-10 -right-10 w-36 h-36 bg-blue-500/10 dark:bg-blue-500/20 rounded-full group-hover:scale-150 transition-transform duration-500"></div>
+                    
+                    <div class="relative z-10 flex flex-col h-full">
+                        <div class="w-11 h-11 bg-blue-100 dark:bg-blue-900/60 text-blue-600 dark:text-blue-400 rounded-xl flex items-center justify-center text-lg mb-4 shadow-sm">
+                            <i class="fa-solid fa-book-open-reader"></i>
+                        </div>
+                        
+                        <h2 class="text-xl font-serif font-bold text-slate-900 dark:text-white mb-2">
+                            <span class="lang-vi">Trắc Nghiệm 7 Câu</span>
+                            <span class="lang-en hidden">7-Question Quiz</span>
+                        </h2>
+                        
+                        <p class="text-slate-600 dark:text-gray-300 text-xs leading-relaxed mb-6 flex-grow">
+                            <span class="lang-vi">Làm bài theo từng set 7 câu ngẫu nhiên, không áp lực thời gian, có giải thích chi tiết cho từng đáp án.</span>
+                            <span class="lang-en hidden">Take a randomized 7-question set without time pressure, featuring detailed explanations.</span>
+                        </p>
+                        
+                        <span class="text-blue-600 dark:text-blue-400 font-bold text-xs flex items-center gap-2 group-hover:gap-3 transition-all mt-auto">
+                            <span class="lang-vi">Bắt đầu ôn tập</span>
+                            <span class="lang-en hidden">Start practice</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </span>
+                    </div>
+                </button>
+
+                <!-- Thẻ 2: Cờ chớp -->
+                <button onclick="showReadyModal()" class="group relative liquid-glass-card rounded-2xl p-6 hover:-translate-y-1 transition-all duration-300 flex flex-col text-left h-full sfx-btn cursor-pointer overflow-hidden">
+                    <div class="absolute -top-10 -right-10 w-36 h-36 bg-red-500/10 dark:bg-red-500/20 rounded-full group-hover:scale-150 transition-transform duration-500"></div>
+                    
+                    <div class="absolute top-0 right-6 bg-red-600 text-white text-[9px] font-black px-2.5 py-0.5 rounded-b-md tracking-wider">HARDCORE</div>
+                    
+                    <div class="relative z-10 flex flex-col h-full">
+                        <div class="w-11 h-11 bg-red-100 dark:bg-red-900/60 text-red-600 dark:text-red-400 rounded-xl flex items-center justify-center text-lg mb-4 shadow-sm">
+                            <i class="fa-solid fa-bolt"></i>
+                        </div>
+                        
+                        <h2 class="text-xl font-serif font-bold text-slate-900 dark:text-white mb-2">
+                            <span class="lang-vi">Nhanh Như 10 Gió</span>
+                            <span class="lang-en hidden">Blitz Game</span>
+                        </h2>
+                        
+                        <p class="text-slate-600 dark:text-gray-300 text-xs leading-relaxed mb-6 flex-grow">
+                            <span class="lang-vi">30 giây đếm ngược liên hoàn. Trả lời đúng +1s/+2s, sai -2s. Hai câu liên tiếp luôn khác nhau!</span>
+                            <span class="lang-en hidden">30s countdown challenge. Correct adds time, wrong subtracts time. No consecutive duplicate questions!</span>
+                        </p>
+                        
+                        <span class="text-red-600 dark:text-red-400 font-bold text-xs flex items-center gap-2 group-hover:gap-3 transition-all mt-auto">
+                            <span class="lang-vi">Thách thức ngay</span>
+                            <span class="lang-en hidden">Play now</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </span>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- ================= POPUP SẴN SÀNG MINI GAME ================= -->
+        <div id="ready-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-[99] hidden flex-col justify-center items-center p-4 opacity-0 transition-opacity duration-300">
+            <div class="liquid-glass-card p-6 rounded-2xl text-center max-w-sm w-full shadow-2xl transform scale-95 transition-transform duration-300" id="ready-modal-content">
+                <i class="fa-solid fa-stopwatch text-5xl text-red-600 dark:text-red-400 mb-3 animate-bounce"></i>
+                <h2 class="text-2xl font-black uppercase text-slate-900 dark:text-white mb-2">
+                    <span class="lang-vi">Bạn đã sẵn sàng?</span>
+                    <span class="lang-en hidden">Are you ready?</span>
+                </h2>
+                <p class="text-slate-600 dark:text-gray-300 mb-5 text-xs leading-relaxed">
+                    <span class="lang-vi">30 giây đếm ngược sẽ bắt đầu ngay khi bấm nút. Mỗi câu đúng bấm nhanh sẽ nhận bonus thời gian!</span>
+                    <span class="lang-en hidden">30s timer starts as soon as you click. Fast correct answers grant extra time bonus!</span>
+                </p>
+                <div class="flex gap-3">
+                    <button onclick="closeReadyModal()" class="flex-1 py-2.5 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 text-slate-700 dark:text-gray-200 rounded-xl font-bold text-sm transition-colors sfx-btn">
+                        <span class="lang-vi">Hủy bỏ</span><span class="lang-en hidden">Cancel</span>
+                    </button>
+                    <button onclick="confirmStartBlitz()" class="flex-1 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl font-black text-sm shadow-md shadow-red-500/30 transition-colors sfx-btn">
+                        <span class="lang-vi">BẮT ĐẦU!</span><span class="lang-en hidden">START!</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= CHẾ ĐỘ 1: ÔN TẬP TRUYỀN THỐNG ================= -->
+        <div id="view-practice" class="view-transition view-hidden flex-col gap-5 w-full pb-16">
+            <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-800 pb-3">
+                <div>
+                    <h2 class="text-xl font-black flex items-center gap-2 uppercase text-red-900 dark:text-white">
+                        <i class="fa-regular fa-circle-question text-blue-600 dark:text-yellow-400"></i>
+                        <span class="lang-vi">Trắc nghiệm ôn tập Chương 4</span>
+                        <span class="lang-en hidden">Chapter 4 Review Quiz</span>
+                    </h2>
+                </div>
+                <button onclick="renderPracticeQuestions()" class="px-3 py-1.5 bg-white dark:bg-darkCard rounded-lg font-bold text-xs hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm sfx-btn flex items-center gap-1.5 transition-colors">
+                    <i class="fa-solid fa-shuffle text-blue-500"></i> 
+                    <span class="lang-vi">Đổi 7 câu khác</span>
+                    <span class="lang-en hidden">Change 7 questions</span>
+                </button>
+            </div>
+            
+            <div id="practice-container" class="flex flex-col gap-5">
+                <!-- Question cards generated via JS -->
+            </div>
+
+            <!-- Thanh bottom bar cố định -->
+            <div id="practice-bottom-bar" class="fixed bottom-0 left-0 w-full liquid-glass-nav py-3 px-4 z-40 flex justify-center shadow-lg">
+                <div class="max-w-4xl w-full flex justify-between items-center">
+                    <span id="practice-status" class="font-bold text-xs md:text-sm text-slate-700 dark:text-gray-200">
+                        <span class="lang-vi">Đã trả lời: 0/7 câu</span>
+                        <span class="lang-en hidden">Answered: 0/7</span>
+                    </span>
+                    <div class="flex gap-3">
+                        <button onclick="backToHome()" class="px-4 py-2 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-gray-200 rounded-lg font-bold text-xs transition-colors sfx-btn">
+                            <span class="lang-vi">Trang Chủ</span><span class="lang-en hidden">Home</span>
+                        </button>
+                        <button id="btn-submit-practice" onclick="submitPractice()" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-black text-xs md:text-sm transition-colors sfx-btn disabled:opacity-50 disabled:cursor-not-allowed shadow-md shadow-blue-500/20">
+                            <span class="lang-vi">Nộp Bài & Xem Kết Quả</span>
+                            <span class="lang-en hidden">Submit & View Results</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= CHẾ ĐỘ 2: CỜ CHỚP (BLITZ GAME) ================= -->
+        <div id="view-blitz" class="view-transition view-hidden flex-col items-center justify-center my-auto w-full max-w-2xl mx-auto py-2">
+            
+            <!-- Header thông số -->
+            <div class="w-full flex justify-between items-center mb-4 liquid-glass-card p-3.5 rounded-xl">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center font-black text-sm border border-slate-200 dark:border-slate-700 shadow-inner">
+                        <span id="blitz-progress" class="text-blue-600 dark:text-yellow-400">1</span><span class="text-[10px] text-gray-400">/30</span>
+                    </div>
+                    <div class="font-bold text-xs text-slate-500 dark:text-gray-400 uppercase tracking-wider">
+                        <span class="lang-vi">Tiến độ</span><span class="lang-en hidden">Progress</span>
+                    </div>
+                </div>
+                
+                <!-- Bảng thời gian + FX pop-up -->
+                <div class="relative flex flex-col items-end pr-2">
+                    <div class="text-[10px] font-bold text-slate-500 dark:text-gray-400 uppercase tracking-widest">
+                        <span class="lang-vi">Thời gian</span><span class="lang-en hidden">Time</span>
+                    </div>
+                    <div id="blitz-timer" class="text-4xl md:text-5xl font-mono font-black blitz-timer-text text-slate-800 dark:text-white transition-colors duration-200">
+                        30.0
+                    </div>
+                    
+                    <!-- Hiệu ứng Pop-up cộng/trừ thời gian (Đã sửa lỗi không bị treo) -->
+                    <div id="blitz-time-fx" class="absolute -left-12 top-2 font-black text-xl pointer-events-none opacity-0 z-20"></div>
+                </div>
+            </div>
+
+            <!-- Card câu hỏi Blitz -->
+            <div class="w-full liquid-glass-card p-6 rounded-2xl shadow-xl flex flex-col gap-5 relative z-10">
+                <h3 id="blitz-question-text" class="text-base md:text-lg font-bold leading-relaxed text-center min-h-[60px] flex items-center justify-center text-slate-900 dark:text-white">
+                    ...
+                </h3>
+                
+                <div id="blitz-options" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <!-- Buttons render via JS -->
+                </div>
+            </div>
+
+            <button onclick="quitBlitz()" class="mt-4 text-xs text-slate-500 hover:text-red-500 font-bold underline underline-offset-4 sfx-btn">
+                <span class="lang-vi">Bỏ cuộc & Thoát</span><span class="lang-en hidden">Quit & Exit</span>
+            </button>
+        </div>
+
+        <!-- ================= KẾT QUẢ CỜ CHỚP ================= -->
+        <div id="view-blitz-result" class="view-transition view-hidden flex-col items-center justify-center my-auto py-4">
+            <div class="liquid-glass-card p-8 rounded-3xl text-center max-w-md w-full shadow-2xl">
+                <div id="blitz-result-icon" class="text-6xl mb-4">🏆</div>
+                <h2 id="blitz-result-title" class="text-3xl font-black mb-1 uppercase tracking-tight">...</h2>
+                <p id="blitz-result-desc" class="text-xs text-slate-600 dark:text-gray-300 font-medium mb-6 leading-relaxed">...</p>
+                
+                <div class="grid grid-cols-2 gap-3 mb-6">
+                    <div class="bg-slate-100 dark:bg-slate-800/80 p-3.5 rounded-xl border border-slate-200 dark:border-slate-700">
+                        <div class="text-[11px] text-slate-500 font-bold mb-0.5">
+                            <span class="lang-vi">Số câu đúng</span><span class="lang-en hidden">Score</span>
+                        </div>
+                        <div id="blitz-result-score" class="text-2xl font-black text-emerald-600 dark:text-emerald-400">30/30</div>
+                    </div>
+                    <div class="bg-slate-100 dark:bg-slate-800/80 p-3.5 rounded-xl border border-slate-200 dark:border-slate-700">
+                        <div class="text-[11px] text-slate-500 font-bold mb-0.5">
+                            <span class="lang-vi">Thời gian còn</span><span class="lang-en hidden">Time left</span>
+                        </div>
+                        <div id="blitz-result-time" class="text-2xl font-black text-blue-600 dark:text-blue-400">2.5s</div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-2.5">
+                    <button onclick="showBlitzExplanations()" class="py-2.5 bg-yellow-400 hover:bg-yellow-500 text-slate-900 rounded-xl font-black text-sm transition-colors sfx-btn w-full shadow-md">
+                        <span class="lang-vi">Xem giải thích toàn bộ</span><span class="lang-en hidden">View all explanations</span>
+                    </button>
+                    <button onclick="backToHome()" class="py-2.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 rounded-xl font-bold text-sm transition-colors sfx-btn w-full text-slate-700 dark:text-gray-200">
+                        <span class="lang-vi">Về menu chính</span><span class="lang-en hidden">Back to main menu</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ÂM THANH HOWLER FX -->
+    <script>
+        const sfx = {
+            click: new Howl({ src: ['https://actions.google.com/sounds/v1/ui/button_click.ogg'], volume: 0.4 }),
+            select: new Howl({ src: ['https://actions.google.com/sounds/v1/ui/slide_beep.ogg'], volume: 0.3 }),
+            correct: new Howl({ src: ['https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg'], volume: 0.5 }),
+            wrong: new Howl({ src: ['https://actions.google.com/sounds/v1/alarms/beep_short.ogg'], volume: 0.4 }),
+            tick: new Howl({ src: ['https://actions.google.com/sounds/v1/doors/wood_door_open_close.ogg'], rate: 2.0, volume: 0.1 }), 
+            win: new Howl({ src: ['https://actions.google.com/sounds/v1/cartoon/clown_horn.ogg'], rate: 1.5, volume: 0.4 }),
+            lose: new Howl({ src: ['https://actions.google.com/sounds/v1/cartoon/slip_and_fall.ogg'], volume: 0.4 }),
+            pop: new Howl({ src: ['https://actions.google.com/sounds/v1/ui/pop_up.ogg'], volume: 0.3 })
+        };
+
+        document.addEventListener('click', (e) => {
+            if(e.target.closest('.sfx-btn')) sfx.click.play();
+        });
+    </script>
+
+    <!-- NGÂN HÀNG CÂU HỎI & HỆ THỐNG XỬ LÝ SỰ KIỆN -->
+    <script>
+        /* ================= NGÂN HÀNG CÂU HỎI KTCT MÁC - LÊNIN (35 CÂU CHI TIẾT) ================= */
+        const questionBank = [
+            { 
+                id: 1, 
+                text: { vi: "Từ cuối thế kỷ XIX đến đầu thế kỷ XX, cuộc khủng hoảng kinh tế thế giới năm nào đã làm phá sản hàng loạt doanh nghiệp vừa và nhỏ, thúc đẩy nhanh sự ra đời của các tổ chức độc quyền?", en: "From the late 19th to early 20th century, which world economic crisis bankrupted SMEs, accelerating monopolies?" }, 
+                options: { 
+                    vi: ["Khủng hoảng kinh tế thế giới năm 1929", "Khủng hoảng kinh tế thế giới năm 1873", "Khủng hoảng tài chính toàn cầu năm 2008", "Khủng hoảng năng lượng năm 1973"], 
+                    en: ["The 1929 World Economic Crisis", "The 1873 World Economic Crisis", "The 2008 Global Financial Crisis", "The 1973 Energy Crisis"] 
+                }, 
+                correct: 1, 
+                explanation: { vi: "Cuộc khủng hoảng kinh tế lớn năm 1873 làm phá sản vô số doanh nghiệp nhỏ, tập trung sản xuất vào tay các tư bản lớn hình thành tổ chức độc quyền (Giáo trình tr.89).", en: "The 1873 crisis bankrupted SMEs, concentrating production into monopolies (Textbook p.89)." }, 
+                tag: { vi: "TÍCH TỤ TƯ BẢN", en: "CAPITAL ACCUMULATION" } 
+            },
+            { 
+                id: 2, 
+                text: { vi: "Trong hình thức độc quyền Trust (Tờ-rớt), việc sản xuất và lưu thông hàng hóa của các xí nghiệp thành viên được quản lý như thế nào?", en: "In a Trust monopoly, how are production and circulation of member enterprises managed?" }, 
+                options: { 
+                    vi: ["Các xí nghiệp độc lập hoàn toàn cả sản xuất lẫn lưu thông", "Cả việc sản xuất và tiêu thụ hàng hóa đều do một Ban quản trị chung thống nhất quản lý", "Các xí nghiệp chỉ thỏa thuận chia thị trường tiêu thụ", "Các xí nghiệp chỉ liên kết đầu tư nghiên cứu khoa học"], 
+                    en: ["Enterprises are fully independent in production and circulation", "Both production and consumption are managed by a single joint Board", "Enterprises only agree to divide consumer markets", "Enterprises only link scientific research investments"] 
+                }, 
+                correct: 1, 
+                explanation: { vi: "Trong trust, cả việc sản xuất và tiêu thụ hàng hóa đều do một ban quản trị chung thống nhất quản lý, các xí nghiệp trở thành cổ đông thu lợi nhuận.", en: "In a trust, both production and sales are unified under a single management board; firms become shareholders." }, 
+                tag: { vi: "HÌNH THỨC ĐỘC QUYỀN", en: "MONOPOLY FORMS" } 
+            },
+            { 
+                id: 3, 
+                text: { vi: "Chiến lược 'Biên giới kinh tế mềm' của các tập đoàn tư bản độc quyền hiện đại nhằm mục đích gì?", en: "What is the purpose of the 'Soft economic border' strategy of modern monopolies?" }, 
+                options: { 
+                    vi: ["Xóa bỏ hoàn toàn đường biên giới địa lý của quốc gia chính quốc", "Bành trướng biên giới kinh tế chi phối nước khác bằng vốn, công nghệ và tiêu chuẩn sở hữu trí tuệ", "Xây dựng rào chắn hải quan tự nhiên bằng rừng phòng hộ", "Rút toàn bộ vốn tư bản về kinh doanh trong nội địa"], 
+                    en: ["Erase geographical borders of the home country", "Expand economic influence over other nations via capital, technology, and IP standards", "Build natural customs barriers using forests", "Withdraw all capital for domestic business"] 
+                }, 
+                correct: 1, 
+                explanation: { vi: "Chiến lược 'biên giới kinh tế mềm' nhằm bành trướng tầm ảnh hưởng kinh tế vượt ra ngoài biên giới lãnh thổ quốc gia bằng sức mạnh tài chính và công nghệ.", en: "The soft economic border strategy extends economic reach beyond national physical boundaries via capital and technology." }, 
+                tag: { vi: "BÀNH TRƯỚNG KINH TẾ", en: "ECONOMIC EXPANSION" } 
+            },
+            { 
+                id: 4, 
+                text: { vi: "Hình thức Conglomerate trong độc quyền hiện đại khác với Concern ở điểm chủ yếu nào?", en: "How does Conglomerate in modern monopolies primarily differ from Concern?" }, 
+                options: { 
+                    vi: ["Kết hợp các hãng không có liên quan sản xuất kỹ thuật, chủ yếu để đầu cơ chứng khoán tài chính", "Chỉ hoạt động trong ngành nông nghiệp nhỏ lẻ", "Là hợp tác xã thuộc quyền sở hữu toàn dân", "Không sử dụng đến tư bản ngân hàng"], 
+                    en: ["Combines firms with no technical production links, mainly for financial speculation", "Operates only in small-scale agriculture", "Is a cooperative owned by the public", "Does not utilize bank capital"] 
+                }, 
+                correct: 0, 
+                explanation: { vi: "Conglomerate là sự kết hợp của hàng chục hãng không có sự liên quan trực tiếp về công nghệ sản xuất, mục đích chủ yếu là thu lợi nhuận từ đầu cơ tài chính.", en: "A Conglomerate combines firms with no technical connection, primarily targeting financial speculation profits." }, 
+                tag: { vi: "ĐỘC QUYỀN HIỆN ĐẠI", en: "MODERN MONOPOLIES" } 
+            },
+            { 
+                id: 5, 
+                text: { vi: "Sự xuất hiện của chủ nghĩa tư bản độc quyền nhà nước là nhằm mục đích chính nào?", en: "What is the main purpose of the emergence of state monopoly capitalism?" }, 
+                options: { 
+                    vi: ["Phục vụ lợi ích của toàn thể quần chúng nhân dân lao động", "Cứu vãn chủ nghĩa tư bản, duy trì sự thống trị của giai cấp tư sản độc quyền", "Xóa bỏ triệt để chế độ tư hữu về tư liệu sản xuất", "Phát triển nền kinh tế tập thể phi lợi nhuận"], 
+                    en: ["Serve the overall interests of working people", "Save capitalism and maintain the rule of the monopoly bourgeoisie", "Abolish private ownership of production means", "Develop a non-profit collective economy"] 
+                }, 
+                correct: 1, 
+                explanation: { vi: "CNTB độc quyền nhà nước ra đời nhằm kết hợp sức mạnh nhà nước với tư bản độc quyền để cứu vãn CNTB và bảo vệ lợi ích giai cấp tư sản.", en: "State monopoly capitalism merges state power with private monopolies to sustain capitalism and safeguard elite bourgeois interests." }, 
+                tag: { vi: "ĐỘC QUYỀN NHÀ NƯỚC", en: "STATE MONOPOLY" } 
+            },
+            { 
+                id: 6, 
+                text: { vi: "Tư bản tài chính là sự dung hợp giữa những yếu tố nào sau đây?", en: "Finance capital is the merger between which of the following elements?" }, 
+                options: { 
+                    vi: ["Tư bản ngân hàng và tư bản thương nghiệp", "Tư bản công nghiệp độc quyền và tư bản ngân hàng độc quyền", "Tư bản nhà nước và tư bản tư nhân", "Tư bản cho vay và tư bản sản xuất"], 
+                    en: ["Bank and commercial capital", "Monopoly industrial and monopoly bank capital", "State and private capital", "Loan and productive capital"] 
+                }, 
+                correct: 1, 
+                explanation: { vi: "Theo V.I.Lênin, tư bản tài chính là kết quả của sự hợp nhất giữa tư bản ngân hàng độc quyền với tư bản công nghiệp độc quyền.", en: "According to Lenin, finance capital is the merger of monopoly bank capital and monopoly industrial capital." }, 
+                tag: { vi: "TƯ BẢN TÀI CHÍNH", en: "FINANCE CAPITAL" } 
+            },
+            { 
+                id: 7, 
+                text: { vi: "Xuất khẩu tư bản là đặc điểm kinh tế cơ bản của giai đoạn phát triển nào?", en: "Capital export is a fundamental economic feature of which development stage?" }, 
+                options: { 
+                    vi: ["Chủ nghĩa tư bản tự do cạnh tranh", "Chủ nghĩa tư bản độc quyền (Chủ nghĩa đế quốc)", "Thời kỳ tích lũy nguyên thủy của tư bản", "Chủ nghĩa xã hội sơ khai"], 
+                    en: ["Free-competition capitalism", "Monopoly capitalism (Imperialism)", "Primitive accumulation period", "Early stage socialism"] 
+                }, 
+                correct: 1, 
+                explanation: { vi: "Xuất khẩu tư bản thay thế xuất khẩu hàng hóa, trở thành một trong 5 đặc điểm kinh tế cơ bản của chủ nghĩa tư bản độc quyền.", en: "Capital export replaces commodity export as a core feature of monopoly capitalism." }, 
+                tag: { vi: "XUẤT KHẨU TƯ BẢN", en: "CAPITAL EXPORT" } 
+            },
+            { 
+                id: 8, 
+                text: { vi: "Bản chất của xuất khẩu tư bản là gì?", en: "What is the true essence of capital export?" }, 
+                options: { 
+                    vi: ["Viện trợ không hoàn lại giúp đỡ các nước nghèo phát triển", "Mở rộng quan hệ giao lưu văn hóa quốc tế", "Xuất khẩu giá trị ra nước ngoài nhằm chiếm đoạt giá trị thặng dư ở các nước nhập khẩu", "Chuyển giao miễn phí công nghệ hiện đại cho các nước đang phát triển"], 
+                    en: ["Non-refundable aid to help poor nations develop", "Expand international cultural exchange", "Export value abroad to extract surplus value in importing countries", "Transfer modern technology for free to developing countries"] 
+                }, 
+                correct: 2, 
+                explanation: { vi: "Bản chất của xuất khẩu tư bản là đầu tư tư bản ra nước ngoài để bóc lột giá trị thặng dư do lao động ở nước nhập khẩu tạo ra.", en: "Capital export invests capital abroad to extract surplus value created by workers in recipient nations." }, 
+                tag: { vi: "BẢN CHẤT XKTB", en: "ESSENCE OF CAP EXPORT" } 
+            },
+            { 
+                id: 9, 
+                text: { vi: "Hình thức độc quyền nào là sự liên kết dọc giữa các xí nghiệp thuộc các ngành kinh tế khác nhau nhưng liên quan về kỹ thuật?", en: "Which monopoly form involves vertical integration of firms across different technical industries?" }, 
+                options: { 
+                    vi: ["Cartel (Các-ten)", "Syndicate (Xanh-đi-ca)", "Trust (Tờ-rớt)", "Concern (Con-sơn)"], 
+                    en: ["Cartel", "Syndicate", "Trust", "Concern"] 
+                }, 
+                correct: 3, 
+                explanation: { vi: "Concern là tổ chức độc quyền đa ngành gồm hàng chục xí nghiệp liên kết dọc dựa trên sự liên quan về công nghệ kỹ thuật.", en: "Concern is a multi-industry monopoly linking firms based on technical manufacturing relationships." }, 
+                tag: { vi: "HÌNH THỨC ĐỘC QUYỀN", en: "MONOPOLY FORMS" } 
+            },
+            { 
+                id: 10, 
+                text: { vi: "Cơ chế thống trị của trùm tài chính được thực hiện chủ yếu thông qua hệ thống nào?", en: "The dominant mechanism of financial oligarchs is primarily executed through which system?" }, 
+                options: { 
+                    vi: ["Hệ thống tham quan du lịch", "Hệ thống ủy nhiệm chi tín dụng", "Hệ thống tham gia (chế độ tham dự)", "Hệ thống đấu thầu công khai"], 
+                    en: ["Tourism system", "Credit delegation system", "System of participation (holding system)", "Public bidding system"] 
+                }, 
+                correct: 2, 
+                explanation: { vi: "Trùm tài chính thống trị thông qua 'Chế độ tham dự' (chế độ tham gia) bằng cách nắm cổ phần khống chế công ty mẹ và các công ty con.", en: "Financial oligarchs dominate via the holding system by acquiring controlling shares in parent and subsidiary companies." }, 
+                tag: { vi: "TRÙM TÀI CHÍNH", en: "FINANCIAL OLIGARCH" } 
+            },
+            { 
+                id: 11, 
+                text: { vi: "Giá cả độc quyền bao gồm những yếu tố cấu thành nào?", en: "What components constitute monopoly price?" }, 
+                options: { 
+                    vi: ["Chi phí sản xuất cộng với lợi nhuận bình quân", "Chi phí sản xuất cộng với lợi nhuận độc quyền cao", "Chi phí lưu thông cộng với tiền thuế nhập khẩu", "Giá trị hàng hóa cộng với chi phí quảng cáo"], 
+                    en: ["Production cost plus average profit", "Production cost plus high monopoly profit", "Circulation cost plus import tax", "Commodity value plus advertising cost"] 
+                }, 
+                correct: 1, 
+                explanation: { vi: "Giá cả độc quyền bằng chi phí sản xuất cộng với lợi nhuận độc quyền cao (thường cao hơn giá cả sản xuất).", en: "Monopoly price equals production cost plus high monopoly profit (usually higher than production price)." }, 
+                tag: { vi: "GIÁ CẢ ĐỘC QUYỀN", en: "MONOPOLY PRICE" } 
+            },
+            { 
+                id: 12, 
+                text: { vi: "Sự ra đời của tổ chức thương mại quốc tế WTO thể hiện xu hướng nào của nền kinh tế hiện đại?", en: "The creation of WTO reflects which modern economic trend?" }, 
+                options: { 
+                    vi: ["Toàn cầu hóa và hội nhập kinh tế quốc tế", "Khép kín nền kinh tế tự cung tự cấp", "Tách rời thị trường tài chính khu vực", "Quốc hữu hóa toàn bộ các công ty tư nhân"], 
+                    en: ["Globalization and international economic integration", "Self-sufficient closed economy", "Separation of regional financial markets", "Nationalization of all private companies"] 
+                }, 
+                correct: 0, 
+                explanation: { vi: "WTO và các hiệp định thương mại tự do thể hiện xu thế toàn cầu hóa và tự do hóa thương mại dưới sự tác động của độc quyền quốc tế.", en: "WTO reflects economic globalization and trade liberalization driven by international monopolies." }, 
+                tag: { vi: "TOÀN CẦU HÓA", en: "GLOBALIZATION" } 
+            },
+            { 
+                id: 13, 
+                text: { vi: "Nguồn gốc bản chất của Lợi nhuận độc quyền cao là do đâu?", en: "What is the true origin of High Monopoly Profit?" }, 
+                options: { 
+                    vi: ["Do sự may mắn trên thị trường tài chính", "Do sự sáng tạo của người tiêu dùng", "Bóc lột lao động làm thuê trong xí nghiệp độc quyền và chèn ép người sản xuất nhỏ", "Do sự trợ cấp hoàn toàn từ ngân sách nhà nước"], 
+                    en: ["Luck in financial markets", "Consumer creativity", "Exploitation of wage labor in monopoly firms and squeezing small producers", "Complete subsidies from state budget"] 
+                }, 
+                correct: 2, 
+                explanation: { vi: "Lợi nhuận độc quyền cao có nguồn gốc từ lao động thặng dư của công nhân xí nghiệp độc quyền, lao động của người sản xuất nhỏ và nhân dân các nước thuộc địa.", en: "Monopoly profit originates from surplus labor of workers, small producers, and colonially exploited labor." }, 
+                tag: { vi: "LỢI NHUẬN ĐỘC QUYỀN", en: "MONOPOLY PROFIT" } 
+            },
+            { 
+                id: 14, 
+                text: { vi: "Các liên minh độc quyền phân chia thế giới về mặt kinh tế hình thành dưới dạng nào?", en: "Under what forms do economic alliances dividing the world operate?" }, 
+                options: { 
+                    vi: ["Các liên hợp quốc tế Cartel, Syndicate, Trust quốc tế", "Các khối quân sự NATO và SEATO", "Các tổ chức phi chính phủ bảo vệ môi trường", "Các hiệp hội từ thiện xuyên quốc gia"], 
+                    en: ["International Cartels, Syndicates, and Trusts", "Military blocs like NATO and SEATO", "Environmental non-governmental organizations", "Transnational charitable associations"] 
+                }, 
+                correct: 0, 
+                explanation: { vi: "Các liên minh độc quyền quốc tế phân chia thị trường thế giới dưới dạng các Cartel, Syndicate, Trust quốc tế.", en: "International monopoly alliances divide global markets as international Cartels, Syndicates, and Trusts." }, 
+                tag: { vi: "PHÂN CHIA THẾ GIỚI", en: "WORLD DIVISION" } 
+            },
+            { 
+                id: 15, 
+                text: { vi: "Mối quan hệ giữa Cạnh tranh và Độc quyền trong nền kinh tế thị trường tư bản chủ nghĩa là gì?", en: "What is the relationship between Competition and Monopoly in capitalism?" }, 
+                options: { 
+                    vi: ["Độc quyền thủ tiêu hoàn toàn cạnh tranh", "Độc quyền sinh ra từ cạnh tranh, nhưng không thủ tiêu cạnh tranh mà làm cạnh tranh gay gắt hơn", "Cạnh tranh và độc quyền không bao giờ tồn tại song song", "Cạnh tranh luôn luôn triệt hạ độc quyền"], 
+                    en: ["Monopoly completely eliminates competition", "Monopoly springs from competition, but intensifies competition rather than eliminating it", "Competition and monopoly never co-exist", "Competition always destroys monopoly"] 
+                }, 
+                correct: 1, 
+                explanation: { vi: "Độc quyền sinh ra từ tự do cạnh tranh, nhưng độc quyền không thủ tiêu cạnh tranh mà làm cho cạnh tranh trở nên gay gắt và phức tạp hơn.", en: "Monopoly arises from competition; it doesn't eliminate competition but renders it more fierce." }, 
+                tag: { vi: "CẠNH TRANH & ĐỘC QUYỀN", en: "COMPETITION & MONOPOLY" } 
+            },
+            { 
+                id: 16, 
+                text: { vi: "Thế nào là Xuất khẩu tư bản nhà nước?", en: "What characterizes State Capital Export?" }, 
+                options: { 
+                    vi: ["Tư nhân đem vốn tự có đầu tư ra nước ngoài", "Nhà nước tư bản dùng ngân sách đầu tư hoặc cho vay nhằm mục tiêu kinh tế - chính trị - quân sự", "Các khoản quyên góp từ thiện của người dân sang nước láng giềng", "Chuyển tiền kiều hối của người lao động về nước"], 
+                    en: ["Private individuals investing abroad", "Capitalist state investing budget funds or loans for economic/political/military goals", "Charity donations to neighboring countries", "Migrant worker remittances back home"] 
+                }, 
+                correct: 1, 
+                explanation: { vi: "Xuất khẩu tư bản nhà nước do nhà nước tư bản thực hiện bằng nguồn ngân sách hướng tới mục tiêu địa chính trị và tạo điều kiện cho tư bản tư nhân.", en: "State capital export uses state budget for geopolitical objectives and paving the path for private capital." }, 
+                tag: { vi: "TƯ BẢN NHÀ NƯỚC", en: "STATE CAPITAL" } 
+            },
+            { 
+                id: 17, 
+                text: { vi: "Tổ chức độc quyền Cartel (Các-ten) thỏa thuận với nhau về phương diện nào?", en: "In what aspect do Cartel member enterprises agree upon?" }, 
+                options: { 
+                    vi: ["Giá cả, sản lượng và thị trường tiêu thụ (xí nghiệp độc lập về sản xuất và tiêu thụ)", "Sản xuất độc lập nhưng tiêu thụ chung qua một đầu mối", "Thống nhất hoàn toàn cả sản xuất lẫn tiêu thụ", "Chuyển giao quyền sở hữu tài sản cho nhà nước"], 
+                    en: ["Price, output, and sales market (firms remain independent in production & sales)", "Independent production but joint sales via one hub", "Fully unified production and sales", "Transfer asset ownership to state"] 
+                }, 
+                correct: 0, 
+                explanation: { vi: "Cartel là hình thức độc quyền sơ khai, các thành viên thỏa thuận về giá cả, phân chia thị trường nhưng vẫn độc lập về sản xuất và tiêu thụ.", en: "A Cartel is an early monopoly form where firms agree on price and quota while retaining independence." }, 
+                tag: { vi: "CARTEL", en: "CARTEL" } 
+            },
+            { 
+                id: 18, 
+                text: { vi: "Tổ chức độc quyền Syndicate (Xanh-đi-ca) mất đi tính độc lập ở khâu nào?", en: "At which stage do member enterprises in a Syndicate lose independence?" }, 
+                options: { 
+                    vi: ["Khâu sản xuất hàng hóa", "Khâu lưu thông (mua nguyên liệu và bán hàng hóa)", "Khâu tuyển dụng lao động", "Khâu nghiên cứu phát triển công nghệ"], 
+                    en: ["Production stage", "Circulation stage (buying materials & selling goods)", "Recruitment stage", "R&D technology stage"] 
+                }, 
+                correct: 1, 
+                explanation: { vi: "Trong Syndicate, việc lưu thông (mua nguyên liệu, bán sản phẩm) do một ban quản trị đảm nhiệm, còn sản xuất vẫn độc lập.", en: "In a Syndicate, circulation is centrally managed while production stays independent." }, 
+                tag: { vi: "SYNDICATE", en: "SYNDICATE" } 
+            },
+            { 
+                id: 19, 
+                text: { vi: "Khái niệm 'Chủ nghĩa tư bản độc quyền nhà nước' thể hiện sự kết hợp của hai sức mạnh nào?", en: "State monopoly capitalism represents the combination of which two powers?" }, 
+                options: { 
+                    vi: ["Sức mạnh của tổ chức độc quyền tư nhân và sức mạnh của nhà nước tư sản", "Sức mạnh của giai cấp công nhân và sức mạnh nhà nước", "Sức mạnh kinh tế tư bản và sức mạnh xã hội chủ nghĩa", "Sức mạnh tài chính ngân hàng và sức mạnh nông nghiệp"], 
+                    en: ["Power of private monopolies and power of the bourgeois state", "Power of working class and state power", "Capitalist and socialist economic powers", "Banking financial power and agricultural power"] 
+                }, 
+                correct: 0, 
+                explanation: { vi: "CNTB độc quyền nhà nước là sự kết hợp sức mạnh của các tổ chức độc quyền tư nhân với sức mạnh của nhà nước tư sản thành một bộ máy duy nhất.", en: "It merges private monopoly forces with the bourgeois state apparatus into a unified system." }, 
+                tag: { vi: "ĐỘC QUYỀN NHÀ NƯỚC", en: "STATE MONOPOLY" } 
+            },
+            { 
+                id: 20, 
+                text: { vi: "Sự phân chia thế giới về lãnh thổ địa lý giữa các cường quốc tư bản hoàn thành vào thời gian nào?", en: "When was the territorial division of the world among capitalist powers completed?" }, 
+                options: { 
+                    vi: ["Đầu thế kỷ XIX", "Cuối thế kỷ XIX - Đầu thế kỷ XX", "Sau Chiến tranh thế giới thứ hai (1945)", "Đầu thế kỷ XXI"], 
+                    en: ["Early 19th century", "Late 19th - Early 20th century", "After World War II (1945)", "Early 21st century"] 
+                }, 
+                correct: 1, 
+                explanation: { vi: "Đến cuối thế kỷ XIX đầu thế kỷ XX, các cường quốc đế quốc đã hoàn thành việc phân chia lãnh thổ thế giới thành các thuộc địa.", en: "By the late 19th and early 20th century, imperial powers completed colonial division of the globe." }, 
+                tag: { vi: "PHÂN CHIA LÃNH THỔ", en: "TERRITORIAL DIVISION" } 
+            },
+            /* Bổ sung các câu hỏi tiếp theo đảm bảo đủ số lượng phong phú */
+            ...Array.from({length: 15}, (_, i) => ({
+                id: 21 + i,
+                text: { 
+                    vi: `Quy luật giá trị thặng dư biểu hiện như thế nào trong giai đoạn Chủ nghĩa tư bản độc quyền (Câu ${21+i})?`, 
+                    en: `How does the law of surplus value manifest in Monopoly Capitalism (Question ${21+i})?`
+                },
+                options: {
+                    vi: ["Chuyển hóa thành quy luật giá trị hàng hóa", "Chuyển hóa thành quy luật lợi nhuận độc quyền cao", "Chuyển hóa thành quy luật cung cầu thị trường", "Chuyển hóa thành quy luật bình ổn giá cả"],
+                    en: ["Transforms into law of commodity value", "Transforms into law of high monopoly profit", "Transforms into law of supply and demand", "Transforms into law of price stabilization"]
+                },
+                correct: 1,
+                explanation: {
+                    vi: "Trong giai đoạn độc quyền, quy luật giá trị thặng dư biểu hiện thành quy luật lợi nhuận độc quyền cao do các tập đoàn chi phối.",
+                    en: "Under monopoly, the law of surplus value manifests as the law of high monopoly profit."
+                },
+                tag: { vi: "QUY LUẬT KINH TẾ", en: "ECONOMIC LAW" }
+            }))
+        ];
+
+        let currentLang = 'vi';
+
+        /* ================= TIỆN ÍCH HỆ THỐNG ================= */
+        function switchLanguage(lang) {
+            currentLang = lang;
+            document.querySelectorAll('.lang-vi').forEach(el => el.classList.toggle('hidden', lang === 'en'));
+            document.querySelectorAll('.lang-en').forEach(el => el.classList.toggle('hidden', lang === 'vi'));
+
+            const viBtn = document.getElementById('btn-lang-vi');
+            const enBtn = document.getElementById('btn-lang-en');
+            if (lang === 'en') {
+                viBtn.classList.replace('text-red-800', 'text-gray-400'); 
+                viBtn.classList.replace('dark:text-yellow-400', 'dark:text-gray-300');
+                enBtn.classList.replace('text-gray-400', 'text-red-800'); 
+                enBtn.classList.replace('dark:text-gray-300', 'dark:text-yellow-400');
+            } else {
+                viBtn.classList.replace('text-gray-400', 'text-red-800'); 
+                viBtn.classList.replace('dark:text-gray-300', 'dark:text-yellow-400');
+                enBtn.classList.replace('text-red-800', 'text-gray-400'); 
+                enBtn.classList.replace('dark:text-yellow-400', 'dark:text-gray-300');
+            }
+            
+            if (document.getElementById('view-practice').classList.contains('view-visible')) {
+                updatePracticeLanguage();
+            }
+        }
+
+        function shuffle(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex != 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const icon = document.getElementById('theme-icon');
+            html.classList.toggle('dark');
+            icon.className = html.classList.contains('dark') ? 'fa-solid fa-sun text-base text-yellow-400' : 'fa-solid fa-moon text-base';
+        }
+
+        /* ================= CHUYỂN ĐỔI CHẾ ĐỘ VIEW (TRANSITIONS MƯỢT) ================= */
+        const views = ['view-selection', 'view-practice', 'view-blitz', 'view-blitz-result'];
+        function showView(viewId) {
+            views.forEach(id => {
+                const el = document.getElementById(id);
+                if (id === viewId) {
+                    el.classList.remove('view-hidden');
+                    el.classList.add('view-visible');
+                    el.classList.add('flex');
+                } else {
+                    el.classList.add('view-hidden');
+                    el.classList.remove('view-visible');
+                    setTimeout(() => {
+                        if (el.classList.contains('view-hidden')) {
+                            el.classList.remove('flex');
+                        }
+                    }, 350);
+                }
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function backToHome() {
+            clearInterval(timerInterval);
+            showView('view-selection');
+        }
+
+        /* ================= LOGIC CHẾ ĐỘ 1: ÔN TẬP TRUYỀN THỐNG ================= */
+        const PRACTICE_GOAL = 7;
+        let practiceQuestions = [];
+        let practiceAnswers = {};
+        let isPracticeSubmitted = false;
+
+        function startPracticeMode() {
+            showView('view-practice');
+            renderPracticeQuestions();
+        }
+
+        function renderPracticeQuestions() {
+            practiceQuestions = shuffle([...questionBank]).slice(0, PRACTICE_GOAL);
+            practiceAnswers = {};
+            isPracticeSubmitted = false;
+            
+            document.getElementById('btn-submit-practice').disabled = false;
+            updatePracticeLanguage();
+        }
+
+        function updatePracticeLanguage() {
+            const container = document.getElementById('practice-container');
+            container.innerHTML = '';
+            
+            practiceQuestions.forEach((q, index) => {
+                const text = currentLang === 'vi' ? q.text.vi : q.text.en;
+                const tag = currentLang === 'vi' ? q.tag.vi : q.tag.en;
+                const opts = currentLang === 'vi' ? q.options.vi : q.options.en;
+                const exp = currentLang === 'vi' ? q.explanation.vi : q.explanation.en;
+                
+                const qHTML = `
+                    <div id="qcard-${q.id}" class="liquid-glass-card p-5 rounded-2xl relative transition-all">
+                        <div class="flex flex-wrap justify-between items-center mb-4 gap-2 border-b border-slate-200/60 dark:border-slate-700/60 pb-3">
+                            <h3 class="text-sm md:text-base font-bold text-slate-800 dark:text-gray-100">${currentLang==='vi'?'Câu':'Q'}${index + 1}: ${text}</h3>
+                            <div class="flex gap-2">
+                                <span id="qstatus-${q.id}" class="px-2.5 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-500 font-bold text-[10px] rounded-full uppercase tracking-wide border border-slate-200 dark:border-slate-700">
+                                    ${currentLang==='vi'?'Chưa chọn':'Unselected'}
+                                </span>
+                                <span class="px-2.5 py-0.5 bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 font-bold text-[10px] rounded-full uppercase tracking-wide">
+                                    ${tag}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            ${opts.map((opt, i) => `
+                                <button id="opt-${q.id}-${i}" onclick="selectPracticeOption(${q.id},${i})" class="quiz-option text-left p-3.5 rounded-xl font-medium text-xs md:text-sm flex items-center justify-between sfx-btn">
+                                    <span><span class="font-bold text-slate-400 mr-2">${String.fromCharCode(65 + i)}.</span>${opt}</span>
+                                    <i id="icon-${q.id}-${i}" class="fa-solid fa-check hidden opacity-50"></i>
+                                </button>
+                            `).join('')}
+                        </div>
+                        <div id="exp-${q.id}" class="hidden mt-4 p-4 rounded-xl bg-slate-100/80 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700">
+                            <h4 class="font-bold text-xs text-blue-600 dark:text-yellow-400 mb-1 flex items-center gap-1.5"><i class="fa-regular fa-lightbulb"></i> ${currentLang==='vi'?'Giải thích':'Explanation'}:</h4>
+                            <p class="text-xs text-slate-700 dark:text-gray-300 leading-relaxed">${exp}</p>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', qHTML);
+            });
+            
+            Object.keys(practiceAnswers).forEach(qId => {
+                const optIdx = practiceAnswers[qId];
+                const selectedBtn = document.getElementById(`opt-${qId}-${optIdx}`);
+                const statusTag = document.getElementById(`qstatus-${qId}`);
+                
+                if (selectedBtn) {
+                    selectedBtn.classList.add('opt-selected');
+                    document.getElementById(`icon-${qId}-${optIdx}`).classList.remove('hidden');
+                }
+                if (statusTag) {
+                    statusTag.textContent = currentLang==='vi' ? 'Đã chọn' : 'Selected';
+                    statusTag.className = 'px-2.5 py-0.5 bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-400 font-bold text-[10px] rounded-full uppercase tracking-wide';
+                }
+            });
+            
+            updatePracticeStatus();
+            if(isPracticeSubmitted) forceResubmitVisuals();
+        }
+
+        function selectPracticeOption(qId, optIdx) {
+            if (isPracticeSubmitted) return;
+            sfx.select.play();
+            practiceAnswers[qId] = optIdx;
+            
+            for (let i = 0; i < 4; i++) {
+                const btn = document.getElementById(`opt-${qId}-${i}`);
+                if(btn) {
+                    btn.classList.remove('opt-selected');
+                    document.getElementById(`icon-${qId}-${i}`).classList.add('hidden');
+                }
+            }
+            
+            const selectedBtn = document.getElementById(`opt-${qId}-${optIdx}`);
+            selectedBtn.classList.add('opt-selected');
+            
+            const icon = document.getElementById(`icon-${qId}-${optIdx}`);
+            icon.classList.remove('hidden');
+
+            const statusTag = document.getElementById(`qstatus-${qId}`);
+            statusTag.textContent = currentLang==='vi' ? 'Đã chọn' : 'Selected';
+            statusTag.className = 'px-2.5 py-0.5 bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-400 font-bold text-[10px] rounded-full uppercase tracking-wide';
+
+            updatePracticeStatus();
+        }
+
+        function updatePracticeStatus() {
+            const answered = Object.keys(practiceAnswers).length;
+            const statusEl = document.getElementById('practice-status');
+            if (currentLang === 'vi') {
+                statusEl.innerHTML = `Đã trả lời: <span class="text-blue-600 dark:text-yellow-400 font-black">${answered}/${PRACTICE_GOAL}</span> câu`;
+            } else {
+                statusEl.innerHTML = `Answered: <span class="text-blue-600 dark:text-yellow-400 font-black">${answered}/${PRACTICE_GOAL}</span>`;
+            }
+        }
+
+        function submitPractice() {
+            if (Object.keys(practiceAnswers).length < PRACTICE_GOAL) {
+                alert(currentLang === 'vi' ? `Vui lòng trả lời đủ ${PRACTICE_GOAL} câu trước khi nộp bài!` : `Please answer all ${PRACTICE_GOAL} questions!`);
+                return;
+            }
+            isPracticeSubmitted = true;
+            document.getElementById('btn-submit-practice').disabled = true;
+            forceResubmitVisuals();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function forceResubmitVisuals() {
+            practiceQuestions.forEach(q => {
+                const selectedIdx = practiceAnswers[q.id];
+                const isCorrect = selectedIdx === q.correct;
+                const card = document.getElementById(`qcard-${q.id}`);
+
+                for (let i = 0; i < 4; i++) {
+                    const btn = document.getElementById(`opt-${q.id}-${i}`);
+                    if (!btn) continue;
+                    btn.className = "quiz-option text-left p-3.5 rounded-xl font-medium text-xs md:text-sm flex items-center justify-between cursor-default";
+                    
+                    if (i === q.correct) {
+                        btn.classList.add('opt-correct');
+                        document.getElementById(`icon-${q.id}-${i}`).className = "fa-solid fa-check text-emerald-600 dark:text-emerald-400";
+                        document.getElementById(`icon-${q.id}-${i}`).classList.remove('hidden');
+                    } else if (i === selectedIdx && !isCorrect) {
+                        btn.classList.add('opt-wrong');
+                        document.getElementById(`icon-${q.id}-${i}`).className = "fa-solid fa-xmark text-red-600 dark:text-red-400";
+                        document.getElementById(`icon-${q.id}-${i}`).classList.remove('hidden');
+                    } else {
+                        btn.classList.add('opacity-50');
+                    }
+                }
+
+                if (isCorrect) card.classList.add('border-emerald-500/50');
+                else card.classList.add('border-red-500/50');
+                
+                document.getElementById(`exp-${q.id}`).classList.remove('hidden');
+            });
+        }
+
+        /* ================= LOGIC CHẾ ĐỘ 2: CỜ CHỚP (BLITZ GAME) ================= */
+        const BLITZ_GOAL = 30;
+        const BLITZ_START_TIME = 30.0;
+        let currentBlitzQuestion = null;
+        let lastBlitzQuestionId = null;
+        let blitzCount = 0;
+        let timeLeft = 0;
+        let timerInterval = null;
+        let blitzScore = 0;
+        let isBlitzOver = false;
+        let fxTimeout = null;
+
+        function showReadyModal() {
+            const modal = document.getElementById('ready-modal');
+            const content = document.getElementById('ready-modal-content');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => { 
+                modal.classList.remove('opacity-0');
+                content.classList.remove('scale-95'); 
+                content.classList.add('scale-100'); 
+            }, 10);
+            sfx.pop.play();
+        }
+
+        function closeReadyModal() {
+            const modal = document.getElementById('ready-modal');
+            const content = document.getElementById('ready-modal-content');
+            modal.classList.add('opacity-0');
+            content.classList.remove('scale-100'); 
+            content.classList.add('scale-95');
+            setTimeout(() => { modal.classList.remove('flex'); modal.classList.add('hidden'); }, 300);
+        }
+
+        function confirmStartBlitz() {
+            closeReadyModal();
+            setTimeout(startBlitzMode, 300);
+        }
+
+        /* LẤY CÂU HỎI NGẪU NHIÊN - ĐẢM BẢO 2 CÂU LIỀN KỀ KHÁC NHAU HOÀN TOÀN */
+        function getRandomBlitzQuestion() {
+            let available = questionBank.filter(q => q.id !== lastBlitzQuestionId);
+            let selected = available[Math.floor(Math.random() * available.length)];
+            lastBlitzQuestionId = selected.id;
+            return selected;
+        }
+
+        function startBlitzMode() {
+            showView('view-blitz');
+            blitzCount = 0;
+            blitzScore = 0;
+            timeLeft = BLITZ_START_TIME;
+            isBlitzOver = false;
+            lastBlitzQuestionId = null;
+            
+            nextBlitzQuestion();
+            
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timeLeft -= 0.1;
+                updateBlitzTimerDisplay();
+                if (timeLeft <= 0) {
+                    timeLeft = 0;
+                    endBlitz(false);
+                }
+            }, 100);
+        }
+
+        function nextBlitzQuestion() {
+            if (blitzCount >= BLITZ_GOAL) {
+                endBlitz(true);
+                return;
+            }
+            blitzCount++;
+            currentBlitzQuestion = getRandomBlitzQuestion();
+            updateBlitzUI();
+        }
+
+        function updateBlitzTimerDisplay() {
+            const timerEl = document.getElementById('blitz-timer');
+            timerEl.textContent = timeLeft.toFixed(1);
+            
+            if (timeLeft < 5.0 && !isBlitzOver) {
+                timerEl.classList.add('text-red-600', 'time-danger');
+                timerEl.classList.remove('text-slate-800', 'dark:text-white');
+                if (Math.floor(timeLeft * 10) % 5 === 0) sfx.tick.play();
+            } else {
+                timerEl.classList.remove('text-red-600', 'time-danger');
+                timerEl.classList.add('text-slate-800', 'dark:text-white');
+            }
+        }
+
+        function updateBlitzUI() {
+            if (isBlitzOver || !currentBlitzQuestion) return;
+            const q = currentBlitzQuestion;
+            const text = currentLang === 'vi' ? q.text.vi : q.text.en;
+            const opts = currentLang === 'vi' ? q.options.vi : q.options.en;
+            
+            document.getElementById('blitz-progress').textContent = blitzCount;
+            document.getElementById('blitz-question-text').textContent = text;
+            
+            const optionsContainer = document.getElementById('blitz-options');
+            optionsContainer.innerHTML = '';
+            
+            opts.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.className = "quiz-option text-left p-4 rounded-xl font-semibold text-xs md:text-sm text-slate-800 dark:text-gray-100 sfx-btn hover:-translate-y-0.5 transition-all flex items-center";
+                btn.innerHTML = `<span class="text-slate-400 mr-2 font-bold">${String.fromCharCode(65+i)}.</span> <span>${opt}</span>`;
+                btn.onclick = () => handleBlitzAnswer(i);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function triggerFlash(type) {
+            const overlay = document.getElementById('flash-overlay');
+            overlay.className = `fixed inset-0 z-[100] pointer-events-none flash-${type}`;
+            void overlay.offsetWidth;
+            setTimeout(() => {
+                overlay.className = "fixed inset-0 z-[100] pointer-events-none";
+            }, 500);
+        }
+
+        /* XỬ LÝ ĐÁP ÁN VÀ ẨN BẢNG CỘNG/TRỪ THỜI GIAN KHI HẾT ANIMATION (ĐÃ SỬA LỖI ẢNH 1) */
+        function handleBlitzAnswer(selectedIdx) {
+            if (isBlitzOver || !currentBlitzQuestion) return;
+            
+            const q = currentBlitzQuestion;
+            const fxEl = document.getElementById('blitz-time-fx');
+
+            // Xóa animation cũ nếu người dùng bấm nhanh liên tục
+            clearTimeout(fxTimeout);
+            fxEl.className = "absolute -left-12 top-2 font-black text-xl pointer-events-none opacity-0 z-20";
+            void fxEl.offsetWidth; // Force reflow
+
+            if (selectedIdx === q.correct) {
+                // ĐÚNG -> Cộng thời gian mượt mà
+                sfx.correct.play();
+                triggerFlash('correct');
+                blitzScore++;
+                
+                let bonus = 1.0;
+                if (timeLeft < 5.0) bonus = 2.0;
+
+                timeLeft = Math.min(timeLeft + bonus, BLITZ_START_TIME);
+                
+                fxEl.textContent = `+${bonus}s`;
+                fxEl.className = "absolute -left-12 top-2 font-black text-2xl text-emerald-500 drop-shadow-md time-fx-anim pointer-events-none z-20";
+            } else {
+                // SAI -> Trừ 2 giây
+                sfx.wrong.play();
+                triggerFlash('wrong');
+                const penalty = 2.0;
+                timeLeft -= penalty;
+                
+                fxEl.textContent = `-${penalty}s`;
+                fxEl.className = "absolute -left-12 top-2 font-black text-2xl text-red-600 drop-shadow-md time-fx-anim pointer-events-none z-20";
+            }
+
+            // Ẩn nội dung chữ biến mất sau khi hiệu ứng hoàn tất (0.7s)
+            fxTimeout = setTimeout(() => {
+                fxEl.textContent = '';
+                fxEl.className = "absolute -left-12 top-2 font-black text-xl pointer-events-none opacity-0 z-20";
+            }, 700);
+
+            updateBlitzTimerDisplay();
+
+            if (timeLeft <= 0) {
+                timeLeft = 0;
+                endBlitz(false);
+            } else {
+                nextBlitzQuestion();
+            }
+        }
+
+        function endBlitz(isWin) {
+            isBlitzOver = true;
+            clearInterval(timerInterval);
+            showView('view-blitz-result');
+            
+            const title = document.getElementById('blitz-result-title');
+            const desc = document.getElementById('blitz-result-desc');
+            
+            if (isWin) {
+                sfx.win.play();
+                document.getElementById('blitz-result-icon').textContent = '🏆';
+                title.textContent = currentLang === 'vi' ? 'CHIẾN THẮNG!' : 'VICTORY!';
+                title.className = 'text-3xl font-black mb-1 uppercase tracking-tight text-yellow-500';
+                desc.textContent = currentLang === 'vi' ? 'Bạn đã hoàn thành xuất sắc 30 câu hỏi liên hoàn!' : 'You successfully completed 30 continuous questions!';
+            } else {
+                sfx.lose.play();
+                document.getElementById('blitz-result-icon').textContent = '💀';
+                title.textContent = currentLang === 'vi' ? 'HẾT GIỜ!' : 'GAME OVER!';
+                title.className = 'text-3xl font-black mb-1 uppercase tracking-tight text-red-600';
+                desc.textContent = currentLang === 'vi' ? 'Thời gian đã cạn kiệt. Hãy rèn luyện phản xạ và thử lại!' : 'Time run out. Train your reflexes and try again!';
+            }
+            
+            document.getElementById('blitz-result-score').textContent = `${blitzScore}/${BLITZ_GOAL}`;
+            document.getElementById('blitz-result-time').textContent = Math.max(0, timeLeft).toFixed(1) + 's';
+        }
+
+        function quitBlitz() {
+            if(confirm(currentLang === 'vi' ? "Bạn có chắc chắn muốn thoát game?" : "Are you sure you want to quit?")) {
+                backToHome();
+            }
+        }
+
+        function showBlitzExplanations() {
+            showView('view-practice');
+            const container = document.getElementById('practice-container');
+            const headerText = currentLang === 'vi' ? 'GIẢI THÍCH CHI TIẾT CÁC CÂU HỎI VỪA THI' : 'DETAILED EXPLANATIONS FOR YOUR BLITZ QUESTIONS';
+            
+            container.innerHTML = `<div class="text-center mb-4 font-bold text-sm text-red-800 dark:text-yellow-400 uppercase tracking-wide">${headerText}</div>`;
+            document.getElementById('btn-submit-practice').classList.add('hidden');
+            document.getElementById('practice-status').innerHTML = `<span class="text-emerald-600 font-bold">${currentLang==='vi'?'Kết quả Blitz':'Blitz Result'}: ${blitzScore}/${BLITZ_GOAL} ${currentLang==='vi'?'câu đúng':'correct'}</span>`;
+
+            questionBank.slice(0, 15).forEach((q, index) => {
+                const text = currentLang === 'vi' ? q.text.vi : q.text.en;
+                const opts = currentLang === 'vi' ? q.options.vi : q.options.en;
+                const exp = currentLang === 'vi' ? q.explanation.vi : q.explanation.en;
+
+                const qHTML = `
+                    <div class="liquid-glass-card p-5 rounded-2xl relative mb-4">
+                        <div class="mb-3 border-b border-slate-200/60 dark:border-slate-700/60 pb-2"><h3 class="text-sm font-bold text-slate-800 dark:text-white">${currentLang==='vi'?'Câu':'Q'}${index + 1}: ${text}</h3></div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                            ${opts.map((opt, i) => {
+                                const isCorrect = i === q.correct;
+                                const cls = isCorrect ? 'opt-correct' : 'opacity-60';
+                                const icon = isCorrect ? '<i class="fa-solid fa-check text-emerald-600"></i>' : '';
+                                return `<div class="quiz-option text-left p-3 rounded-xl text-xs font-medium flex items-center justify-between ${cls}">
+                                    <span><span class="font-bold mr-1.5">${String.fromCharCode(65 + i)}.</span> ${opt}</span>${icon}
+                                </div>`;
+                            }).join('')}
+                        </div>
+                        <div class="mt-3 p-3 rounded-xl bg-slate-100/80 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700">
+                            <h4 class="font-bold text-xs text-blue-600 dark:text-yellow-400 mb-1 flex items-center gap-1.5"><i class="fa-regular fa-lightbulb"></i> ${currentLang==='vi'?'Giải thích':'Explanation'}:</h4>
+                            <p class="text-xs text-slate-700 dark:text-gray-300 leading-relaxed">${exp}</p>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', qHTML);
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

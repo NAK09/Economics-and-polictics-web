@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nền tảng học tập, tìm hiểu Kinh tế Chính trị Mác - Lênin cho sinh viên ĐHQG và Việt Nam">
+    <meta name="author" content="Nguyễn Anh Khoa - Nhóm 1 ĐH Quốc Tế">
+    
+    <meta property="og:title" content="Kinh tế chính trị Mác - Lênin | ĐH Quốc Tế">
+    <meta property="og:description" content="Nền tảng học tập, tìm hiểu Kinh tế Chính trị Mác - Lênin cho sinh viên ĐHQG và Việt Nam">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="./image_b6f8e2.jpg">
+
+    <title>Kinh tế chính trị Mác - Lênin | ĐH Quốc Tế</title>
+    
+    <link rel="icon" href="./Logo-HCMIU.png" type="image/png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        darkBg: '#0f172a',
+                        darkCard: '#1e293b',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+
+    <style>
+        /* Tùy chỉnh thanh cuộn Premium */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #facc15; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #eab308; }
+
+        /* HIỆU ỨNG LOADING PRELOADER */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #4a0404;
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.6s ease-out, visibility 0.6s ease-out;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(250, 204, 21, 0.2);
+            border-top-color: #facc15;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* HIỆU ỨNG LIQUID GLASS */
+        .liquid-glass-container {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3), inset 0 0 20px rgba(255,255,255,0.1);
+        }
+        
+        .liquid-text {
+            background: linear-gradient(to right, #facc15 20%, #ffffff 50%, #facc15 80%);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: liquidShine 4s linear infinite;
+            filter: drop-shadow(0px 6px 12px rgba(250, 204, 21, 0.5));
+        }
+
+        @keyframes liquidShine {
+            to { background-position: 200% center; }
+        }
+
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased bg-gray-50 dark:bg-darkBg text-gray-800 dark:text-gray-100 relative transition-colors duration-300">
+
+    <div id="preloader">
+        <div class="spinner"></div>
+        <h2 class="text-yellow-400 font-serif font-bold text-lg tracking-widest uppercase">
+            <span class="lang-vi">ĐANG TẢI DỮ LIỆU...</span>
+            <span class="lang-en hidden">LOADING RESOURCES...</span>
+        </h2>
+    </div>
+
+    <!-- THANH ĐIỀU HƯỚNG -->
+    <nav class="fixed top-0 left-0 w-full z-50 p-4 md:px-8 flex justify-between items-center bg-black/50 backdrop-blur-xl border-b border-white/10 shadow-lg transition-all duration-300">
+        <!-- ĐÃ FIX: Chỉ cuộn lên trang đầu, không đổi ngôn ngữ -->
+        <a href="#" onclick="resetToHome(event)" class="flex items-center gap-3 sfx-btn group">
+            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(250,204,21,0.5)] border-2 border-yellow-400 overflow-hidden transition-transform group-hover:scale-110">
+                <img src="./Logo-HCMIU.png" alt="Logo ĐH Quốc Tế" class="w-10 h-10 object-contain" onerror="this.src='https://upload.wikimedia.org/wikipedia/vi/thumb/9/90/Logo_Đại_học_Quốc_tế%2C_ĐHQG-HCM.svg/1200px-Logo_Đại_học_Quốc_tế%2C_ĐHQG-HCM.svg.png'">
+            </div>
+            <div class="hidden sm:block text-white font-bold leading-tight drop-shadow-md">
+                <span class="text-lg font-serif tracking-wider">
+                    <span class="lang-vi">ĐẠI HỌC QUỐC TẾ</span>
+                    <span class="lang-en hidden">INTERNATIONAL UNIVERSITY</span>
+                </span><br>
+                <span class="text-yellow-400 text-xs">
+                    <span class="lang-vi">Đại học Quốc gia TP.HCM</span>
+                    <span class="lang-en hidden">Vietnam National University - HCMC</span>
+                </span>
+            </div>
+        </a>
+
+        <div class="flex items-center gap-4 sm:gap-6">
+            <button onclick="toggleDarkMode()" class="w-10 h-10 rounded-full bg-black/40 border border-white/20 flex items-center justify-center text-white hover:text-yellow-400 hover:bg-white/10 transition-all sfx-btn" title="Đổi giao diện Sáng/Tối">
+                <i id="theme-icon" class="fa-solid fa-moon text-lg"></i>
+            </button>
+
+            <div class="flex items-center gap-2 text-sm font-bold bg-black/40 px-3 py-1.5 rounded-full border border-white/20 select-none backdrop-blur-md">
+                <span id="btn-lang-vi" onclick="switchLanguage('vi')" class="cursor-pointer text-yellow-400 hover:scale-110 transition-transform sfx-btn">VN</span>
+                <span class="text-white/50">|</span>
+                <span id="btn-lang-en" onclick="switchLanguage('en')" class="cursor-pointer text-white hover:text-yellow-400 hover:scale-110 transition-transform sfx-btn">EN</span>
+            </div>
+
+            <div class="relative group cursor-pointer">
+                <button class="flex items-center gap-2 px-5 py-2 rounded-full bg-[#3d2424] hover:bg-[#2a1717] border border-[#5a3a3a] transition-all text-white font-bold shadow-lg sfx-btn">
+                    <span class="hidden sm:inline">
+                        <span class="lang-vi">Về chúng tôi</span>
+                        <span class="lang-en hidden">About Us</span>
+                    </span>
+                    <span class="sm:hidden">Info</span>
+                    <i class="fa-solid fa-chevron-down text-sm transition-transform group-hover:rotate-180"></i>
+                </button>
+                <div class="absolute right-0 mt-2 w-64 bg-white/95 dark:bg-darkCard/95 backdrop-blur-xl rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 p-5 border border-gray-200 dark:border-gray-700 z-50">
+                    <h4 class="font-bold text-red-700 dark:text-yellow-400 mb-3 border-b-2 border-red-100 dark:border-gray-700 pb-2 font-serif">
+                        <span class="lang-vi">Thông tin nhóm</span>
+                        <span class="lang-en hidden">Team Information</span>
+                    </h4>
+                    <ul class="text-sm text-gray-700 dark:text-gray-300 space-y-2">
+                        <li><strong><span class="lang-vi">Nhóm:</span><span class="lang-en hidden">Group:</span></strong> <span class="lang-vi">Nhóm 1 - KTCT</span><span class="lang-en hidden">Group 1 - PE</span></li>
+                        <li><strong><span class="lang-vi">Lập trình viên:</span><span class="lang-en hidden">Developer:</span></strong> Nguyễn Anh Khoa</li>
+                        <li><strong><span class="lang-vi">Thành viên 2:</span><span class="lang-en hidden">Member 2:</span></strong> Trần Thị B</li>
+                        <li><strong><span class="lang-vi">Thành viên 3:</span><span class="lang-en hidden">Member 3:</span></strong> Lê Văn C</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- PHẦN MỞ ĐẦU (Giữ nguyên text cũ, thêm Hạt ánh sáng) -->
+    <header class="relative w-full h-screen flex items-center justify-center overflow-hidden bg-red-950">
+        <div class="absolute inset-0 z-0">
+            <img src="./image_b6f8e2.jpg" alt="Background" class="w-full h-full object-cover opacity-40 mix-blend-overlay" onerror="this.src='https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'">
+            <div class="absolute inset-0 bg-gradient-to-b from-red-900/70 via-red-900/80 to-gray-50 dark:to-darkBg"></div>
+            <!-- Hiệu ứng Hạt ánh sáng Premium -->
+            <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-yellow-500/20 rounded-full blur-[80px] animate-pulse pointer-events-none"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-72 h-72 bg-red-500/20 rounded-full blur-[100px] animate-pulse pointer-events-none" style="animation-delay: 2s;"></div>
+        </div>
+
+        <div class="relative z-10 text-center px-6 py-14 max-w-5xl mx-auto mt-16 liquid-glass-container rounded-[2.5rem]" data-aos="zoom-in" data-aos-duration="1000">
+            <h1 class="text-4xl md:text-7xl font-serif font-black mb-6 uppercase tracking-wide leading-tight liquid-text">
+                <span class="lang-vi">KINH TẾ CHÍNH TRỊ<br><span class="text-white drop-shadow-2xl" style="animation:none; filter:none; -webkit-text-fill-color: white;">MÁC - LÊNIN</span></span>
+                <span class="lang-en hidden">MARXIST-LENINIST<br><span class="text-white drop-shadow-2xl" style="animation:none; filter:none; -webkit-text-fill-color: white;">POLITICAL ECONOMY</span></span>
+            </h1>
+            <p class="text-lg md:text-2xl text-white/90 mb-10 leading-relaxed font-bold drop-shadow-md">
+                <span class="lang-vi">Nền tảng học tập, tìm hiểu Kinh tế Chính trị Mác - Lênin cho sinh viên ĐHQG và Việt Nam</span>
+                <span class="lang-en hidden">A learning and research platform on Marxist-Leninist Political Economy for students of VNU and Vietnam</span>
+            </p>
+            <a href="#khu-vuc-hoc-tap" class="bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 text-red-950 px-10 py-4 rounded-full font-black text-lg shadow-[0_0_30px_rgba(250,204,21,0.5)] transition-all hover:-translate-y-2 inline-flex items-center gap-3 group sfx-btn border border-yellow-200">
+                <span class="lang-vi">BẮT ĐẦU KHÁM PHÁ NGAY</span>
+                <span class="lang-en hidden">START EXPLORING NOW</span>
+                <i class="fa-solid fa-arrow-down group-hover:translate-y-2 transition-transform duration-300"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- KHU VỰC HỌC TẬP (NGUYÊN TRẠNG 5 THẺ CỦA BẠN) -->
+    <main id="khu-vuc-hoc-tap" class="py-24 px-4 md:px-8 max-w-7xl mx-auto relative z-10">
+        <div class="text-center mb-16" data-aos="fade-up">
+            <h2 class="text-3xl md:text-5xl font-serif font-black text-red-800 dark:text-yellow-400 mb-4 uppercase">
+                <span class="lang-vi">TÀI NGUYÊN HỌC TẬP</span>
+                <span class="lang-en hidden">LEARNING RESOURCES</span>
+            </h2>
+            <div class="w-24 h-1.5 bg-yellow-400 mx-auto rounded-full"></div>
+            <p class="mt-4 text-gray-600 dark:text-gray-300 font-medium text-lg">
+                <span class="lang-vi">Lựa chọn phương pháp tiếp cận phù hợp nhất với bạn</span>
+                <span class="lang-en hidden">Choose the learning approach that suits you best</span>
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Card 1: Games -->
+            <a href="khung-cui-8-gio.html" class="group relative bg-white dark:bg-darkCard rounded-3xl p-8 border border-gray-100 dark:border-gray-700 shadow-[0_10px_40px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_50px_rgba(220,38,38,0.15)] hover:-translate-y-2 transition-all duration-300 overflow-hidden flex flex-col h-full sfx-btn" data-aos="fade-up" data-aos-delay="100">
+                <div class="absolute -top-12 -right-12 w-40 h-40 bg-red-50 dark:bg-red-950/30 rounded-full group-hover:scale-[1.5] transition-transform duration-500"></div>
+                <div class="relative z-10 flex flex-col h-full">
+                    <div class="w-14 h-14 bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400 rounded-2xl flex items-center justify-center text-2xl mb-8 group-hover:-translate-y-1 transition-transform">
+                        <i class="fa-solid fa-gamepad"></i>
+                    </div>
+                    <h3 class="text-2xl font-serif font-bold text-gray-900 dark:text-white mb-3">Mini Games</h3>
+                    <p class="text-gray-600 dark:text-gray-300 flex-grow text-[15px] leading-relaxed">
+                        <span class="lang-vi">Vừa học vừa chơi với các tựa game mô phỏng chuỗi cung ứng, thặng dư giá trị đầy hấp dẫn.</span>
+                        <span class="lang-en hidden">Learn and play with engaging games simulating supply chains and surplus value.</span>
+                    </p>
+                    <span class="mt-6 text-red-600 dark:text-yellow-400 font-bold flex items-center gap-2 group-hover:gap-3 transition-all">
+                        <span class="lang-vi">Chơi ngay</span><span class="lang-en hidden">Play now</span> <i class="fa-solid fa-arrow-right"></i>
+                    </span>
+                </div>
+            </a>
+
+            <!-- Card 2: Mindmap (ĐÃ GẮN LINK mindmap.html) -->
+            <a href="mindmap.html" class="group relative bg-white dark:bg-darkCard rounded-3xl p-8 border border-gray-100 dark:border-gray-700 shadow-[0_10px_40px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_50px_rgba(250,204,21,0.15)] hover:-translate-y-2 transition-all duration-300 overflow-hidden flex flex-col h-full sfx-btn" data-aos="fade-up" data-aos-delay="200">
+                <div class="absolute -top-12 -right-12 w-40 h-40 bg-[#fef9eb] dark:bg-yellow-950/30 rounded-full group-hover:scale-[1.5] transition-transform duration-500"></div>
+                <div class="relative z-10 flex flex-col h-full">
+                    <div class="w-14 h-14 bg-[#f8cf62] text-white rounded-2xl flex items-center justify-center text-2xl mb-8 group-hover:-translate-y-1 transition-transform">
+                        <i class="fa-solid fa-network-wired"></i>
+                    </div>
+                    <h3 class="text-2xl font-serif font-bold text-gray-900 dark:text-white mb-3">
+                        <span class="lang-vi">Sơ Đồ Tư Duy</span><span class="lang-en hidden">Mind Maps</span>
+                    </h3>
+                    <p class="text-gray-600 dark:text-gray-300 flex-grow text-[15px] leading-relaxed">
+                        <span class="lang-vi">Hệ thống hóa toàn bộ kiến thức Kinh tế chính trị thông qua các Mindmap trực quan, dễ nhớ.</span>
+                        <span class="lang-en hidden">Systematize all knowledge through visual and easy-to-remember mind maps.</span>
+                    </p>
+                    <span class="mt-6 text-yellow-600 dark:text-yellow-400 font-bold flex items-center gap-2 group-hover:gap-3 transition-all">
+                        <span class="lang-vi">Xem sơ đồ</span><span class="lang-en hidden">View maps</span> <i class="fa-solid fa-arrow-right"></i>
+                    </span>
+                </div>
+            </a>
+
+            <!-- Card 3: Quiz -->
+            <a href="#" class="group relative bg-white dark:bg-darkCard rounded-3xl p-8 border border-gray-100 dark:border-gray-700 shadow-[0_10px_40px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_50px_rgba(37,99,235,0.15)] hover:-translate-y-2 transition-all duration-300 overflow-hidden flex flex-col h-full sfx-btn" data-aos="fade-up" data-aos-delay="300">
+                <div class="absolute -top-12 -right-12 w-40 h-40 bg-[#eff6ff] dark:bg-blue-950/30 rounded-full group-hover:scale-[1.5] transition-transform duration-500"></div>
+                <div class="relative z-10 flex flex-col h-full">
+                    <div class="w-14 h-14 bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 rounded-2xl flex items-center justify-center text-2xl mb-8 group-hover:-translate-y-1 transition-transform">
+                        <i class="fa-solid fa-clipboard-question"></i>
+                    </div>
+                    <h3 class="text-2xl font-serif font-bold text-gray-900 dark:text-white mb-3">
+                        <span class="lang-vi">Trắc Nghiệm</span><span class="lang-en hidden">Quizzes</span>
+                    </h3>
+                    <p class="text-gray-600 dark:text-gray-300 flex-grow text-[15px] leading-relaxed">
+                        <span class="lang-vi">Ngân hàng câu hỏi đa dạng giúp ôn tập nhanh trước kỳ thi. Có chấm điểm trực tiếp!</span>
+                        <span class="lang-en hidden">A diverse question bank to help you review quickly before exams. Auto-grading included!</span>
+                    </p>
+                    <span class="mt-6 text-blue-600 dark:text-yellow-400 font-bold flex items-center gap-2 group-hover:gap-3 transition-all">
+                        <span class="lang-vi">Làm bài</span><span class="lang-en hidden">Start test</span> <i class="fa-solid fa-arrow-right"></i>
+                    </span>
+                </div>
+            </a>
+
+            <!-- Card 4: Slide (ĐƯỢC PHỤC HỒI LẠI) -->
+            <a href="#" class="group relative bg-white dark:bg-darkCard rounded-3xl p-8 border border-gray-100 dark:border-gray-700 shadow-[0_10px_40px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_50px_rgba(34,197,94,0.15)] hover:-translate-y-2 transition-all duration-300 overflow-hidden flex flex-col h-full sfx-btn" data-aos="fade-up" data-aos-delay="400">
+                <div class="absolute -top-12 -right-12 w-40 h-40 bg-[#ecfdf5] dark:bg-green-950/30 rounded-full group-hover:scale-[1.5] transition-transform duration-500"></div>
+                <div class="relative z-10 flex flex-col h-full">
+                    <div class="w-14 h-14 bg-green-100 dark:bg-green-900/50 text-green-600 dark:text-green-400 rounded-2xl flex items-center justify-center text-2xl mb-8 group-hover:-translate-y-1 transition-transform">
+                        <i class="fa-solid fa-person-chalkboard"></i>
+                    </div>
+                    <h3 class="text-2xl font-serif font-bold text-gray-900 dark:text-white mb-3">
+                        <span class="lang-vi">Slide Bài Giảng</span><span class="lang-en hidden">Lecture Slides</span>
+                    </h3>
+                    <p class="text-gray-600 dark:text-gray-300 flex-grow text-[15px] leading-relaxed">
+                        <span class="lang-vi">Tài liệu học tập chính khóa, được tóm tắt súc tích, đính kèm các ví dụ thực tiễn.</span>
+                        <span class="lang-en hidden">Main course materials, concisely summarized with practical examples.</span>
+                    </p>
+                    <span class="mt-6 text-green-600 dark:text-yellow-400 font-bold flex items-center gap-2 group-hover:gap-3 transition-all">
+                        <span class="lang-vi">Đọc tài liệu</span><span class="lang-en hidden">Read material</span> <i class="fa-solid fa-arrow-right"></i>
+                    </span>
+                </div>
+            </a>
+
+            <!-- Card 5: Video (ĐƯỢC PHỤC HỒI LẠI) -->
+            <a href="#" class="lg:col-span-2 group relative bg-white dark:bg-darkCard rounded-3xl p-8 border border-gray-100 dark:border-gray-700 shadow-[0_10px_40px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_50px_rgba(168,85,247,0.15)] hover:-translate-y-2 transition-all duration-300 overflow-hidden flex flex-col h-full sfx-btn" data-aos="fade-up" data-aos-delay="500">
+                <div class="absolute -top-12 -right-12 w-40 h-40 bg-[#faf5ff] dark:bg-purple-950/30 rounded-full group-hover:scale-[1.5] transition-transform duration-500"></div>
+                <div class="relative z-10 flex flex-col h-full">
+                    <div class="w-14 h-14 bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-400 rounded-2xl flex items-center justify-center text-2xl mb-8 group-hover:-translate-y-1 transition-transform">
+                        <i class="fa-solid fa-play"></i>
+                    </div>
+                    <h3 class="text-2xl font-serif font-bold text-gray-900 dark:text-white mb-3">
+                        <span class="lang-vi">Video Phân Tích & Tài liệu tham khảo</span>
+                        <span class="lang-en hidden">Analytical Videos & References</span>
+                    </h3>
+                    <p class="text-gray-600 dark:text-gray-300 flex-grow text-[15px] leading-relaxed">
+                        <span class="lang-vi">Các đoạn phim tài liệu, bài thảo luận chuyên sâu và clip giải thích các khái niệm phức tạp một cách trực quan, giúp bạn nắm bắt cốt lõi vấn đề nhanh nhất.</span>
+                        <span class="lang-en hidden">Documentaries, in-depth discussions, and visual clips explaining complex concepts to help you quickly grasp the core issues.</span>
+                    </p>
+                    <span class="mt-6 text-purple-600 dark:text-yellow-400 font-bold flex items-center gap-2 group-hover:gap-3 transition-all">
+                        <span class="lang-vi">Xem ngay</span><span class="lang-en hidden">Watch now</span> <i class="fa-solid fa-arrow-right"></i>
+                    </span>
+                </div>
+            </a>
+        </div>
+    </main>
+
+    <!-- FOOTER (ĐÃ FIX ĐỊA CHỈ TRONG ẢNH 1 THÀNH TIẾNG VIỆT) -->
+    <footer class="w-full relative bg-red-950 text-white pt-16 pb-8 border-t-4 border-yellow-400 font-sans">
+        <div class="max-w-7xl mx-auto px-6 relative z-20">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 border-b border-red-800 pb-10">
+                <div class="flex flex-col">
+                    <h2 class="text-2xl font-serif font-black text-yellow-400 mb-4 uppercase">
+                        <span class="lang-vi">LIÊN HỆ</span><span class="lang-en hidden">CONTACT</span>
+                    </h2>
+                    <div class="text-white/90 text-sm leading-loose mb-5 space-y-2">
+                        <p class="font-bold">
+                            <span class="lang-vi">Trường Đại học Quốc tế, Đại học Quốc gia Thành phố Hồ Chí Minh</span>
+                            <span class="lang-en hidden">International University, Vietnam National University - Ho Chi Minh City</span>
+                        </p>
+                        <!-- LỖI ĐỊA CHỈ ĐÃ FIX -->
+                        <p><i class="fa-solid fa-location-dot w-5 text-yellow-400"></i> 
+                            <span class="lang-vi">Địa chỉ: Khu phố 6, phường Linh Trung, Thành phố Thủ Đức, TP.HCM</span>
+                            <span class="lang-en hidden">Address: Quarter 6, Linh Trung Ward, Thu Duc City, Ho Chi Minh City</span>
+                        </p>
+                        <p><i class="fa-solid fa-phone w-5 text-yellow-400"></i> <span class="lang-vi">Điện thoại:</span><span class="lang-en hidden">Phone:</span> (028) 37244270</p>
+                        <p><i class="fa-solid fa-fax w-5 text-yellow-400"></i> Fax: (028) 37244271</p>
+                        <p><i class="fa-solid fa-envelope w-5 text-yellow-400"></i> Email: info@hcmiu.edu.vn</p>
+                    </div>
+                </div>
+                <div class="flex flex-col">
+                    <h3 class="text-lg font-serif font-bold text-yellow-400 mb-6 uppercase tracking-wider">
+                        <span class="lang-vi">Tài liệu Liên kết</span><span class="lang-en hidden">Useful Links</span>
+                    </h3>
+                    <ul class="flex flex-col gap-3 text-white/80 text-sm">
+                        <li><a href="https://triethoc.edu.vn/" target="_blank" class="hover:text-yellow-400 transition-colors"><i class="fa-solid fa-link text-xs mr-2"></i> <span class="lang-vi">Website Triết học</span><span class="lang-en hidden">Philosophy Website</span></a></li>
+                        <li><a href="https://surl.li/vevyhv" target="_blank" class="hover:text-yellow-400 transition-colors"><i class="fa-solid fa-link text-xs mr-2"></i> <span class="lang-vi">Nội dung chủ yếu KTCT</span><span class="lang-en hidden">Political Economy Main Content</span></a></li>
+                        <li><a href="https://surl.li/ssrmob" target="_blank" class="hover:text-yellow-400 transition-colors"><i class="fa-solid fa-file-pdf text-xs mr-2"></i> <span class="lang-vi">Giáo trình KTCT (PDF)</span><span class="lang-en hidden">PE Textbook (PDF)</span></a></li>
+                    </ul>
+                </div>
+                <div class="flex flex-col">
+                    <h3 class="text-lg font-serif font-bold text-yellow-400 mb-6 uppercase tracking-wider">
+                        <span class="lang-vi">Đội ngũ Phát triển</span><span class="lang-en hidden">Development Team</span>
+                    </h3>
+                    <ul class="flex flex-col gap-4 text-white/90 text-sm">
+                        <li class="flex items-center gap-3 bg-red-800/30 p-2 rounded-lg border border-red-800"><i class="fa-solid fa-chalkboard-user w-6 text-center text-yellow-400"></i> <span class="lang-vi">GVHD:</span><span class="lang-en hidden">Supervisor:</span> Thầy/Cô Giảng Viên</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-code w-6 text-center text-gray-300"></i> <span class="lang-vi">Lập trình viên:</span><span class="lang-en hidden">Developer:</span> Nguyễn Anh Khoa</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-user-graduate w-6 text-center text-gray-300"></i> <span class="lang-vi">Thành viên 2:</span><span class="lang-en hidden">Member 2:</span> Trần Thị B</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-user-graduate w-6 text-center text-gray-300"></i> <span class="lang-vi">Thành viên 3:</span><span class="lang-en hidden">Member 3:</span> Lê Văn C</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center text-sm text-white/50 pt-6">
+                © 2026 <span class="lang-vi">Đại học Quốc tế - ĐHQG TP.HCM. Bảo lưu mọi quyền.</span><span class="lang-en hidden">International University - VNU-HCMC. All rights reserved.</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- NÚT BACK TO TOP -->
+    <button id="backToTopBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="fixed bottom-8 left-8 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-[#7a1b1b] text-yellow-400 border-[3px] border-yellow-400 shadow-[0_0_15px_rgba(0,0,0,0.5)] transition-all duration-300 hover:scale-110 opacity-0 invisible sfx-btn">
+        <i class="fa-solid fa-arrow-up text-2xl font-black"></i>
+    </button>
+
+    <!-- NÚT AI BOT -->
+    <button onclick="toggleChatbot()" class="fixed bottom-8 right-8 z-50 flex h-[70px] w-[70px] items-center justify-center rounded-full bg-gradient-to-r from-yellow-400 to-yellow-500 shadow-[0_0_25px_rgba(250,204,21,0.5)] transition-all hover:scale-110 border-4 border-white dark:border-gray-800 group sfx-btn">
+        <i class="fa-solid fa-robot text-3xl text-red-900 group-hover:animate-bounce"></i>
+    </button>
+
+    <!-- GIAO DIỆN CHATBOT AI -->
+    <div id="ai-chatbot-window" class="fixed bottom-28 right-8 w-80 sm:w-96 bg-gray-50 dark:bg-darkCard border border-yellow-500/30 rounded-2xl shadow-[0_15px_40px_rgba(127,29,29,0.25)] flex-col z-50 overflow-hidden hidden transition-all origin-bottom-right font-sans">
+        <div class="bg-gradient-to-r from-red-950 via-red-900 to-red-800 border-b-2 border-yellow-400 p-4 flex justify-between items-center relative overflow-hidden">
+            <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
+            <div class="flex items-center gap-3 relative z-10">
+                <div class="w-10 h-10 bg-gradient-to-b from-yellow-300 to-yellow-500 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(250,204,21,0.4)] border border-yellow-200">
+                    <i class="fa-solid fa-robot text-red-950 text-lg"></i>
+                </div>
+                <div class="leading-tight">
+                    <div class="font-serif font-black text-yellow-400 text-lg uppercase tracking-wide drop-shadow-sm">
+                        <span class="lang-vi">AI MÁC - LÊNIN</span><span class="lang-en hidden">AI MARX - LENIN</span>
+                    </div>
+                    <div class="text-[11px] font-medium text-white/90">
+                        <span class="lang-vi">Trợ lý Kinh tế Chính trị đáng yêu</span><span class="lang-en hidden">Lovely Economy Assistant</span>
+                    </div>
+                </div>
+            </div>
+            <div class="flex gap-2 relative z-10">
+                <button onclick="clearChat()" class="w-8 h-8 text-white/70 hover:text-white hover:bg-white/10 rounded-lg flex items-center justify-center transition-colors sfx-btn" title="Xóa hội thoại"><i class="fa-regular fa-trash-can text-sm"></i></button>
+                <button onclick="toggleChatbot()" class="w-8 h-8 text-white/70 hover:text-yellow-400 hover:bg-white/10 rounded-lg flex items-center justify-center transition-colors sfx-btn"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+        </div>
+
+        <div id="chat-logs" class="p-4 h-72 overflow-y-auto flex flex-col gap-4 bg-white dark:bg-gray-900">
+            <!-- Messages rendered by renderChat() -->
+        </div>
+
+        <div class="flex gap-2 p-3 overflow-x-auto border-t border-gray-100 dark:border-gray-800 scrollbar-hide whitespace-nowrap bg-gray-50 dark:bg-gray-800">
+            <button onclick="sendSuggestion1()" class="px-4 py-1.5 bg-white dark:bg-gray-700 border border-red-200 dark:border-gray-600 text-red-800 dark:text-yellow-400 rounded-full text-xs font-bold shadow-sm hover:bg-red-50 transition-colors sfx-btn">
+                <span class="lang-vi">🌸 5 đặc điểm độc quyền?</span><span class="lang-en hidden">🌸 5 Monopoly traits?</span>
+            </button>
+            <button onclick="sendSuggestion2()" class="px-4 py-1.5 bg-white dark:bg-gray-700 border border-red-200 dark:border-gray-600 text-red-800 dark:text-yellow-400 rounded-full text-xs font-bold shadow-sm hover:bg-red-50 transition-colors sfx-btn">
+                <span class="lang-vi">💡 Tư bản tài chính là gì?</span><span class="lang-en hidden">💡 What is Finance Capital?</span>
+            </button>
+        </div>
+
+        <div class="p-3 bg-white dark:bg-darkCard border-t border-gray-200 dark:border-gray-700 flex gap-3 items-center">
+            <input type="text" id="userQueryInput" onkeypress="if(event.key === 'Enter') handleSendChat()" placeholder="Nhập câu hỏi của bạn..." class="flex-1 bg-gray-100 dark:bg-gray-700 dark:text-white px-4 py-2.5 rounded-full text-sm font-medium focus:outline-none focus:ring-2 focus:ring-red-800/20 placeholder:text-gray-500 transition-all">
+            <button onclick="handleSendChat()" class="w-10 h-10 shrink-0 bg-gradient-to-b from-red-800 to-red-950 rounded-full flex items-center justify-center hover:from-red-700 hover:to-red-900 shadow-md transition-transform active:scale-95 sfx-btn">
+                <i class="fa-solid fa-paper-plane text-yellow-400 -ml-1"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- SCRIPTS TỪ FILE CŨ -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        const sfxClick = new Howl({ src: ['https://actions.google.com/sounds/v1/ui/button_click.ogg'], volume: 0.4 });
+        const sfxPop = new Howl({ src: ['https://actions.google.com/sounds/v1/ui/pop_up_01.ogg'], volume: 0.4 });
+
+        document.querySelectorAll('.sfx-btn').forEach(el => {
+            el.addEventListener('click', () => sfxClick.play());
+        });
+
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            setTimeout(() => {
+                preloader.style.opacity = '0';
+                preloader.style.visibility = 'hidden';
+                AOS.init({ once: true, offset: 100 });
+            }, 800);
+        });
+
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const icon = document.getElementById('theme-icon');
+            html.classList.toggle('dark');
+            
+            if (html.classList.contains('dark')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                icon.classList.add('text-yellow-400');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                icon.classList.remove('text-yellow-400');
+            }
+        }
+
+        let currentLang = 'vi';
+
+        // HÀM RESET LOGO MỚI CẬP NHẬT: Không đổi language, chỉ cuộn
+        function resetToHome(e) {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function switchLanguage(lang) {
+            currentLang = lang;
+            const viElements = document.querySelectorAll('.lang-vi');
+            const enElements = document.querySelectorAll('.lang-en');
+            const viBtn = document.getElementById('btn-lang-vi');
+            const enBtn = document.getElementById('btn-lang-en');
+            const inputField = document.getElementById('userQueryInput');
+
+            if (lang === 'en') {
+                viElements.forEach(el => el.classList.add('hidden'));
+                enElements.forEach(el => el.classList.remove('hidden'));
+                viBtn.classList.remove('text-yellow-400');
+                viBtn.classList.add('text-white');
+                enBtn.classList.remove('text-white');
+                enBtn.classList.add('text-yellow-400');
+                inputField.placeholder = 'Type your question...';
+            } else {
+                viElements.forEach(el => el.classList.remove('hidden'));
+                enElements.forEach(el => el.classList.add('hidden'));
+                viBtn.classList.add('text-yellow-400');
+                viBtn.classList.remove('text-white');
+                enBtn.classList.add('text-white');
+                enBtn.classList.remove('text-yellow-400');
+                inputField.placeholder = 'Nhập câu hỏi của bạn...';
+            }
+            clearChat(); 
+        }
+
+        let chatState = {
+            isOpen: false,
+            isLoading: false,
+            messages: []
+        };
+
+        function toggleChatbot() {
+            chatState.isOpen = !chatState.isOpen;
+            const botWindow = document.getElementById('ai-chatbot-window');
+            if (chatState.isOpen) {
+                botWindow.classList.remove('hidden');
+                botWindow.classList.add('flex');
+                sfxPop.play();
+            } else {
+                botWindow.classList.add('hidden');
+                botWindow.classList.remove('flex');
+            }
+        }
+
+        function renderChat() {
+            const chatLogs = document.getElementById('chat-logs');
+            chatLogs.innerHTML = '';
+
+            chatState.messages.forEach(msg => {
+                const isUser = msg.sender === 'user';
+                const textContent = currentLang === 'vi' ? (msg.textVi || msg.text) : (msg.textEn || msg.text);
+
+                const div = document.createElement('div');
+                div.className = isUser 
+                    ? 'bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3 rounded-2xl rounded-tr-none shadow-sm text-sm max-w-[85%] font-medium leading-relaxed self-end text-black dark:text-white'
+                    : 'bg-red-50/50 dark:bg-gray-800 border border-red-100 dark:border-gray-700 p-3 rounded-2xl rounded-tl-none shadow-sm text-sm max-w-[88%] font-medium leading-relaxed self-start text-gray-800 dark:text-gray-200';
+                
+                div.innerHTML = textContent;
+                chatLogs.appendChild(div);
+            });
+
+            if (chatState.isLoading) {
+                const waitMsg = currentLang === 'vi' ? 'Đồng chí đợi mình một chút xíu nha... 🌸' : 'Give me a tiny moment, comrade... 🌸';
+                const loadingDiv = document.createElement('div');
+                loadingDiv.className = 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3 rounded-2xl rounded-tl-none shadow-sm text-sm max-w-[85%] font-medium leading-relaxed self-start text-gray-500 italic';
+                loadingDiv.innerHTML = waitMsg;
+                chatLogs.appendChild(loadingDiv);
+            }
+
+            chatLogs.scrollTop = chatLogs.scrollHeight;
+        }
+
+        function clearChat() {
+            const viGreet = 'Chào đồng chí đáng yêu! 🥰 Mình là <strong class="text-red-800 dark:text-yellow-400">Trợ lý AI Kinh tế Chính trị Mác - Lênin</strong> đây. Đừng ngại ngần, hãy hỏi mình bất cứ điều gì nha! ✨';
+            const enGreet = 'Greetings, lovely comrade! 🥰 I am your <strong class="text-red-800 dark:text-yellow-400">Marxist-Leninist AI Assistant</strong>! Don\'t hesitate to ask me anything! ✨';
+            
+            chatState.messages = [{
+                sender: 'bot',
+                textVi: viGreet,
+                textEn: enGreet
+            }];
+            chatState.isLoading = false;
+            renderChat();
+        }
+
+        async function handleSendChat() {
+            const input = document.getElementById('userQueryInput');
+            const text = input.value.trim();
+            if (!text) return;
+
+            chatState.messages.push({ sender: 'user', text: text });
+            chatState.isLoading = true;
+            input.value = '';
+            renderChat();
+
+            try {
+                const response = await fetch('http://127.0.0.1:5000/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: text })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    chatState.messages.push({ sender: 'bot', text: data.reply || data.error });
+                } else {
+                    throw new Error('API Error');
+                }
+            } catch (err) {
+                let fallbackVi = 'Tư bản độc quyền sinh ra từ tự do cạnh tranh, dẫn đến tích tụ và tập trung sản xuất ngày càng cao! 💡';
+                let fallbackEn = 'Monopoly capitalism arises from free competition, leading to higher concentration of production! 💡';
+
+                if (text.toLowerCase().includes('đặc điểm') || text.toLowerCase().includes('monopoly')) {
+                    fallbackVi = '5 đặc điểm độc quyền: 1. Tập trung sản xuất, 2. Tư bản tài chính, 3. Xuất khẩu tư bản, 4. Liên minh kinh tế, 5. Phân chia thế giới.';
+                    fallbackEn = '5 Monopoly traits: 1. Production concentration, 2. Financial capital, 3. Capital export, 4. Economic alliances, 5. World division.';
+                } else if (text.toLowerCase().includes('tài chính') || text.toLowerCase().includes('finance')) {
+                    fallbackVi = 'Tư bản tài chính là sự hợp nhất giữa tư bản ngân hàng độc quyền và tư bản công nghiệp độc quyền!';
+                    fallbackEn = 'Financial capital is the merger of monopoly banking capital and monopoly industrial capital!';
+                }
+
+                chatState.messages.push({
+                    sender: 'bot',
+                    textVi: `${fallbackVi} <br><span class="text-[11px] text-gray-400 block mt-1">(Chế độ phản hồi nhanh Off-line)</span>`,
+                    textEn: `${fallbackEn} <br><span class="text-[11px] text-gray-400 block mt-1">(Off-line quick response)</span>`
+                });
+            } finally {
+                chatState.isLoading = false;
+                renderChat();
+                sfxPop.play();
+            }
+        }
+
+        function sendSuggestion1() {
+            document.getElementById('userQueryInput').value = currentLang === 'vi' ? '5 đặc điểm độc quyền là gì?' : 'What are the 5 characteristics of monopoly?';
+            handleSendChat();
+        }
+        function sendSuggestion2() {
+            document.getElementById('userQueryInput').value = currentLang === 'vi' ? 'Tư bản tài chính là gì?' : 'What is Finance Capital?';
+            handleSendChat();
+        }
+
+        window.addEventListener('scroll', () => {
+            const backToTopBtn = document.getElementById('backToTopBtn');
+            const scrollPosition = window.scrollY + window.innerHeight;
+            const triggerPoint = document.documentElement.scrollHeight * 0.85;
+            
+            if (scrollPosition >= triggerPoint || window.scrollY > 400) {
+                backToTopBtn.classList.remove('opacity-0', 'invisible');
+                backToTopBtn.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopBtn.classList.add('opacity-0', 'invisible');
+                backToTopBtn.classList.remove('opacity-100', 'visible');
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            clearChat();
+        });
+    </script>
+</body>
+</html>
