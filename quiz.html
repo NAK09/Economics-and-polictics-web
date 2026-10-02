@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>try { if (localStorage.getItem('ktct-theme') === 'dark') document.documentElement.classList.add('dark'); } catch (_) {}</script>
     <title>Trắc nghiệm & Ôn tập | KTCT Mác - Lênin</title>
     
     <!-- Tailwind CSS -->
@@ -73,6 +74,21 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35),
                         inset 0 1px 1px rgba(255, 255, 255, 0.1);
+        }
+        .liquid-title-text {
+            background: linear-gradient(100deg, #7f1d1d 5%, #eab308 48%, #7f1d1d 95%);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: quizTitleShine 6s linear infinite;
+        }
+        .dark .liquid-title-text {
+            background-image: linear-gradient(100deg, #facc15 5%, #fff7cc 48%, #facc15 95%);
+        }
+        @keyframes quizTitleShine { to { background-position: 200% center; } }
+        @media (prefers-reduced-motion: reduce) {
+            .liquid-title-text { animation: none; }
         }
 
         /* Vệt sáng lỏng chảy (Liquid Shimmer) */
@@ -213,21 +229,21 @@
     <div id="flash-overlay" class="fixed inset-0 z-[100] pointer-events-none"></div>
 
     <!-- NAVBAR VỚI LIQUID GLASS EFFECT -->
-    <nav class="fixed top-0 left-0 w-full z-50 px-4 md:px-8 py-3.5 flex justify-between items-center liquid-glass-nav liquid-shine transition-all duration-300">
-        <a href="index.html" class="flex items-center gap-3 sfx-btn group">
-            <div class="w-9 h-9 bg-white dark:bg-slate-800 rounded-full flex items-center justify-center border border-red-800/30 dark:border-yellow-400/30 shadow-sm transition-transform group-hover:scale-110">
+    <nav class="fixed top-0 left-0 w-full h-20 z-50 px-4 md:px-8 flex justify-between items-center liquid-glass-nav liquid-shine transition-all duration-300">
+        <a href="/" class="flex items-center gap-3 sfx-btn group">
+            <div class="w-11 h-11 bg-white dark:bg-slate-800 rounded-full flex items-center justify-center border border-red-800/30 dark:border-yellow-400/30 shadow-sm transition-transform group-hover:scale-110">
                 <i class="fa-solid fa-arrow-left text-red-800 dark:text-yellow-400 text-sm"></i>
             </div>
             <div class="font-bold leading-tight">
-                <span class="text-base font-serif font-black text-red-900 dark:text-yellow-400 tracking-wide">
+                <span class="text-lg md:text-xl font-serif font-black text-red-900 dark:text-yellow-400 tracking-wide">
                     <span class="lang-vi">Trở về Trang chủ</span>
                     <span class="lang-en hidden">Back to Home</span>
                 </span>
             </div>
         </a>
         
-        <div class="flex items-center gap-3">
-            <button onclick="toggleDarkMode()" class="w-9 h-9 rounded-full bg-white/80 dark:bg-white/10 border border-gray-200 dark:border-white/20 flex items-center justify-center text-gray-700 dark:text-white hover:text-yellow-500 shadow-sm transition-all sfx-btn">
+        <div class="flex items-center gap-3 md:gap-4">
+            <button onclick="toggleDarkMode()" class="w-10 h-10 rounded-full bg-white/80 dark:bg-white/10 border border-gray-200 dark:border-white/20 flex items-center justify-center text-gray-700 dark:text-white hover:text-yellow-500 shadow-sm transition-all sfx-btn">
                 <i id="theme-icon" class="fa-solid fa-moon text-base"></i>
             </button>
             <div class="flex items-center gap-2 text-xs font-bold bg-white/80 dark:bg-black/40 px-3 py-1.5 rounded-full border border-gray-200 dark:border-white/20 shadow-sm select-none">
@@ -239,37 +255,40 @@
     </nav>
 
     <!-- MAIN CONTAINER (Đã tối ưu khoảng trắng) -->
-    <main class="flex-grow px-4 md:px-6 max-w-4xl mx-auto w-full relative h-full flex flex-col py-4">
+    <main class="flex-grow px-4 md:px-8 max-w-6xl mx-auto w-full relative flex flex-col py-4 md:py-6">
         
         <!-- ================= MÀN HÌNH CHỌN CHẾ ĐỘ (SẢNH CHÍNH) ================= -->
-        <div id="view-selection" class="flex flex-col items-center justify-center my-auto py-2 view-transition view-visible w-full">
-            <div class="text-center mb-6">
-                <h1 class="text-3xl md:text-4xl font-serif font-black text-red-900 dark:text-yellow-400 mb-2 uppercase tracking-tight">
+        <div id="view-selection" class="flex flex-col items-center justify-center my-auto py-2 md:py-4 view-transition view-visible w-full">
+            <div class="relative overflow-hidden text-center mb-6 md:mb-8 w-full max-w-5xl rounded-3xl liquid-glass-card liquid-shine px-5 py-6 md:px-10 md:py-8">
+                <div class="absolute -top-16 -right-12 w-48 h-48 rounded-full bg-yellow-400/10 dark:bg-yellow-400/10 pointer-events-none"></div>
+                <div class="relative z-10">
+                <h1 class="liquid-title-text text-3xl md:text-5xl font-serif font-black mb-3 uppercase tracking-tight">
                     <span class="lang-vi">Trạm Kiểm Tra Kiến Thức</span>
                     <span class="lang-en hidden">Knowledge Checkpoint</span>
                 </h1>
-                <p class="text-slate-600 dark:text-gray-300 text-sm font-medium">
+                <p class="text-slate-600 dark:text-gray-300 text-sm md:text-base font-medium">
                     <span class="lang-vi">Lựa chọn chế độ thử thách phù hợp với bạn</span>
                     <span class="lang-en hidden">Choose your challenge mode</span>
                 </p>
+                </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-3xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 w-full max-w-5xl mx-auto">
                 <!-- Thẻ 1: Ôn tập 7 câu -->
-                <button onclick="startPracticeMode()" class="group relative liquid-glass-card rounded-2xl p-6 hover:-translate-y-1 transition-all duration-300 flex flex-col text-left h-full sfx-btn cursor-pointer overflow-hidden">
+                <button onclick="startPracticeMode()" class="group relative liquid-glass-card rounded-3xl p-7 md:p-9 hover:-translate-y-1 transition-all duration-300 flex flex-col text-left min-h-[270px] md:min-h-[320px] sfx-btn cursor-pointer overflow-hidden">
                     <div class="absolute -top-10 -right-10 w-36 h-36 bg-blue-500/10 dark:bg-blue-500/20 rounded-full group-hover:scale-150 transition-transform duration-500"></div>
                     
                     <div class="relative z-10 flex flex-col h-full">
-                        <div class="w-11 h-11 bg-blue-100 dark:bg-blue-900/60 text-blue-600 dark:text-blue-400 rounded-xl flex items-center justify-center text-lg mb-4 shadow-sm">
+                        <div class="w-14 h-14 bg-blue-100 dark:bg-blue-900/60 text-blue-600 dark:text-blue-400 rounded-2xl flex items-center justify-center text-2xl mb-5 shadow-sm">
                             <i class="fa-solid fa-book-open-reader"></i>
                         </div>
                         
-                        <h2 class="text-xl font-serif font-bold text-slate-900 dark:text-white mb-2">
-                            <span class="lang-vi">Trắc Nghiệm 7 Câu</span>
+                        <h2 class="text-2xl md:text-3xl font-serif font-bold text-slate-900 dark:text-white mb-3">
+                            <span class="lang-vi">Trắc Nghiệm 7 <span class="inline-block align-baseline relative -top-0.5 mx-0.5 text-[0.48em] font-black italic tracking-tight text-red-600/65 dark:text-yellow-300/65 -rotate-6" title="Khối lượng kiến thức cần gánh" aria-label="100 kg kiến thức">100kg</span> Câu</span>
                             <span class="lang-en hidden">7-Question Quiz</span>
                         </h2>
                         
-                        <p class="text-slate-600 dark:text-gray-300 text-xs leading-relaxed mb-6 flex-grow">
+                        <p class="text-slate-600 dark:text-gray-300 text-sm leading-relaxed mb-6 flex-grow">
                             <span class="lang-vi">Làm bài theo từng set 7 câu ngẫu nhiên, không áp lực thời gian, có giải thích chi tiết cho từng đáp án.</span>
                             <span class="lang-en hidden">Take a randomized 7-question set without time pressure, featuring detailed explanations.</span>
                         </p>
@@ -283,24 +302,24 @@
                 </button>
 
                 <!-- Thẻ 2: Cờ chớp -->
-                <button onclick="showReadyModal()" class="group relative liquid-glass-card rounded-2xl p-6 hover:-translate-y-1 transition-all duration-300 flex flex-col text-left h-full sfx-btn cursor-pointer overflow-hidden">
+                <button onclick="showReadyModal()" class="group relative liquid-glass-card rounded-3xl p-7 md:p-9 hover:-translate-y-1 transition-all duration-300 flex flex-col text-left min-h-[270px] md:min-h-[320px] sfx-btn cursor-pointer overflow-hidden">
                     <div class="absolute -top-10 -right-10 w-36 h-36 bg-red-500/10 dark:bg-red-500/20 rounded-full group-hover:scale-150 transition-transform duration-500"></div>
                     
                     <div class="absolute top-0 right-6 bg-red-600 text-white text-[9px] font-black px-2.5 py-0.5 rounded-b-md tracking-wider">HARDCORE</div>
                     
                     <div class="relative z-10 flex flex-col h-full">
-                        <div class="w-11 h-11 bg-red-100 dark:bg-red-900/60 text-red-600 dark:text-red-400 rounded-xl flex items-center justify-center text-lg mb-4 shadow-sm">
+                        <div class="w-14 h-14 bg-red-100 dark:bg-red-900/60 text-red-600 dark:text-red-400 rounded-2xl flex items-center justify-center text-2xl mb-5 shadow-sm">
                             <i class="fa-solid fa-bolt"></i>
                         </div>
                         
-                        <h2 class="text-xl font-serif font-bold text-slate-900 dark:text-white mb-2">
+                        <h2 class="text-2xl md:text-3xl font-serif font-bold text-slate-900 dark:text-white mb-3">
                             <span class="lang-vi">Nhanh Như 10 Gió</span>
                             <span class="lang-en hidden">Blitz Game</span>
                         </h2>
                         
                         <p class="text-slate-600 dark:text-gray-300 text-xs leading-relaxed mb-6 flex-grow">
-                            <span class="lang-vi">30 giây đếm ngược liên hoàn. Trả lời đúng +1s/+2s, sai -2s. Hai câu liên tiếp luôn khác nhau!</span>
-                            <span class="lang-en hidden">30s countdown challenge. Correct adds time, wrong subtracts time. No consecutive duplicate questions!</span>
+                            <span class="lang-vi">Hoàn thành 30 câu liên tiếp. Chỉ khi còn ít thời gian, trả lời đúng mới được cộng thêm; trả lời sai sẽ bị choáng 2 giây.</span>
+                            <span class="lang-en hidden">Answer 30 questions in a row. Correct answers earn time only near the end; wrong answers stun you for 2 seconds.</span>
                         </p>
                         
                         <span class="text-red-600 dark:text-red-400 font-bold text-xs flex items-center gap-2 group-hover:gap-3 transition-all mt-auto">
@@ -322,8 +341,8 @@
                     <span class="lang-en hidden">Are you ready?</span>
                 </h2>
                 <p class="text-slate-600 dark:text-gray-300 mb-5 text-xs leading-relaxed">
-                    <span class="lang-vi">30 giây đếm ngược sẽ bắt đầu ngay khi bấm nút. Mỗi câu đúng bấm nhanh sẽ nhận bonus thời gian!</span>
-                    <span class="lang-en hidden">30s timer starts as soon as you click. Fast correct answers grant extra time bonus!</span>
+                    <span class="lang-vi">Trả lời đúng khi còn 5 giây được +1 giây, còn 3 giây được +2 giây. Trả lời sai sẽ bị khóa thao tác trong 2 giây.</span>
+                    <span class="lang-en hidden">Correct answers earn +1s at 5 seconds and +2s at 3 seconds. A wrong answer stuns you for 2 seconds.</span>
                 </p>
                 <div class="flex gap-3">
                     <button onclick="closeReadyModal()" class="flex-1 py-2.5 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 text-slate-700 dark:text-gray-200 rounded-xl font-bold text-sm transition-colors sfx-btn">
@@ -718,11 +737,12 @@
             }))
         ];
 
-        let currentLang = 'vi';
+        let currentLang = (() => { try { return localStorage.getItem('ktct-language') || 'vi'; } catch (_) { return 'vi'; } })();
 
         /* ================= TIỆN ÍCH HỆ THỐNG ================= */
         function switchLanguage(lang) {
             currentLang = lang;
+            try { localStorage.setItem('ktct-language', lang); } catch (_) {}
             document.querySelectorAll('.lang-vi').forEach(el => el.classList.toggle('hidden', lang === 'en'));
             document.querySelectorAll('.lang-en').forEach(el => el.classList.toggle('hidden', lang === 'vi'));
 
@@ -759,6 +779,7 @@
             const html = document.documentElement;
             const icon = document.getElementById('theme-icon');
             html.classList.toggle('dark');
+            try { localStorage.setItem('ktct-theme', html.classList.contains('dark') ? 'dark' : 'light'); } catch (_) {}
             icon.className = html.classList.contains('dark') ? 'fa-solid fa-sun text-base text-yellow-400' : 'fa-solid fa-moon text-base';
         }
 
@@ -786,6 +807,8 @@
 
         function backToHome() {
             clearInterval(timerInterval);
+            clearTimeout(blitzStunTimeout);
+            blitzAnswerLocked = false;
             showView('view-selection');
         }
 
@@ -956,6 +979,8 @@
         let timerInterval = null;
         let blitzScore = 0;
         let isBlitzOver = false;
+        let blitzAnswerLocked = false;
+        let blitzStunTimeout = null;
         let fxTimeout = null;
 
         function showReadyModal() {
@@ -988,6 +1013,7 @@
         /* LẤY CÂU HỎI NGẪU NHIÊN - ĐẢM BẢO 2 CÂU LIỀN KỀ KHÁC NHAU HOÀN TOÀN */
         function getRandomBlitzQuestion() {
             let available = questionBank.filter(q => q.id !== lastBlitzQuestionId);
+            if (!available.length) available = questionBank;
             let selected = available[Math.floor(Math.random() * available.length)];
             lastBlitzQuestionId = selected.id;
             return selected;
@@ -999,7 +1025,9 @@
             blitzScore = 0;
             timeLeft = BLITZ_START_TIME;
             isBlitzOver = false;
+            blitzAnswerLocked = false;
             lastBlitzQuestionId = null;
+            clearTimeout(blitzStunTimeout);
             
             nextBlitzQuestion();
             
@@ -1020,6 +1048,7 @@
                 return;
             }
             blitzCount++;
+            blitzAnswerLocked = false;
             currentBlitzQuestion = getRandomBlitzQuestion();
             updateBlitzUI();
         }
@@ -1049,6 +1078,7 @@
             
             const optionsContainer = document.getElementById('blitz-options');
             optionsContainer.innerHTML = '';
+            document.getElementById('blitz-question-text').textContent = text;
             
             opts.forEach((opt, i) => {
                 const btn = document.createElement('button');
@@ -1070,10 +1100,12 @@
 
         /* XỬ LÝ ĐÁP ÁN VÀ ẨN BẢNG CỘNG/TRỪ THỜI GIAN KHI HẾT ANIMATION (ĐÃ SỬA LỖI ẢNH 1) */
         function handleBlitzAnswer(selectedIdx) {
-            if (isBlitzOver || !currentBlitzQuestion) return;
+            if (isBlitzOver || blitzAnswerLocked || !currentBlitzQuestion) return;
+            blitzAnswerLocked = true;
             
             const q = currentBlitzQuestion;
             const fxEl = document.getElementById('blitz-time-fx');
+            const optionsContainer = document.getElementById('blitz-options');
 
             // Xóa animation cũ nếu người dùng bấm nhanh liên tục
             clearTimeout(fxTimeout);
@@ -1081,26 +1113,30 @@
             void fxEl.offsetWidth; // Force reflow
 
             if (selectedIdx === q.correct) {
-                // ĐÚNG -> Cộng thời gian mượt mà
+                // Chỉ cộng thêm thời gian ở chặng cuối để tránh spam kéo dài ván chơi.
                 sfx.correct.play();
                 triggerFlash('correct');
                 blitzScore++;
                 
-                let bonus = 1.0;
-                if (timeLeft < 5.0) bonus = 2.0;
+                const bonus = timeLeft <= 3 ? 2 : (timeLeft <= 5 ? 1 : 0);
 
                 timeLeft = Math.min(timeLeft + bonus, BLITZ_START_TIME);
                 
-                fxEl.textContent = `+${bonus}s`;
+                fxEl.textContent = bonus ? `+${bonus}s` : (currentLang === 'vi' ? 'CHÍNH XÁC' : 'CORRECT');
                 fxEl.className = "absolute -left-12 top-2 font-black text-2xl text-emerald-500 drop-shadow-md time-fx-anim pointer-events-none z-20";
+                optionsContainer.querySelectorAll('button').forEach(button => { button.disabled = true; });
             } else {
-                // SAI -> Trừ 2 giây
+                // Sai không trừ điểm thời gian trực tiếp; người chơi bị choáng 2 giây.
                 sfx.wrong.play();
                 triggerFlash('wrong');
-                const penalty = 2.0;
-                timeLeft -= penalty;
-                
-                fxEl.textContent = `-${penalty}s`;
+                optionsContainer.querySelectorAll('button').forEach(button => {
+                    button.disabled = true;
+                    button.classList.add('opacity-50', 'cursor-not-allowed');
+                });
+                document.getElementById('blitz-question-text').textContent = currentLang === 'vi'
+                    ? 'BỊ CHOÁNG! Chờ 2 giây…'
+                    : 'STUNNED! Wait 2 seconds…';
+                fxEl.textContent = currentLang === 'vi' ? 'CHOÁNG 2s' : 'STUN 2s';
                 fxEl.className = "absolute -left-12 top-2 font-black text-2xl text-red-600 drop-shadow-md time-fx-anim pointer-events-none z-20";
             }
 
@@ -1112,7 +1148,11 @@
 
             updateBlitzTimerDisplay();
 
-            if (timeLeft <= 0) {
+            if (selectedIdx !== q.correct) {
+                blitzStunTimeout = setTimeout(() => {
+                    if (!isBlitzOver) nextBlitzQuestion();
+                }, 2000);
+            } else if (timeLeft <= 0) {
                 timeLeft = 0;
                 endBlitz(false);
             } else {
@@ -1123,6 +1163,8 @@
         function endBlitz(isWin) {
             isBlitzOver = true;
             clearInterval(timerInterval);
+            clearTimeout(blitzStunTimeout);
+            blitzAnswerLocked = true;
             showView('view-blitz-result');
             
             const title = document.getElementById('blitz-result-title');
@@ -1189,6 +1231,13 @@
             });
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            switchLanguage(currentLang);
+            document.getElementById('theme-icon').className = document.documentElement.classList.contains('dark')
+                ? 'fa-solid fa-sun text-base text-yellow-400'
+                : 'fa-solid fa-moon text-base';
+        });
     </script>
     <script src="/chat-widget.js" defer></script>
 </body>
