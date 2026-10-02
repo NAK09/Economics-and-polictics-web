@@ -6,7 +6,6 @@ import google.generativeai as genai
 app = Flask(__name__)
 CORS(app)
 
-# Cấu hình Gemini API
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
 if GEMINI_API_KEY:
     genai.configure(api_key=GEMINI_API_KEY)
@@ -23,6 +22,7 @@ QUY TẮC ĐA NGÔN NGỮ (TỰ ĐỘNG CẢM BIẾN):
 2. Nếu người dùng hỏi bằng Tiếng Anh, bạn vẫn phải giữ phong cách siêu dễ thương (dùng các từ như "lovely comrade", "friend", "yay!", "let's explore") kết hợp với thuật ngữ chuyên ngành chính xác.
 
 PHẠM VI KIẾN THỨC: Trả lời chính xác, khoa học và đầy đủ kiến thức trong TOÀN BỘ GIÁO TRÌNH KINH TẾ CHÍNH TRỊ MÁC - LÊNIN.
+
 """
 
 try:
@@ -36,7 +36,6 @@ except Exception:
         system_instruction=system_instruction
     )
 
-# Đổi route thành /api/chat hoặc /chat
 @app.route('/api/chat', methods=['POST'])
 @app.route('/chat', methods=['POST'])
 def chat():
