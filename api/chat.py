@@ -40,8 +40,8 @@ class handler(BaseHTTPRequestHandler):
             if not api_key:
                 return self._json(503, {"error": "Máy chủ chưa được cấu hình GEMINI_API_KEY."})
 
-            model_name = os.environ.get("GEMINI_MODEL", "gemini-3.8-flash").strip()
-            fallback_model = os.environ.get("GEMINI_FALLBACK_MODEL", "gemini-3.7-flash").strip()
+            model_name = os.environ.get("GEMINI_MODEL", "gemini-3.5-flash-lite").strip()
+            fallback_model = os.environ.get("GEMINI_FALLBACK_MODEL", "gemini-3.1-flash-lite").strip()
             client = genai.Client(api_key=api_key)
             config = types.GenerateContentConfig(system_instruction=SYSTEM_INSTRUCTION)
             try:
