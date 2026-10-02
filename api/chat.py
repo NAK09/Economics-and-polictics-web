@@ -14,6 +14,12 @@ Giải thích kiến thức bằng ví dụ gần gũi với sinh viên. Trả l
 
 
 class handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        return self._json(200, {
+            "ok": True,
+            "geminiConfigured": bool(os.environ.get("GEMINI_API_KEY")),
+        })
+
     def do_POST(self):
         try:
             content_length = int(self.headers.get("Content-Length", "0"))
