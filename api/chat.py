@@ -41,12 +41,32 @@ class handler(BaseHTTPRequestHandler):
                 return self._json(503, {"error": "Máy chủ chưa được cấu hình GEMINI_API_KEY."})
 
             model_name = os.environ.get("GEMINI_MODEL", "gemini-flash-latest").strip()
+            fallback_model = os.environ.get("GEMINI_FALLBACK_MODEL", "gemini-3.7-flash").strip()
             client = genai.Client(api_key=api_key)
-            result = client.models.generate_content(
-                model=model_name,
-                contents=message.strip(),
-                config=types.GenerateContentConfig(system_instruction=SYSTEM_INSTRUCTION),
-            )
+            config = types.GenerateContentConfig(system_instruction=SYSTEM_INSTRUCTION)
+            try:
+                result = client.models.generate_content(
+                    model=model_name,
+                    contents=message.strip(),
+                    config=config,
+                )
+            except Exception as primary_error:
+                status = getattr(primary_error, "code", None)
+                if callable(status):
+                    status = status()
+                if status != 503 or not fallback_model or fallback_model == model_name:
+                    raise
+
+                logging.warning(
+                    "Gemini model %s returned 503; trying fallback model %s",
+                    model_name,
+                    fallback_model,
+                )
+                result = client.models.generate_content(
+                    model=fallback_model,
+                    contents=message.strip(),
+                    config=config,
+                )
             reply = result.text
             if not reply:
                 return self._json(502, {"error": "AI không trả về nội dung. Vui lòng thử lại."})
