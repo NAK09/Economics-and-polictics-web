@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Khung Cửi 8 Giờ</title>
+<title>Xưởng Ô Tô 8 Giờ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
@@ -252,7 +252,7 @@ ul.tight li{margin-bottom:3px; font-size:.87rem;}
   <div class="hero-bgfx" id="hero-bgfx"></div>
   <div class="start-box">
     <div class="lang-toggle" id="lang-toggle-start"></div>
-    <div style="font-size:2.1rem; margin-bottom:8px;">🏛️</div>
+    <div style="font-size:2.1rem; margin-bottom:8px;">🏭</div>
     <div class="kicker" id="s-kicker"></div>
     <h1 id="s-title"></h1>
     <p class="sub" id="s-sub"></p>
@@ -298,11 +298,11 @@ ul.tight li{margin-bottom:3px; font-size:.87rem;}
 
 <script>
 /* =========================================================
-   KHUNG CỬI 8 GIỜ — xưởng dệt thời Cách mạng công nghiệp I
+   XƯỞNG Ô TÔ 8 GIỜ — xưởng ô tô thuở sơ khai ngành công nghiệp
    Mô phỏng quản lý 6 màn · song ngữ VI/EN · KTCT Mác-Lênin
    ========================================================= */
 
-const FMT = n => Math.round(n).toLocaleString('vi-VN') + 'đ';
+const FMT = n => '$' + (Math.round(n*10)/10).toLocaleString('en-US');
 function L(o){ return o[S.lang]; }
 
 /* ---------------- global state ---------------- */
@@ -317,24 +317,24 @@ const DIFF = {
   easy:{
     label:{vi:'Dễ',en:'Easy'}, emoji:'🌤️',
     desc:{vi:'Hợp để làm quen luật chơi và các khái niệm.',en:'Good for getting used to the rules and concepts.'},
-    L1start:2500000, L1target:7000000,
-    L4target:14000000, L4mrate:80, L4workhealth:30,
+    L1start:250, L1target:700,
+    L4target:1400, L4mrate:80, L4workhealth:30,
     L5health:30, L5discCap:75, L5discWork:85,
     L6score:3
   },
   normal:{
     label:{vi:'Vừa',en:'Normal'}, emoji:'⚖️',
     desc:{vi:'Cân bằng — đúng như đề cương thiết kế.',en:'Balanced — matches the original design.'},
-    L1start:2000000, L1target:10000000,
-    L4target:20000000, L4mrate:100, L4workhealth:40,
+    L1start:200, L1target:1000,
+    L4target:2000, L4mrate:100, L4workhealth:40,
     L5health:40, L5discCap:60, L5discWork:70,
     L6score:4
   },
   hard:{
     label:{vi:'Khó',en:'Hard'}, emoji:'🔥',
     desc:{vi:'Thử thách — biên độ sai lầm rất hẹp.',en:'Challenging — very little room for error.'},
-    L1start:1600000, L1target:14000000,
-    L4target:28000000, L4mrate:130, L4workhealth:50,
+    L1start:160, L1target:1400,
+    L4target:2800, L4mrate:130, L4workhealth:50,
     L5health:50, L5discCap:45, L5discWork:55,
     L6score:5
   }
@@ -424,10 +424,10 @@ function openModal(html){ document.getElementById('modal-body').innerHTML=html; 
    TEXT DICTIONARY (UI chrome)
    ========================================================= */
 const UI = {
-  gameTitle:{vi:'Khung Cửi 8 Giờ', en:'The 8-Hour Loom'},
-  gameSub:{vi:'Xưởng dệt · Cách mạng công nghiệp lần I', en:'A weaving mill · First Industrial Revolution'},
+  gameTitle:{vi:'Xưởng Ô Tô 8 Giờ', en:'The 8-Hour Auto Workshop'},
+  gameSub:{vi:'Xưởng ô tô · Buổi bình minh ngành công nghiệp ô tô', en:'An auto workshop · The dawn of the automobile industry'},
   startKicker:{vi:'MÔ PHỎNG QUẢN LÝ · KTCT MÁC – LÊNIN', en:'MANAGEMENT SIMULATION · MARXIST POLITICAL ECONOMY'},
-  startSub:{vi:'Từ khung cửi tay của một thợ dệt tự do, đến một xưởng dệt máy đầy công nhân — rồi một phiên toà để bạn tự trả lời: đây là hợp tác, hay là bóc lột?', en:'From a lone weaver at a hand loom to a power-loom mill full of workers — then a tribunal where you answer for yourself: cooperation, or exploitation?'},
+  startSub:{vi:'Từ máy tiện tay của một thợ cơ khí tự do, đến một xưởng ô tô đầy công nhân — rồi một phiên toà để bạn tự trả lời: đây là hợp tác, hay là bóc lột?', en:'From a lone mechanic at a hand lathe to a car workshop full of workers — then a tribunal where you answer for yourself: cooperation, or exploitation?'},
   play:{vi:'▶ Bắt đầu', en:'▶ Start'},
   rules:{vi:'📜 Luật chơi', en:'📜 Rules'},
   credit:{vi:'6 màn · 1 lượt = 1 tháng', en:'6 stages · 1 turn = 1 month'},
@@ -439,7 +439,7 @@ const UI = {
     <p><b>Kiến thức:</b> mỗi màn mở khoá dần các khái niệm, xem trong mục "Thư viện kiến thức" ở thanh bên.</p>
     <p><b>Thắng/thua từng màn</b> chỉ để bạn thấy hệ quả của lựa chọn — thua không mất tiến trình lâu dài, bạn luôn được chơi lại.</p>`,
     en:`<p><b>Pace:</b> one turn = one month. Each turn opens with a random event card — you pick a response, then see the outcome.</p>
-    <p><b>Role:</b> play as the <b>mill owner</b> (set prices, wages, machinery) or as a <b>worker</b> (negotiate, react to the owner's decisions). Stages 1–2 have no employer–worker relation yet, so both roles experience them the same way.</p>
+    <p><b>Role:</b> play as the <b>workshop owner</b> (set prices, wages, machinery) or as a <b>worker</b> (negotiate, react to the owner's decisions). Stages 1–2 have no employer–worker relation yet, so both roles experience them the same way.</p>
     <p><b>W = c + v + m:</b> c (machinery, raw material — only transfers value, never creates more), v (wages), m (surplus value — created by living labour). The workday bar splits into t (necessary labour time, green) and t′ (surplus labour time, red).</p>
     <p><b>Knowledge:</b> each stage unlocks concepts — check the "Knowledge library" in the sidebar.</p>
     <p><b>Winning/losing a stage</b> is just there to show you the consequence of your choices — losing never erases progress, you can always retry.</p>`},
@@ -451,15 +451,15 @@ const UI = {
   diffTitle:{vi:'Chọn độ khó', en:'Choose a difficulty'},
   diffSub:{vi:'Mỗi độ khó đổi mục tiêu cần đạt ở các màn có thắng/thua. Chọn xong sẽ giữ nguyên suốt ván chơi.', en:'Each difficulty changes the targets in the win/lose stages. Once chosen, it stays fixed for the whole playthrough.'},
   diffWarn:{vi:'⚠️ Không thể đổi lại giữa chừng — chỉ đổi được khi chơi lại từ đầu.', en:'⚠️ Cannot be changed mid-game — only by restarting from the beginning.'},
-  roleCapTitle:{vi:'Nhà tư bản', en:'The Mill Owner'},
-  roleCapDesc:{vi:'Bạn điều hành xưởng: định giá, trả lương, mua máy móc, quyết định giờ làm — và nhìn thấy toàn bộ sổ sách W = c + v + m.', en:'You run the mill: set prices, pay wages, buy machinery, decide hours — and see the full ledger, W = c + v + m.'},
-  roleWorkTitle:{vi:'Người thợ dệt', en:'The Weaver'},
+  roleCapTitle:{vi:'Nhà tư bản', en:'The Workshop Owner'},
+  roleCapDesc:{vi:'Bạn điều hành xưởng: định giá, trả lương, mua máy móc, quyết định giờ làm — và nhìn thấy toàn bộ sổ sách W = c + v + m.', en:'You run the workshop: set prices, pay wages, buy machinery, decide hours — and see the full ledger, W = c + v + m.'},
+  roleWorkTitle:{vi:'Người thợ cơ khí', en:'The Mechanic'},
   roleWorkDesc:{vi:'Bạn là một công nhân: nhận hay từ chối lời mời làm việc, chấp nhận hay phản đối tăng ca — và cảm nhận hậu quả trên chính sức khoẻ của mình.', en:'You are a worker: accept or refuse job offers, agree to or resist overtime — and feel the consequences in your own health.'},
   continue:{vi:'Tiếp tục →', en:'Continue →'},
   back:{vi:'← Quay lại', en:'← Back'},
-  menuGreet:{vi:'Chào mừng đến xưởng dệt 👋', en:'Welcome to the mill 👋'},
-  menuIntroCap:{vi:'Bạn sẽ đi từ một thợ dệt tự do, đến chủ một xưởng dệt máy đầy công nhân, rồi một phiên toà để tự trả lời: quan hệ chủ xưởng – thợ dệt là hợp tác tự nguyện, hay còn là bóc lột?', en:'You will go from a free weaver, to the owner of a power-loom mill full of workers, to a tribunal where you answer for yourself: is the owner–weaver relation just voluntary cooperation, or still exploitation?'},
-  menuIntroWork:{vi:'Bạn sẽ đi từ một thợ dệt tự do, đến một công nhân trong xưởng dệt máy, rồi một phiên toà để tự trả lời: bạn có đang bị bóc lột, dù mọi thứ trông có vẻ công bằng?', en:'You will go from a free weaver, to a worker inside a power-loom mill, to a tribunal where you answer for yourself: are you being exploited, even when everything looks fair on paper?'},
+  menuGreet:{vi:'Chào mừng đến xưởng ô tô 👋', en:'Welcome to the workshop 👋'},
+  menuIntroCap:{vi:'Bạn sẽ đi từ một thợ cơ khí tự do, đến chủ một xưởng ô tô đầy công nhân, rồi một phiên toà để tự trả lời: quan hệ chủ xưởng – thợ cơ khí là hợp tác tự nguyện, hay còn là bóc lột?', en:'You will go from a free mechanic, to the owner of a car workshop full of workers, to a tribunal where you answer for yourself: is the owner–mechanic relation just voluntary cooperation, or still exploitation?'},
+  menuIntroWork:{vi:'Bạn sẽ đi từ một thợ cơ khí tự do, đến một công nhân trong xưởng ô tô, rồi một phiên toà để tự trả lời: bạn có đang bị bóc lột, dù mọi thứ trông có vẻ công bằng?', en:'You will go from a free mechanic, to a worker inside a car workshop, to a tribunal where you answer for yourself: are you being exploited, even when everything looks fair on paper?'},
   startL1:{vi:'Bắt đầu màn 1 →', en:'Start stage 1 →'},
   knowledgeLib:{vi:'📖 Thư viện kiến thức', en:'📖 Knowledge library'},
   rulesSide:{vi:'❓ Luật chơi', en:'❓ Rules'},
@@ -518,10 +518,10 @@ function unlock(id){
    ========================================================= */
 function levelMeta(){
   return [
-    {n:1, id:'L1', name:{vi:'Thợ dệt tự do', en:'The free weaver'}, tag:'H–T–H'},
+    {n:1, id:'L1', name:{vi:'Thợ cơ khí tự do', en:'The free mechanic'}, tag:'H–T–H'},
     {n:2, id:'L2', name:{vi:'Tiền đẻ ra tiền?', en:'Money begets money?'}, tag:'T–H–T′'},
     {n:3, id:'L3', name:{vi:'Việc làm đầu tiên', en:'The first job'}, tag:{vi:'Sức lao động', en:'Labour-power'}},
-    {n:4, id:'L4', name:{vi:'Xưởng dệt máy', en:'The power-loom mill'}, tag:'c · v · m'},
+    {n:4, id:'L4', name:{vi:'Xưởng ô tô', en:'The car workshop'}, tag:'c · v · m'},
     {n:5, id:'L5', name:{vi:'Ba cách tăng thặng dư', en:'Three ways to raise surplus'}, tag:{vi:'m tuyệt đối/tương đối', en:'absolute/relative m'}},
     {n:6, id:'L6', name:{vi:'Phiên toà: bóc lột?', en:'Tribunal: exploitation?'}, tag:{vi:'Kết luận', en:'Conclusion'}}
   ];
@@ -535,7 +535,7 @@ function render(){
   app.innerHTML = `
     <div class="topbar">
       <div class="brand">
-        <span style="font-size:1.2rem;">🏛️</span>
+        <span style="font-size:1.2rem;">🏭</span>
         <span class="gearicon">⚙️</span>
         <div><h1>${tr('gameTitle')}</h1><span>${tr('gameSub')}</span></div>
       </div>
@@ -597,20 +597,20 @@ function rulesBodyHTML(){
   const roleNote = S.role ? '' : (S.lang==='vi'?'<p class="small" style="opacity:.7;">Bạn chưa chọn vai — mô tả dưới đây áp dụng chung, phần khác nhau giữa hai vai được ghi rõ trong ngoặc.</p>':'<p class="small" style="opacity:.7;">You haven\u2019t picked a role yet — the notes below apply generally; differences between roles are noted in brackets.</p>');
   return `
   <p><b>${S.lang==='vi'?'Nhịp chơi':'Pace'}:</b> ${S.lang==='vi'?'mỗi lượt = 1 tháng. Đầu mỗi lượt, một thẻ sự kiện ngẫu nhiên xuất hiện — bạn chọn cách phản ứng, rồi xem kết quả.':'one turn = one month. Each turn opens with a random event card — you pick a response, then see the outcome.'}</p>
-  <p><b>${S.lang==='vi'?'Vai trò':'Role'}:</b> ${S.lang==='vi'?'bạn chọn làm <b>nhà tư bản</b> (điều hành xưởng) hoặc <b>công nhân</b> (thương lượng, phản ứng). Màn 1–2 chưa có quan hệ chủ–thợ nên cả hai vai trải nghiệm như nhau.':'play as the <b>mill owner</b> or as a <b>worker</b>. Stages 1–2 have no employer–worker relation yet, so both roles play them the same way.'}</p>
+  <p><b>${S.lang==='vi'?'Vai trò':'Role'}:</b> ${S.lang==='vi'?'bạn chọn làm <b>nhà tư bản</b> (điều hành xưởng) hoặc <b>công nhân</b> (thương lượng, phản ứng). Màn 1–2 chưa có quan hệ chủ–thợ nên cả hai vai trải nghiệm như nhau.':'play as the <b>workshop owner</b> or as a <b>worker</b>. Stages 1–2 have no employer–worker relation yet, so both roles play them the same way.'}</p>
   <p><b>${S.lang==='vi'?'Độ khó hiện tại':'Current difficulty'}:</b> ${c.emoji} <b>${L(c.label)}</b> — ${S.lang==='vi'?'các mục tiêu bên dưới đã theo đúng độ khó này.':'the targets below already match this difficulty.'} ${!S.difficulty?(S.lang==='vi'?'(mặc định Vừa cho tới khi bạn chọn)':'(defaults to Normal until you pick one)'):''}</p>
   ${roleNote}
   <hr class="sep">
-  ${stageRule(1,'Thợ dệt tự do','The free weaver',
-    `Tự dệt, tự bán, tự mua nhu yếu phẩm — 6 tháng. <b>Qua màn:</b> còn dư ≥ ${FMT(c.L1target)} sau tháng 6. <b>Thua:</b> âm tiền trước tháng 4.`,
-    `Weave, sell, buy necessities yourself — 6 months. <b>Clear:</b> end with ≥ ${FMT(c.L1target)}. <b>Fail:</b> go negative before month 4.`)}
+  ${stageRule(1,'Thợ cơ khí tự do','The free mechanic',
+    `Tự gia công, tự bán, tự mua nhu yếu phẩm — 6 tháng. <b>Qua màn:</b> còn dư ≥ ${FMT(c.L1target)} sau tháng 6. <b>Thua:</b> âm tiền trước tháng 4.`,
+    `Machine parts, sell, buy necessities yourself — 6 months. <b>Clear:</b> end with ≥ ${FMT(c.L1target)}. <b>Fail:</b> go negative before month 4.`)}
   ${stageRule(2,'Tiền đẻ ra tiền?','Money begets money?',
     `5 vòng giao dịch để thấy lưu thông không tự tạo giá trị mới. <b>Không có thắng/thua</b> — đây là màn khám phá, luôn được đi tiếp sau khi trả lời câu hỏi cuối màn.`,
     `5 rounds of trading to see that circulation creates no new value. <b>No win/lose</b> — an exploration stage; you move on after the closing question.`)}
   ${stageRule(3,'Việc làm đầu tiên','The first job',
     `<u>Nhà tư bản:</u> thương lượng lương với 2 ứng viên, tối đa 3 vòng. <b>Qua màn:</b> thuê được 1 người với mức ≥ giá trị sức lao động của họ. <b>Thua:</b> hết vòng hoặc bất mãn ≥ 50 mà chưa thuê được ai.<br><u>Công nhân:</u> nhận lời mời lương qua tối đa 4 vòng. <b>Qua màn:</b> chấp nhận 1 lời mời trước khi hết vòng. <b>Thua:</b> "sức chịu đựng" về 0 trước khi nhận việc.`,
     `<u>Owner:</u> negotiate wages with 2 candidates, up to 3 rounds. <b>Clear:</b> hire someone at or above their labour-power value. <b>Fail:</b> run out of rounds or discontent reaches 50 with no hire.<br><u>Worker:</u> respond to wage offers over up to 4 rounds. <b>Clear:</b> accept an offer before rounds run out. <b>Fail:</b> "endurance" hits 0 first.`)}
-  ${stageRule(4,'Xưởng dệt máy (c · v · m)','The power-loom mill (c · v · m)',
+  ${stageRule(4,'Xưởng ô tô (c · v · m)','The car workshop (c · v · m)',
     `Màn trung tâm — 6 tháng, có 2 thí nghiệm bắt buộc để thấy chỉ v tạo ra m.<br><u>Nhà tư bản:</u> <b>qua màn</b> khi m′ ≥ ${c.L4mrate}% <i>và</i> vốn ≥ ${FMT(c.L4target)} sau tháng 6. <b>Thua:</b> vốn âm 2 tháng liên tiếp.<br><u>Công nhân:</u> <b>qua màn</b> khi sức khoẻ cuối màn ≥ ${c.L4workhealth}. <b>Thua:</b> sức khoẻ ≤ 15 giữa chừng.`,
     `The central stage — 6 months, 2 required experiments show only v creates m.<br><u>Owner:</u> <b>clear</b> when m′ ≥ ${c.L4mrate}% <i>and</i> capital ≥ ${FMT(c.L4target)} by month 6. <b>Fail:</b> capital negative two months running.<br><u>Worker:</u> <b>clear</b> when final health ≥ ${c.L4workhealth}. <b>Fail:</b> health drops to ≤ 15.`)}
   ${stageRule(5,'Ba cách tăng giá trị thặng dư','Three ways to raise surplus value',
@@ -694,28 +694,28 @@ function statHTML(cls,icon,label,val,ofText,goalText,pct){
 function renderInto(){ document.getElementById('main').innerHTML = renderLevelScreen(S.screen); }
 
 /* =========================================================
-   MÀN 1 — THỢ DỆT TỰ DO (H – T – H)
+   MÀN 1 — THỢ CƠ KHÍ TỰ DO (H – T – H)
    ========================================================= */
 const L1 = (function(){
   const deck = [
-    {tag:{vi:'Thị trường',en:'Market'}, title:{vi:'Khách quen đặt 10 tấm vải',en:'A regular orders 10 bolts'}, desc:{vi:'Một tiệm may quen đặt thẳng 10 tấm vải, không cần ra chợ bán lẻ.',en:'A regular tailor shop orders 10 bolts directly — no need to sell retail at the market.'}, choices:[
-      {label:{vi:'Nhận đơn (bán chắc 10 tấm, giá thường)',en:'Take the order (10 bolts sold at usual price)'}, effect:s=>{s.demandBonus=10;}},
+    {tag:{vi:'Thị trường',en:'Market'}, title:{vi:'Khách quen đặt 10 phụ tùng',en:'A regular orders 10 parts'}, desc:{vi:'Một garage quen đặt thẳng 10 phụ tùng, không cần ra chợ bán lẻ.',en:'A regular garage orders 10 parts directly — no need to sell retail at the market.'}, choices:[
+      {label:{vi:'Nhận đơn (bán chắc 10 phụ tùng, giá thường)',en:'Take the order (10 parts sold at usual price)'}, effect:s=>{s.demandBonus=10;}},
       {label:{vi:'Từ chối, giữ bán lẻ tự do',en:'Decline, keep selling freely at market'}, effect:s=>{}}
     ]},
     {tag:{vi:'Thị trường',en:'Market'}, title:{vi:'Trời mưa, chợ vắng',en:'Rain, market is empty'}, desc:{vi:'Mưa suốt buổi sáng, người đi chợ thưa hẳn.',en:'It rains all morning; far fewer people come to market.'}, choices:[
-      {label:{vi:'Hạ giá để đẩy hàng',en:'Cut the price to move stock'}, effect:s=>{s.priceOverride=Math.max(9000,s.price-4000); s.demandMult=0.8;}},
+      {label:{vi:'Hạ giá để đẩy hàng',en:'Cut the price to move stock'}, effect:s=>{s.priceOverride=Math.max(0.9,s.price-0.4); s.demandMult=0.8;}},
       {label:{vi:'Giữ giá, chịu ế nhiều hơn',en:'Keep the price, accept more unsold stock'}, effect:s=>{s.demandMult=0.5;}}
     ]},
-    {tag:{vi:'Thị trường',en:'Market'}, title:{vi:'Giá sợi bông tăng',en:'Cotton yarn price rises'}, desc:{vi:'Đại lý báo giá sợi bông tăng khoảng 30% do khan hiếm nguồn cung.',en:'The supplier reports yarn prices up about 30% due to a supply shortage.'}, choices:[
-      {label:{vi:'Mua đủ sợi như dự tính, chịu giá cao',en:'Buy the planned amount, at the higher price'}, effect:s=>{s.yarnPriceMult=1.3;}},
-      {label:{vi:'Mua ít sợi hơn, dệt ít vải hơn tháng này',en:'Buy less yarn, weave less cloth this month'}, effect:s=>{s.yarnPriceMult=1.3; s.yarnCapCut=true;}}
+    {tag:{vi:'Thị trường',en:'Market'}, title:{vi:'Giá sắt tăng',en:'Iron price rises'}, desc:{vi:'Đại lý báo giá sắt tăng khoảng 30% do khan hiếm nguồn cung.',en:'The supplier reports iron prices up about 30% due to a supply shortage.'}, choices:[
+      {label:{vi:'Mua đủ sắt như dự tính, chịu giá cao',en:'Buy the planned amount, at the higher price'}, effect:s=>{s.yarnPriceMult=1.3;}},
+      {label:{vi:'Mua ít sắt hơn, gia công ít phụ tùng hơn tháng này',en:'Buy less iron, machine fewer parts this month'}, effect:s=>{s.yarnPriceMult=1.3; s.yarnCapCut=true;}}
     ]},
-    {tag:{vi:'Đời sống',en:'Life'}, title:{vi:'Khung cửi kẹt trục',en:'The loom jams'}, desc:{vi:'Khung cửi kêu lạch cạch, thợ sửa báo giá sửa gấp.',en:'The loom starts rattling; a repairman quotes a rush fee.'}, choices:[
-      {label:{vi:'Sửa ngay (300.000đ)',en:'Fix it now (300,000đ)'}, effect:s=>{s.repairCost=300000;}},
+    {tag:{vi:'Đời sống',en:'Life'}, title:{vi:'Máy tiện kẹt trục',en:'The lathe jams'}, desc:{vi:'Máy tiện kêu lạch cạch, thợ sửa báo giá sửa gấp.',en:'The lathe starts rattling; a repairman quotes a rush fee.'}, choices:[
+      {label:{vi:'Sửa ngay ($30)',en:'Fix it now ($30)'}, effect:s=>{s.repairCost=30;}},
       {label:{vi:'Cố dùng tạm, năng suất giảm',en:'Limp along, lower output'}, effect:s=>{s.demandMult=(s.demandMult||1)*0.85;}}
     ]}
   ];
-  function init(){ return {money:DCFG().L1start, yarn:20, turn:1, maxTurn:6, price:15000, bolts:40, buyYarn:8, log:[], done:false, result:null}; }
+  function init(){ return {money:DCFG().L1start, yarn:20, turn:1, maxTurn:6, price:1.5, bolts:40, buyYarn:8, log:[], done:false, result:null}; }
   function ensure(){ if(!S.L1) S.L1=init(); return S.L1; }
 
   function render(){
@@ -724,25 +724,25 @@ const L1 = (function(){
     return `
       ${roadmap(1)}
       <div class="card hoverable">
-        <h3>${S.lang==='vi'?'Màn 1 · Thợ dệt tự do':'Stage 1 · The free weaver'}</h3>
-        <p class="small">${S.lang==='vi'?'Bạn tự tay dệt vải trên khung cửi của mình, mang ra chợ bán, rồi dùng tiền mua gạo và đồ dùng. Không thuê ai, không làm thuê cho ai: <b>Hàng – Tiền – Hàng</b>.':'You weave cloth on your own loom, sell it at market, then use the money to buy rice and supplies. No one employed, no one employing you: <b>Commodity – Money – Commodity</b>.'}</p>
+        <h3>${S.lang==='vi'?'Màn 1 · Thợ cơ khí tự do':'Stage 1 · The free mechanic'}</h3>
+        <p class="small">${S.lang==='vi'?'Bạn tự tay gia công phụ tùng trên máy tiện của mình, mang ra chợ bán, rồi dùng tiền mua gạo và đồ dùng. Không thuê ai, không làm thuê cho ai: <b>Hàng – Tiền – Hàng</b>.':'You machine parts on your own lathe, sell them at market, then use the money to buy rice and supplies. No one employed, no one employing you: <b>Commodity – Money – Commodity</b>.'}</p>
         <p class="small" style="opacity:.75;">${tr('sameForRole')}</p>
       </div>
       <div class="statgrid">
-        ${statHTML('brass','🧵', S.lang==='vi'?'Tiền mặt':'Cash', FMT(s.money), tr('monthLbl')+' '+s.turn+'/'+s.maxTurn, (S.lang==='vi'?'Mục tiêu ':'Target ')+'≥'+FMT(DCFG().L1target), Math.min(100,s.money/DCFG().L1target*100))}
-        ${statHTML('indigo','🧶', S.lang==='vi'?'Sợi bông tồn kho':'Yarn stock', s.yarn.toFixed(1)+' kg', null, null, Math.min(100,s.yarn/20*100))}
+        ${statHTML('brass','🔧', S.lang==='vi'?'Tiền mặt':'Cash', FMT(s.money), tr('monthLbl')+' '+s.turn+'/'+s.maxTurn, (S.lang==='vi'?'Mục tiêu ':'Target ')+'≥'+FMT(DCFG().L1target), Math.min(100,s.money/DCFG().L1target*100))}
+        ${statHTML('indigo','🔩', S.lang==='vi'?'Sắt tồn kho':'Iron stock', s.yarn.toFixed(1)+' kg', null, null, Math.min(100,s.yarn/20*100))}
       </div>
       <div class="card">
         <h3>${S.lang==='vi'?'Kế hoạch tháng':'Plan for month'} ${s.turn}</h3>
         <div class="row">
-          <div class="col"><label>${S.lang==='vi'?'Số tấm vải định dệt':'Bolts to weave'}: <b>${s.bolts}</b></label>
+          <div class="col"><label>${S.lang==='vi'?'Số phụ tùng định gia công':'Parts to machine'}: <b>${s.bolts}</b></label>
             <input type="range" min="10" max="80" value="${s.bolts}" oninput="L1.set('bolts',+this.value)">${stepper('L1','bolts',1,10,80)}</div>
-          <div class="col"><label>${S.lang==='vi'?'Giá bán mỗi tấm':'Price per bolt'}: <b>${s.price.toLocaleString('vi-VN')}đ</b></label>
-            <input type="range" min="9000" max="26000" step="500" value="${s.price}" oninput="L1.set('price',+this.value)">${stepper('L1','price',500,9000,26000)}</div>
-          <div class="col"><label>${S.lang==='vi'?'Mua sợi bông (kg, 40.000đ/kg)':'Buy yarn (kg, 40,000đ/kg)'}: <b>${s.buyYarn}</b></label>
+          <div class="col"><label>${S.lang==='vi'?'Giá bán mỗi phụ tùng':'Price per part'}: <b>$${s.price.toLocaleString('en-US')}</b></label>
+            <input type="range" min="0.9" max="2.6" step="0.05" value="${s.price}" oninput="L1.set('price',+this.value)">${stepper('L1','price',0.05,0.9,2.6)}</div>
+          <div class="col"><label>${S.lang==='vi'?'Mua sắt (kg, $4/kg)':'Buy iron (kg, $4/kg)'}: <b>${s.buyYarn}</b></label>
             <input type="range" min="0" max="25" value="${s.buyYarn}" oninput="L1.set('buyYarn',+this.value)">${stepper('L1','buyYarn',1,0,25)}</div>
         </div>
-        <p class="small">${S.lang==='vi'?'1 tấm vải cần khoảng 0,2kg sợi. Vải không bán hết coi như mất trắng (hàng tồn giảm giá trị).':'Each bolt needs about 0.2kg of yarn. Unsold cloth is a straight loss.'}</p>
+        <p class="small">${S.lang==='vi'?'1 phụ tùng cần khoảng 0,2kg sắt. Phụ tùng không bán hết coi như mất trắng (hàng tồn giảm giá trị).':'Each part needs about 0.2kg of iron. Unsold parts are a straight loss.'}</p>
         <button class="btn primary" onclick="L1.playTurn()">${S.lang==='vi'?'Tiến hành tháng':'Run month'} ${s.turn} →</button>
       </div>
       ${s.log.length? `<div class="card"><h3>${tr('logTitle')}</h3>${s.log.slice(-4).map(l=>`<p class="small">${l}</p>`).join('')}</div>`:''}
@@ -764,16 +764,16 @@ const L1 = (function(){
     const maxByYarn=Math.floor((s.yarn+s.buyYarn)/0.2);
     const actualBolts=Math.min(s.bolts, ctx.yarnCapCut?Math.floor(maxByYarn*0.6):maxByYarn);
     const price=ctx.priceOverride||s.price;
-    let baseDemand=Math.max(5, Math.round(30+(21000-price)/500));
+    let baseDemand=Math.max(5, Math.round(30+(2.1-price)/0.05));
     const demand=Math.round(baseDemand*(ctx.demandMult||1))+(ctx.demandBonus||0);
     const sold=Math.min(actualBolts,demand);
     const revenue=sold*price;
-    const yarnCost=s.buyYarn*40000*(ctx.yarnPriceMult||1);
-    const living=400000; const repair=ctx.repairCost||0;
+    const yarnCost=s.buyYarn*4*(ctx.yarnPriceMult||1);
+    const living=40; const repair=ctx.repairCost||0;
     const net=revenue-yarnCost-living-repair;
     s.yarn=Math.max(0,(s.yarn+s.buyYarn)-actualBolts*0.2);
     s.money+=net;
-    s.log.push(`${tr('monthLbl')} ${s.turn}: ${L(card.title)} → ${S.lang==='vi'?'dệt':'wove'} ${actualBolts}, ${S.lang==='vi'?'bán':'sold'} ${sold}, ${net>=0?(S.lang==='vi'?'lãi':'profit'):(S.lang==='vi'?'lỗ':'loss')} ${FMT(Math.abs(net))}.`);
+    s.log.push(`${tr('monthLbl')} ${s.turn}: ${L(card.title)} → ${S.lang==='vi'?'gia công':'machined'} ${actualBolts}, ${S.lang==='vi'?'bán':'sold'} ${sold}, ${net>=0?(S.lang==='vi'?'lãi':'profit'):(S.lang==='vi'?'lỗ':'loss')} ${FMT(Math.abs(net))}.`);
     if(s.turn===1) unlock('hth');
     s.turn++;
     if(s.money<0 && s.turn<=4){ s.done=true; s.result='lose'; }
@@ -788,15 +788,15 @@ const L1 = (function(){
       <p>${S.lang==='vi'?'Bạn tự làm, tự bán, rồi lấy tiền mua lại thứ mình cần — công thức <b>H – T – H</b>: tiền chỉ là khâu trung gian, mục đích cuối cùng vẫn là giá trị sử dụng.':'You made, sold, and bought back what you needed — the <b>C – M – C</b> formula: money is just the middle step; the goal is still use-value.'}</p></div>${quiz()}`;
     }
     return `${roadmap(1)}<div class="card">${loseArt()}<div class="pill lose">${S.lang==='vi'?'CHƯA QUA':'NOT CLEARED'}</div>
-    <h3>${S.lang==='vi'?'Hết vốn':'Ran out of money'}</h3><p class="small">${S.lang==='vi'?'Thường do giá bán quá thấp làm dư nhiều vải bị ế, hoặc gặp liên tiếp sự kiện bất lợi.':'Usually caused by too-low prices leaving too much unsold cloth, or a run of unlucky events.'}</p>
+    <h3>${S.lang==='vi'?'Hết vốn':'Ran out of money'}</h3><p class="small">${S.lang==='vi'?'Thường do giá bán quá thấp làm dư nhiều phụ tùng bị ế, hoặc gặp liên tiếp sự kiện bất lợi.':'Usually caused by too-low prices leaving too many unsold parts, or a run of unlucky events.'}</p>
     <button class="btn" onclick="L1.retry()">${tr('retry')}</button></div>`;
   }
   function retry(){ S.L1=null; renderInto(); }
   const quizQ=[
-    {q:{vi:'Mục đích cuối cùng của việc mang vải ra chợ bán trong màn này là gì?',en:'What is the ultimate goal of selling cloth at market in this stage?'},
+    {q:{vi:'Mục đích cuối cùng của việc mang phụ tùng ra chợ bán trong màn này là gì?',en:'What is the ultimate goal of selling parts at market in this stage?'},
      opts:[{vi:'Có tiền để làm giàu, tích luỹ tư bản',en:'Getting rich, accumulating capital'},{vi:'Đổi lấy thứ mình cần dùng — một dạng giá trị sử dụng khác',en:'Exchanging it for what you need — another use-value'},{vi:'Chiếm đoạt giá trị thặng dư của người khác',en:'Capturing someone else’s surplus value'}], correct:1},
     {q:{vi:'Vì sao màn 1 chưa có bóc lột dù bạn có lời?',en:'Why is there no exploitation here even when you profit?'},
-     opts:[{vi:'Vì bạn bán giá rẻ',en:'Because you sell cheap'},{vi:'Vì bạn tự làm, tự hưởng toàn bộ thành quả, không ai làm thuê cho ai',en:'Because you do the work and keep all of it — no one is employed by anyone'},{vi:'Vì vải không phải hàng hoá',en:'Because cloth is not a commodity'}], correct:1}
+     opts:[{vi:'Vì bạn bán giá rẻ',en:'Because you sell cheap'},{vi:'Vì bạn tự làm, tự hưởng toàn bộ thành quả, không ai làm thuê cho ai',en:'Because you do the work and keep all of it — no one is employed by anyone'},{vi:'Vì phụ tùng không phải hàng hoá',en:'Because a part is not a commodity'}], correct:1}
   ];
   function quiz(){
     return `<div class="card"><h3>${S.lang==='vi'?'Kiểm tra nhanh':'Quick check'}</h3>${quizQ.map((q,qi)=>`
@@ -820,12 +820,12 @@ const L1 = (function(){
 const L2 = (function(){
   const npcs=[
     {name:{vi:'Bác Sáu bán rau',en:'Old Mrs. Sau, veg seller'}, need:{vi:'cần tiền gấp',en:'needs cash urgently'}},
-    {name:{vi:'Cô Hạnh nội trợ',en:'Ms. Hanh, homemaker'}, need:{vi:'mua vải mặc hàng ngày',en:'buying everyday cloth'}},
+    {name:{vi:'Cô Hạnh nội trợ',en:'Ms. Hanh, homemaker'}, need:{vi:'cần mua đồ kim khí gia dụng',en:'buying everyday hardware'}},
     {name:{vi:'Chú Tư xe kéo',en:'Mr. Tu, cart puller'}, need:{vi:'nghe tin đồn khan hàng',en:'heard rumours of a shortage'}},
     {name:{vi:'Anh Long thợ nề',en:'Long, a mason'}, need:{vi:'mua chịu, hẹn trả sau',en:'buying on credit'}},
-    {name:{vi:'Bà Liên tiệm vải',en:'Mrs. Lien, cloth shop owner'}, need:{vi:'muốn nhập sỉ giá tốt',en:'wants a good wholesale price'}}
+    {name:{vi:'Bà Liên, chủ đại lý phụ tùng',en:'Mrs. Lien, parts dealer'}, need:{vi:'muốn nhập sỉ giá tốt',en:'wants a good wholesale price'}}
   ];
-  function init(){ return {money:1000000, turn:1, maxTurn:5, marketValue:5000000, log:[], done:false}; }
+  function init(){ return {money:100, turn:1, maxTurn:5, marketValue:500, log:[], done:false}; }
   function ensure(){ if(!S.L2) S.L2=init(); return S.L2; }
 
   function render(){
@@ -835,10 +835,10 @@ const L2 = (function(){
     return `${roadmap(2)}
     <div class="card hoverable">
       <h3>${S.lang==='vi'?'Màn 2 · Tiền đẻ ra tiền?':'Stage 2 · Money begets money?'}</h3>
-      <p class="small">${S.lang==='vi'?'Giờ bạn dùng tiền để kiếm thêm tiền: mua vải rẻ, bán lại đắt hơn — <b>Tiền – Hàng – Tiền′</b>. Theo dõi ô "Tổng giá trị thị trường": nó có tăng theo lãi của bạn không?':'Now you use money to make more money: buy cloth cheap, sell it dearer — <b>Money – Commodity – Money′</b>. Watch the "Total market value" box: does it grow along with your profit?'}</p>
+      <p class="small">${S.lang==='vi'?'Giờ bạn dùng tiền để kiếm thêm tiền: mua phụ tùng rẻ, bán lại đắt hơn — <b>Tiền – Hàng – Tiền′</b>. Theo dõi ô "Tổng giá trị thị trường": nó có tăng theo lãi của bạn không?':'Now you use money to make more money: buy parts cheap, sell them dearer — <b>Money – Commodity – Money′</b>. Watch the "Total market value" box: does it grow along with your profit?'}</p>
     </div>
     <div class="statgrid">
-      ${statHTML('brass','🪙', S.lang==='vi'?'Tiền của bạn':'Your money', FMT(s.money), null, null, Math.min(100,s.money/2000000*100))}
+      ${statHTML('brass','🪙', S.lang==='vi'?'Tiền của bạn':'Your money', FMT(s.money), null, null, Math.min(100,s.money/200*100))}
       ${statHTML('indigo','⚖️', S.lang==='vi'?'Tổng giá trị thị trường':'Total market value', FMT(s.marketValue), S.lang==='vi'?'(không đổi)':'(unchanged)', null, 100)}
     </div>
     <div class="card">
@@ -855,11 +855,11 @@ const L2 = (function(){
   function trade(mode){
     const s=ensure(); const npc=npcs[s.turn-1];
     let gain=0, note='';
-    if(mode==='cheap'){ gain=60000+Math.round(Math.random()*40000);
+    if(mode==='cheap'){ gain=6+Math.round(Math.random()*4);
       note=S.lang==='vi'?`Bạn lời ${FMT(gain)} vì ${L(npc.name)} chịu thiệt tương ứng — tổng giá trị thị trường không đổi.`:`You gained ${FMT(gain)} because ${L(npc.name)} lost the same amount — total market value unchanged.`;
-    } else if(mode==='fair'){ gain=5000;
+    } else if(mode==='fair'){ gain=0.5;
       note=S.lang==='vi'?'Trao đổi ngang giá, gần như không ai lời.':'A fair trade — almost no one profits.';
-    } else { gain=90000+Math.round(Math.random()*50000);
+    } else { gain=9+Math.round(Math.random()*5);
       note=S.lang==='vi'?`Bạn thu lời từ chênh lệch/lãi vay với ${L(npc.name)} — chỉ là phân phối lại của cải sẵn có.`:`You profited from the spread/interest with ${L(npc.name)} — just a redistribution of existing wealth.`;
     }
     s.money+=gain; s.log.push(`${S.lang==='vi'?'Vòng':'Round'} ${s.turn}: ${note}`);
@@ -895,22 +895,22 @@ const L3 = (function(){
   function initCap(){
     return {mode:'capital',
       candidates:[
-        {id:'A', name:{vi:'Chị Lan',en:'Lan'}, story:{vi:'thợ dệt mất khung cửi vì xưởng lớn cạnh tranh',en:'a weaver who lost her loom to bigger mills'}, needWage:230000, hireable:true, skill:1},
-        {id:'B', name:{vi:'Anh Dũng',en:'Dung'}, story:{vi:'nông dân mất đất canh tác, lên phố tìm việc',en:'a farmer who lost his land, come to the city'}, needWage:210000, hireable:true, skill:.9},
-        {id:'C', name:{vi:'Ông Bình',en:'Binh'}, story:{vi:'có khung cửi riêng, tự dệt tự bán, từ chối làm thuê',en:'owns his own loom, weaves and sells for himself, refuses to be hired'}, needWage:null, hireable:false, skill:1.2}
+        {id:'A', name:{vi:'Chị Lan',en:'Lan'}, story:{vi:'thợ cơ khí mất máy tiện vì xưởng lớn cạnh tranh',en:'a mechanic who lost her lathe to bigger workshops'}, needWage:23, hireable:true, skill:1},
+        {id:'B', name:{vi:'Anh Dũng',en:'Dung'}, story:{vi:'nông dân mất đất canh tác, lên phố tìm việc',en:'a farmer who lost his land, come to the city'}, needWage:21, hireable:true, skill:.9},
+        {id:'C', name:{vi:'Ông Bình',en:'Binh'}, story:{vi:'có máy tiện riêng, tự gia công tự bán, từ chối làm thuê',en:'owns his own lathe, machines and sells for himself, refuses to be hired'}, needWage:null, hireable:false, skill:1.2}
       ],
-      baseline:200000, discontent:20, offer:230000, hired:null, turn:1, maxTurn:3, done:false, log:[]};
+      baseline:20, discontent:20, offer:23, hired:null, turn:1, maxTurn:3, done:false, log:[]};
   }
   function initWork(){
-    return {mode:'worker', baseline:200000, endurance:70, turn:1, maxTurn:4, accepted:false, done:false, log:[],
-      offers:[195000,215000,205000,235000]};
+    return {mode:'worker', baseline:20, endurance:70, turn:1, maxTurn:4, accepted:false, done:false, log:[],
+      offers:[19.5,21.5,20.5,23.5]};
   }
   function ensure(){ if(!S.L3) S.L3 = S.role==='capital'?initCap():initWork(); return S.L3; }
 
   const deckShared=[
-    {title:{vi:'Giá gạo & tiền trọ tăng',en:'Rice & rent prices rise'}, desc:{vi:'Chi phí sinh hoạt tối thiểu nhích lên.',en:'The minimum cost of living creeps up.'}, wage:15000},
-    {title:{vi:'Cần thêm tiền nuôi con nhỏ',en:'Needs more to raise a young child'}, desc:{vi:'Chi phí nuôi con khiến mức sống tối thiểu tăng.',en:'Childcare costs raise the minimum needed.'}, wage:10000},
-    {title:{vi:'Học thêm kỹ thuật dệt hoa văn',en:'Learns patterned-weaving technique'}, desc:{vi:'Tay nghề khá hơn, lao động phức tạp hơn.',en:'Skill improves — more complex labour.'}, wage:0}
+    {title:{vi:'Giá gạo & tiền trọ tăng',en:'Rice & rent prices rise'}, desc:{vi:'Chi phí sinh hoạt tối thiểu nhích lên.',en:'The minimum cost of living creeps up.'}, wage:1.5},
+    {title:{vi:'Cần thêm tiền nuôi con nhỏ',en:'Needs more to raise a young child'}, desc:{vi:'Chi phí nuôi con khiến mức sống tối thiểu tăng.',en:'Childcare costs raise the minimum needed.'}, wage:1},
+    {title:{vi:'Học thêm kỹ thuật tiện chính xác',en:'Learns precision-machining technique'}, desc:{vi:'Tay nghề khá hơn, lao động phức tạp hơn.',en:'Skill improves — more complex labour.'}, wage:0}
   ];
 
   function render(){
@@ -924,7 +924,7 @@ const L3 = (function(){
     <div class="split">
       <div class="panel capital you"><span class="youtag">${S.lang==='vi'?'BẠN':'YOU'}</span>
         <h3>${S.lang==='vi'?'Góc chủ xưởng':'The owner’s desk'}</h3>
-        <p class="k">${S.lang==='vi'?'Bạn cần tuyển 1 người cho xưởng dệt sắp mở rộng.':'You need to hire one weaver for your expanding mill.'}</p>
+        <p class="k">${S.lang==='vi'?'Bạn cần tuyển 1 người cho xưởng ô tô sắp mở rộng.':'You need to hire one mechanic for your expanding workshop.'}</p>
         <div class="k" style="margin-top:10px;">${S.lang==='vi'?'Giá trị sức lao động tối thiểu hiện nay':'Current minimum value of labour-power'}</div>
         <div class="v">${FMT(s.baseline)} / ${S.lang==='vi'?'ngày':'day'}</div>
         <div class="k" style="margin-top:10px;">${S.lang==='vi'?'Bất mãn thị trường lao động':'Labour-market discontent'}</div>
@@ -941,8 +941,8 @@ const L3 = (function(){
     </div>
     <div class="card">
       <h3>${S.lang==='vi'?'Thương lượng — vòng':'Negotiation — round'} ${s.turn}/${s.maxTurn}</h3>
-      <label>${S.lang==='vi'?'Đề nghị lương/ngày':'Wage offer per day'}: <b>${s.offer.toLocaleString('vi-VN')}đ</b></label>
-      <input type="range" min="150000" max="320000" step="5000" value="${s.offer}" oninput="L3.set('offer',+this.value)">${stepper('L3','offer',5000,150000,320000)}
+      <label>${S.lang==='vi'?'Đề nghị lương/ngày':'Wage offer per day'}: <b>$${s.offer.toLocaleString('en-US')}</b></label>
+      <input type="range" min="15" max="32" step="0.5" value="${s.offer}" oninput="L3.set('offer',+this.value)">${stepper('L3','offer',0.5,15,32)}
       <div class="row" style="margin-top:10px;">
         <button class="btn" onclick="L3.negotiate('A')">${S.lang==='vi'?'Đề nghị với':'Offer to'} ${L(s.candidates[0].name)}</button>
         <button class="btn" onclick="L3.negotiate('B')">${S.lang==='vi'?'Đề nghị với':'Offer to'} ${L(s.candidates[1].name)}</button>
@@ -956,7 +956,7 @@ const L3 = (function(){
   function tryC(){
     const s=ensure();
     openModal(`<div class="tag">${S.lang==='vi'?'Vì sao không thuê được?':'Why can’t you hire him?'}</div><h3>${L(s.candidates[2].name)} ${S.lang==='vi'?'từ chối':'refuses'}</h3>
-    <p>${S.lang==='vi'?'Ông Bình có khung cửi riêng — tự sản xuất, tự bán, không buộc phải bán sức lao động để sống. Sức lao động chỉ thành hàng hoá khi người lao động tự do về thân thể <b>và</b> không có tư liệu sản xuất. Ông Bình chỉ thoả điều kiện đầu.':'Binh owns his own loom — he produces and sells for himself, not forced to sell his labour-power to survive. Labour-power becomes a commodity only when the worker is free <b>and</b> owns no means of production. Binh only meets the first condition.'}</p>
+    <p>${S.lang==='vi'?'Ông Bình có máy tiện riêng — tự sản xuất, tự bán, không buộc phải bán sức lao động để sống. Sức lao động chỉ thành hàng hoá khi người lao động tự do về thân thể <b>và</b> không có tư liệu sản xuất. Ông Bình chỉ thoả điều kiện đầu.':'Binh owns his own lathe — he produces and sells for himself, not forced to sell his labour-power to survive. Labour-power becomes a commodity only when the worker is free <b>and</b> owns no means of production. Binh only meets the first condition.'}</p>
     <button class="btn wide" onclick="closeModal()">${S.lang==='vi'?'Đã hiểu':'Got it'}</button>`);
     unlock('laborcom');
   }
@@ -983,8 +983,8 @@ const L3 = (function(){
     return `${roadmap(3)}
     <div class="split">
       <div class="panel worker you"><span class="youtag">${S.lang==='vi'?'BẠN':'YOU'}</span>
-        <h3>${S.lang==='vi'?'Bạn — thợ dệt mất khung cửi':'You — a weaver who lost her loom'}</h3>
-        <p class="k">${S.lang==='vi'?'Xưởng dệt lớn cạnh tranh khiến khung cửi riêng của bạn không còn sống nổi. Giờ bạn phải đi tìm việc làm thuê.':'Big mills undercut your own loom; you can no longer make a living from it. Now you must find waged work.'}</p>
+        <h3>${S.lang==='vi'?'Bạn — thợ cơ khí mất máy tiện':'You — a mechanic who lost your lathe'}</h3>
+        <p class="k">${S.lang==='vi'?'Xưởng ô tô lớn cạnh tranh khiến máy tiện riêng của bạn không còn sống nổi. Giờ bạn phải đi tìm việc làm thuê.':'Big workshops undercut your own lathe; you can no longer make a living from it. Now you must find waged work.'}</p>
         <div class="k" style="margin-top:10px;">${S.lang==='vi'?'Sức chịu đựng (còn trụ được bao lâu chưa có việc)':'Endurance (how long you can hold out unemployed)'}</div>
         <div class="meter"><i style="width:${Math.min(100,s.endurance)}%"></i></div>
       </div>
@@ -1016,7 +1016,7 @@ const L3 = (function(){
       s.done=true;
     } else if(choice==='negotiate'){
       const success = Math.random()<0.5;
-      if(success){ s.offers[s.turn-1] = offer+20000; s.log.push(S.lang==='vi'?'Thương lượng thành công, chủ xưởng nâng giá đề nghị.':'Negotiation worked — the owner raised the offer.'); }
+      if(success){ s.offers[s.turn-1] = offer+2; s.log.push(S.lang==='vi'?'Thương lượng thành công, chủ xưởng nâng giá đề nghị.':'Negotiation worked — the owner raised the offer.'); }
       else { s.endurance-=8; s.log.push(S.lang==='vi'?'Chủ xưởng không nhượng bộ. Bạn mất thêm thời gian, sức chịu đựng giảm.':'The owner won’t budge. More time lost, endurance drops.'); s.turn++; }
     } else {
       s.endurance-=15;
@@ -1043,7 +1043,7 @@ const L3 = (function(){
       if(s.accepted && s.accepted!=='none'){
         return `${roadmap(3)}<div class="card">${winArt()}<div class="pill win badge-pop">${S.lang==='vi'?'QUA MÀN':'STAGE CLEARED'}</div>
         <h3>${S.lang==='vi'?'Bạn nhận việc với':'You took the job at'} ${FMT(s.finalWage)}/${S.lang==='vi'?'ngày':'day'}</h3>
-        <p>${S.lang==='vi'?'Bạn tự do về thân thể, không còn khung cửi riêng nên buộc phải bán sức lao động để sống — đúng hai điều kiện khiến sức lao động thành hàng hoá.':'You are personally free, but you own no loom, so you must sell your labour-power to live — exactly the two conditions that make labour-power a commodity.'}</p>
+        <p>${S.lang==='vi'?'Bạn tự do về thân thể, không còn máy tiện riêng nên buộc phải bán sức lao động để sống — đúng hai điều kiện khiến sức lao động thành hàng hoá.':'You are personally free, but you own no lathe, so you must sell your labour-power to live — exactly the two conditions that make labour-power a commodity.'}</p>
         <button class="btn primary" onclick="L3.finish()">${S.lang==='vi'?'Sang màn 4':'Go to stage 4'} →</button></div>`;
       }
       return `${roadmap(3)}<div class="card">${loseArt()}<div class="pill lose">${S.lang==='vi'?'KIỆT SỨC':'RAN OUT'}</div><h3>${S.lang==='vi'?'Sức chịu đựng cạn trước khi có việc':'Endurance ran out before finding work'}</h3>
@@ -1059,29 +1059,29 @@ const L3 = (function(){
 })();
 
 /* =========================================================
-   MÀN 4 — XƯỞNG DỆT MÁY (c, v, m)
+   MÀN 4 — XƯỞNG Ô TÔ (c, v, m)
    ========================================================= */
 const L4 = (function(){
-  const VPH=50000;
-  function initCap(){ return {mode:'capital', capital:5000000, machines:1, workers:1, cottonKg:20, wage:230000, turn:1, maxTurn:6, expDone:false, machineTestDone:false, hireTestDone:false, log:[], done:false}; }
-  function initWork(){ return {mode:'worker', turn:1, maxTurn:6, health:70, wage:230000, hoursExtra:0, machines:2, workers:3, cottonKg:20, log:[], done:false, infoSeen:{m:false,h:false}}; }
+  const VPH=5;
+  function initCap(){ return {mode:'capital', capital:500, machines:1, workers:1, cottonKg:20, wage:23, turn:1, maxTurn:6, expDone:false, machineTestDone:false, hireTestDone:false, log:[], done:false}; }
+  function initWork(){ return {mode:'worker', turn:1, maxTurn:6, health:70, wage:23, hoursExtra:0, machines:2, workers:3, cottonKg:20, log:[], done:false, infoSeen:{m:false,h:false}}; }
   function ensure(){ if(!S.L4) S.L4 = S.role==='capital'?initCap():initWork(); return S.L4; }
 
   const deckCap=[
-    {title:{vi:'Khung cửi máy hỏng, phải thay',en:'A power loom breaks, must replace it'}, desc:{vi:'Một khung cửi cũ hỏng nặng.',en:'An old loom fails badly.'}, effect:s=>{s.oneTimeC=(s.oneTimeC||0)+1500000;}},
-    {title:{vi:'Mất điện nửa ngày',en:'Power cut for half a day'}, desc:{vi:'Xưởng ngừng vài giờ.',en:'The mill halts for hours.'}, effect:s=>{s.outputMult=(s.outputMult||1)*0.85;}},
-    {title:{vi:'Giá sợi bông giảm 15%',en:'Cotton yarn price drops 15%'}, desc:{vi:'Nguồn cung dồi dào.',en:'Supply is plentiful.'}, effect:s=>{s.cottonMult=(s.cottonMult||1)*0.85;}},
-    {title:{vi:'Thợ tay nghề cao xin nghỉ',en:'A skilled weaver quits'}, desc:{vi:'Chuyển sang xưởng khác trả cao hơn.',en:'Moves to a mill paying more.'}, effect:s=>{s.workers=Math.max(1,s.workers-1);}},
-    {title:{vi:'Đơn hàng tăng mạnh',en:'Orders surge'}, desc:{vi:'Một chuỗi cửa hàng đặt số lượng lớn.',en:'A retail chain places a big order.'}, effect:s=>{s.outputMult=(s.outputMult||1)*1.2;}}
+    {title:{vi:'Máy tiện hỏng, phải thay',en:'A lathe breaks, must replace it'}, desc:{vi:'Một máy tiện cũ hỏng nặng.',en:'An old lathe fails badly.'}, effect:s=>{s.oneTimeC=(s.oneTimeC||0)+150;}},
+    {title:{vi:'Mất điện nửa ngày',en:'Power cut for half a day'}, desc:{vi:'Xưởng ngừng vài giờ.',en:'The workshop halts for hours.'}, effect:s=>{s.outputMult=(s.outputMult||1)*0.85;}},
+    {title:{vi:'Giá sắt giảm 15%',en:'Iron price drops 15%'}, desc:{vi:'Nguồn cung dồi dào.',en:'Supply is plentiful.'}, effect:s=>{s.cottonMult=(s.cottonMult||1)*0.85;}},
+    {title:{vi:'Thợ cơ khí tay nghề cao xin nghỉ',en:'A skilled mechanic quits'}, desc:{vi:'Chuyển sang xưởng khác trả cao hơn.',en:'Moves to a workshop paying more.'}, effect:s=>{s.workers=Math.max(1,s.workers-1);}},
+    {title:{vi:'Đơn hàng tăng mạnh',en:'Orders surge'}, desc:{vi:'Một đại lý ô tô đặt số lượng lớn.',en:'A car dealership places a big order.'}, effect:s=>{s.outputMult=(s.outputMult||1)*1.2;}}
   ];
   const deckWork=[
     {title:{vi:'Chủ xưởng đề nghị tăng ca',en:'The owner asks for overtime'}, desc:{vi:'Đơn hàng gấp, cần thêm giờ.',en:'A rush order needs extra hours.'}},
-    {title:{vi:'Máy dệt gần bạn kêu lạ',en:'The loom next to you sounds off'}, desc:{vi:'Có thể mất an toàn nếu không báo cáo.',en:'Could be unsafe if unreported.'}},
+    {title:{vi:'Máy tiện gần bạn kêu lạ',en:'The lathe next to you sounds off'}, desc:{vi:'Có thể mất an toàn nếu không báo cáo.',en:'Could be unsafe if unreported.'}},
     {title:{vi:'Đồng nghiệp rủ xin tăng lương',en:'A coworker suggests asking for a raise'}, desc:{vi:'Cùng nhau đề nghị chủ xưởng.',en:'Approach the owner together.'}}
   ];
 
   function computeWvm(workers,machines,wage,cottonKg,extraHours){
-    const c = machines*250000 + cottonKg*workers*35000;
+    const c = machines*25 + cottonKg*workers*3.5;
     const v = workers*wage;
     const mHours = 4 + (extraHours||0);
     const m = workers*mHours*VPH;
@@ -1106,7 +1106,7 @@ const L4 = (function(){
         <div class="k" style="margin-top:8px;">p′</div><div class="v">${pRate}%</div>
       </div>
       <div class="panel worker">
-        <h3>${S.lang==='vi'?'Trạng thái thợ dệt':'Weavers’ status'}</h3>
+        <h3>${S.lang==='vi'?'Trạng thái thợ cơ khí':'Mechanics’ status'}</h3>
         <div class="k">${S.lang==='vi'?'Số công nhân':'Workers'}</div><div class="v">${s.workers}</div>
         <div class="laborbar" style="margin-top:8px;"><div class="t" style="width:50%">t = 4h</div><div class="t2" style="width:50%">t′ = 4h</div></div>
       </div>
@@ -1119,9 +1119,9 @@ const L4 = (function(){
     <div class="card">
       <h3>${S.lang==='vi'?'Quyết định tháng':'Decisions for month'} ${s.turn}</h3>
       <div class="row">
-        <div class="col"><label>${S.lang==='vi'?'Số khung cửi máy':'Power looms'}: <b>${s.machines}</b></label><input type="range" min="1" max="6" value="${s.machines}" oninput="L4.set('machines',+this.value)">${stepper('L4','machines',1,1,6)}</div>
+        <div class="col"><label>${S.lang==='vi'?'Số máy tiện':'Lathes'}: <b>${s.machines}</b></label><input type="range" min="1" max="6" value="${s.machines}" oninput="L4.set('machines',+this.value)">${stepper('L4','machines',1,1,6)}</div>
         <div class="col"><label>${S.lang==='vi'?'Số công nhân':'Workers'}: <b>${s.workers}</b></label><input type="range" min="1" max="6" value="${s.workers}" oninput="L4.set('workers',+this.value)">${stepper('L4','workers',1,1,6)}</div>
-        <div class="col"><label>${S.lang==='vi'?'Lương/ngày':'Wage/day'}: <b>${s.wage.toLocaleString('vi-VN')}đ</b></label><input type="range" min="180000" max="320000" step="5000" value="${s.wage}" oninput="L4.set('wage',+this.value)">${stepper('L4','wage',5000,180000,320000)}</div>
+        <div class="col"><label>${S.lang==='vi'?'Lương/ngày':'Wage/day'}: <b>$${s.wage.toLocaleString('en-US')}</b></label><input type="range" min="18" max="32" step="0.5" value="${s.wage}" oninput="L4.set('wage',+this.value)">${stepper('L4','wage',0.5,18,32)}</div>
       </div>
       <button class="btn primary" style="margin-top:10px;" onclick="L4.playTurn()">${S.lang==='vi'?'Tiến hành tháng':'Run month'} ${s.turn} →</button>
     </div>
@@ -1131,7 +1131,7 @@ const L4 = (function(){
     return `<div class="card" style="border-left:4px solid var(--brass);">
       <h3>${S.lang==='vi'?'Thí nghiệm bắt buộc':'Required experiment'}</h3>
       <div class="row">
-        <button class="btn secondary" ${s.machineTestDone?'disabled':''} onclick="L4.testMachine()">${S.lang==='vi'?'1) Chỉ mua thêm 2 khung cửi':'1) Only buy 2 more looms'}</button>
+        <button class="btn secondary" ${s.machineTestDone?'disabled':''} onclick="L4.testMachine()">${S.lang==='vi'?'1) Chỉ mua thêm 2 máy tiện':'1) Only buy 2 more lathes'}</button>
         <button class="btn secondary" ${s.hireTestDone?'disabled':''} onclick="L4.testHire()">${S.lang==='vi'?'2) Chỉ thuê thêm 1 công nhân':'2) Only hire 1 more worker'}</button>
       </div>
     </div>`;
@@ -1139,7 +1139,7 @@ const L4 = (function(){
   function testMachine(){
     const s=ensure();
     const before=computeWvm(s.workers,s.machines,s.wage,s.cottonKg,0), after=computeWvm(s.workers,s.machines+2,s.wage,s.cottonKg,0);
-    openModal(`<div class="tag">${S.lang==='vi'?'Thí nghiệm 1':'Experiment 1'}</div><h3>${S.lang==='vi'?'Thêm 2 khung cửi, không thuê thêm ai':'Add 2 looms, no new hires'}</h3>
+    openModal(`<div class="tag">${S.lang==='vi'?'Thí nghiệm 1':'Experiment 1'}</div><h3>${S.lang==='vi'?'Thêm 2 máy tiện, không thuê thêm ai':'Add 2 lathes, no new hires'}</h3>
     <p>m: <b>${FMT(before.m)}</b> → <b>${FMT(after.m)}</b>. ${after.m===before.m?(S.lang==='vi'?'Không đổi — máy chỉ làm c tăng.':'Unchanged — machines only raise c.'):''}</p>
     <button class="btn wide" onclick="closeModal()">${S.lang==='vi'?'Ghi nhận':'Noted'}</button>`);
     s.machineTestDone=true; if(s.machineTestDone&&s.hireTestDone){s.expDone=true; unlock('cvm');} renderInto();
@@ -1147,7 +1147,7 @@ const L4 = (function(){
   function testHire(){
     const s=ensure();
     const before=computeWvm(s.workers,s.machines,s.wage,s.cottonKg,0), after=computeWvm(s.workers+1,s.machines,s.wage,s.cottonKg,0);
-    openModal(`<div class="tag">${S.lang==='vi'?'Thí nghiệm 2':'Experiment 2'}</div><h3>${S.lang==='vi'?'Thuê thêm 1 công nhân, giữ nguyên số khung cửi':'Hire 1 more worker, same looms'}</h3>
+    openModal(`<div class="tag">${S.lang==='vi'?'Thí nghiệm 2':'Experiment 2'}</div><h3>${S.lang==='vi'?'Thuê thêm 1 công nhân, giữ nguyên số máy tiện':'Hire 1 more worker, same lathes'}</h3>
     <p>m: <b>${FMT(before.m)}</b> → <b>${FMT(after.m)}</b>. ${after.m>before.m?(S.lang==='vi'?'Tăng! Lao động sống làm m tăng.':'It rises! Living labour is what grows m.'):''}</p>
     <button class="btn wide" onclick="closeModal()">${S.lang==='vi'?'Ghi nhận':'Noted'}</button>`);
     s.hireTestDone=true; if(s.machineTestDone&&s.hireTestDone){s.expDone=true; unlock('cvm');} renderInto();
@@ -1188,17 +1188,17 @@ const L4 = (function(){
     return `${roadmap(4)}
     <div class="split">
       <div class="panel worker you"><span class="youtag">${S.lang==='vi'?'BẠN':'YOU'}</span>
-        <h3>${S.lang==='vi'?'Bạn — thợ dệt':'You — a weaver'}</h3>
+        <h3>${S.lang==='vi'?'Bạn — thợ cơ khí':'You — a mechanic'}</h3>
         <div class="k">${S.lang==='vi'?'Sức khoẻ':'Health'}</div><div class="meter"><i style="width:${s.health}%"></i></div>
         <div class="k" style="margin-top:8px;">${S.lang==='vi'?'Lương/ngày':'Wage/day'}</div><div class="v">${FMT(s.wage)}</div>
       </div>
       <div class="panel capital">
-        <h3>${S.lang==='vi'?'Sổ sách xưởng (bạn nhìn thấy)':'The mill’s ledger (you can see it)'}</h3>
+        <h3>${S.lang==='vi'?'Sổ sách xưởng (bạn nhìn thấy)':'The workshop’s ledger (you can see it)'}</h3>
         <div class="k">m′ ${S.lang==='vi'?'hiện nay':'right now'}</div><div class="v">${mRate}%</div>
         <div class="laborbar" style="margin-top:8px;"><div class="t" style="width:${4/(4+mHours)*100}%">t=4h</div><div class="t2" style="width:${mHours/(4+mHours)*100}%">t′=${mHours}h</div></div>
       </div>
     </div>
-    <div class="card"><h3>W = c + v + m ${S.lang==='vi'?'của cả xưởng':'for the whole mill'}</h3>
+    <div class="card"><h3>W = c + v + m ${S.lang==='vi'?'của cả xưởng':'for the whole workshop'}</h3>
       <div class="wbar"><div class="c" style="width:${Math.max(6,c/W*100)}%">c</div><div class="v" style="width:${Math.max(6,v/W*100)}%">v</div><div class="m" style="width:${Math.max(6,m/W*100)}%">m</div></div>
       <div class="wlegend"><span class="c">c = ${FMT(c)}</span><span class="v">v = ${FMT(v)}</span><span class="m">m = ${FMT(m)}</span></div>
     </div>
@@ -1212,15 +1212,15 @@ const L4 = (function(){
       </div>
     </div>
     <div class="row">
-      <button class="btn small secondary" onclick="L4.infoMachine()">💡 ${S.lang==='vi'?'So sánh: xưởng thêm máy':'Compare: mill adds machines'}</button>
-      <button class="btn small secondary" onclick="L4.infoHire()">💡 ${S.lang==='vi'?'So sánh: xưởng thuê thêm người':'Compare: mill hires more'}</button>
+      <button class="btn small secondary" onclick="L4.infoMachine()">💡 ${S.lang==='vi'?'So sánh: xưởng thêm máy':'Compare: workshop adds machines'}</button>
+      <button class="btn small secondary" onclick="L4.infoHire()">💡 ${S.lang==='vi'?'So sánh: xưởng thuê thêm người':'Compare: workshop hires more'}</button>
     </div>
     ${s.log.length? `<div class="card" style="margin-top:14px;"><h3>${tr('logTitle')}</h3>${s.log.slice(-4).map(l=>`<p class="small">${l}</p>`).join('')}</div>`:''}`;
   }
   function infoMachine(){
     const s=ensure();
     const before=computeWvm(s.workers,s.machines,s.wage,s.cottonKg,s.hoursExtra), after=computeWvm(s.workers,s.machines+2,s.wage,s.cottonKg,s.hoursExtra);
-    openModal(`<div class="tag">${S.lang==='vi'?'Sổ sách':'Ledger'}</div><h3>${S.lang==='vi'?'Nếu xưởng mua thêm 2 máy':'If the mill buys 2 more looms'}</h3>
+    openModal(`<div class="tag">${S.lang==='vi'?'Sổ sách':'Ledger'}</div><h3>${S.lang==='vi'?'Nếu xưởng mua thêm 2 máy':'If the workshop buys 2 more lathes'}</h3>
     <p>m: <b>${FMT(before.m)}</b> → <b>${FMT(after.m)}</b> (${S.lang==='vi'?'không đổi — máy chỉ chuyển giá trị, không tự sinh thêm':'unchanged — machines only transfer value'}).</p>
     <button class="btn wide" onclick="closeModal()">${S.lang==='vi'?'Ghi nhận':'Noted'}</button>`);
     s.infoSeen.m=true; if(s.infoSeen.m&&s.infoSeen.h) unlock('cvm'); renderInto();
@@ -1228,16 +1228,16 @@ const L4 = (function(){
   function infoHire(){
     const s=ensure();
     const before=computeWvm(s.workers,s.machines,s.wage,s.cottonKg,s.hoursExtra), after=computeWvm(s.workers+1,s.machines,s.wage,s.cottonKg,s.hoursExtra);
-    openModal(`<div class="tag">${S.lang==='vi'?'Sổ sách':'Ledger'}</div><h3>${S.lang==='vi'?'Nếu xưởng thuê thêm 1 người như bạn':'If the mill hires one more worker like you'}</h3>
+    openModal(`<div class="tag">${S.lang==='vi'?'Sổ sách':'Ledger'}</div><h3>${S.lang==='vi'?'Nếu xưởng thuê thêm 1 người như bạn':'If the workshop hires one more worker like you'}</h3>
     <p>m: <b>${FMT(before.m)}</b> → <b>${FMT(after.m)}</b> (${S.lang==='vi'?'tăng! chính lao động sống làm m tăng':'it rises! living labour is what grows m'}).</p>
     <button class="btn wide" onclick="closeModal()">${S.lang==='vi'?'Ghi nhận':'Noted'}</button>`);
     s.infoSeen.h=true; if(s.infoSeen.m&&s.infoSeen.h) unlock('cvm'); renderInto();
   }
   function workTurn(choice){
     const s=ensure(); unlock('rate');
-    if(choice==='overtime'){ s.hoursExtra=Math.min(4,s.hoursExtra+2); s.health-=8; s.wage+=15000; s.log.push(S.lang==='vi'?'Bạn nhận tăng ca — thêm thu nhập, sức khoẻ giảm.':'You accepted overtime — more pay, less health.'); }
+    if(choice==='overtime'){ s.hoursExtra=Math.min(4,s.hoursExtra+2); s.health-=8; s.wage+=1.5; s.log.push(S.lang==='vi'?'Bạn nhận tăng ca — thêm thu nhập, sức khoẻ giảm.':'You accepted overtime — more pay, less health.'); }
     else if(choice==='refuse'){ s.health+=5; s.log.push(S.lang==='vi'?'Bạn từ chối tăng ca, giữ sức khoẻ.':'You refused overtime, protecting your health.'); }
-    else { const ok=Math.random()<0.4; if(ok){ s.wage+=20000; s.log.push(S.lang==='vi'?'Đề nghị được chấp nhận, lương tăng.':'Your request was granted — wage rises.'); } else { s.health-=3; s.log.push(S.lang==='vi'?'Chủ xưởng từ chối tăng lương.':'The owner refused the raise.'); } }
+    else { const ok=Math.random()<0.4; if(ok){ s.wage+=2; s.log.push(S.lang==='vi'?'Đề nghị được chấp nhận, lương tăng.':'Your request was granted — wage rises.'); } else { s.health-=3; s.log.push(S.lang==='vi'?'Chủ xưởng từ chối tăng lương.':'The owner refused the raise.'); } }
     s.health=Math.max(0,Math.min(100,s.health));
     s.turn++;
     if(s.health<=15){ s.done=true; s.result='lose'; }
@@ -1260,7 +1260,7 @@ const L4 = (function(){
       if(s.result==='win'||s.result==='partial'){
         return `${roadmap(4)}<div class="card">${s.result==='win'?winArt():''}<div class="pill ${s.result==='win'?'win badge-pop':'info'}">${s.result==='win'?(S.lang==='vi'?'QUA MÀN':'STAGE CLEARED'):(S.lang==='vi'?'HOÀN THÀNH':'FINISHED')}</div>
         <h3>${S.lang==='vi'?'Sau 6 tháng, sức khoẻ':'After 6 months, health'}: ${s.health}</h3>
-        <p>${S.lang==='vi'?'Dù bạn chọn nhận hay từ chối tăng ca, m của xưởng vẫn luôn dương — phần giá trị đó không thuộc về bạn, dù bạn được trả đúng lương thoả thuận.':'Whether you accepted or refused overtime, the mill’s m was always positive — that value was never yours, even though you were paid the agreed wage.'}</p>
+        <p>${S.lang==='vi'?'Dù bạn chọn nhận hay từ chối tăng ca, m của xưởng vẫn luôn dương — phần giá trị đó không thuộc về bạn, dù bạn được trả đúng lương thoả thuận.':'Whether you accepted or refused overtime, the workshop’s m was always positive — that value was never yours, even though you were paid the agreed wage.'}</p>
         <button class="btn primary" onclick="L4.finish()">${S.lang==='vi'?'Sang màn 5':'Go to stage 5'} →</button></div>`;
       }
       return `${roadmap(4)}<div class="card">${loseArt()}<div class="pill lose">${S.lang==='vi'?'KIỆT SỨC':'BURNED OUT'}</div><h3>${S.lang==='vi'?'Sức khoẻ xuống quá thấp':'Health dropped too low'}</h3>
@@ -1281,15 +1281,15 @@ const L4 = (function(){
    MÀN 5 — BA CÁCH TĂNG GIÁ TRỊ THẶNG DƯ
    ========================================================= */
 const L5 = (function(){
-  function initCap(){ return {mode:'capital', turn:1, maxTurn:6, hours:8, tHours:4, health:70, discontent:20, capital:(S.history.L4?.capital)||8000000, usedAbsolute:false, usedRelative:false, usedSuper:false, superBoostTurns:0, healthLog:[], log:[], done:false}; }
-  function initWork(){ return {mode:'worker', turn:1, maxTurn:6, health:70, discontent:20, wage:230000, sawAbsolute:false, sawRelative:false, sawSuper:false, healthLog:[], log:[], done:false}; }
+  function initCap(){ return {mode:'capital', turn:1, maxTurn:6, hours:8, tHours:4, health:70, discontent:20, capital:(S.history.L4?.capital)||800, usedAbsolute:false, usedRelative:false, usedSuper:false, superBoostTurns:0, healthLog:[], log:[], done:false}; }
+  function initWork(){ return {mode:'worker', turn:1, maxTurn:6, health:70, discontent:20, wage:23, sawAbsolute:false, sawRelative:false, sawSuper:false, healthLog:[], log:[], done:false}; }
   function ensure(){ if(!S.L5) S.L5 = S.role==='capital'?initCap():initWork(); return S.L5; }
 
   const eventPool=[
     {title:{vi:'Giá gạo, thịt, điện giảm',en:'Rice, meat, electricity get cheaper'}, desc:{vi:'Nông nghiệp được mùa, hàng thiết yếu rẻ đi.',en:'A good harvest makes necessities cheaper.'}, kind:'relative-trigger'},
     {title:{vi:'Đối thủ mua dây chuyền mới',en:'A rival buys new machinery'}, desc:{vi:'Giá thị trường bắt đầu giảm theo.',en:'Market prices start to drop.'}, kind:'super-pressure'},
     {title:{vi:'Đơn hàng gấp dồn dập',en:'Rush orders pile up'}, desc:{vi:'Cám dỗ tăng ca.',en:'The temptation to add overtime.'}, kind:'neutral'},
-    {title:{vi:'Công đoàn đề nghị đối thoại',en:'The union asks to talk'}, desc:{vi:'Đại diện thợ dệt xin gặp bàn về giờ làm.',en:'Weaver reps want to discuss hours.'}, kind:'neutral'}
+    {title:{vi:'Công đoàn đề nghị đối thoại',en:'The union asks to talk'}, desc:{vi:'Đại diện thợ cơ khí xin gặp bàn về giờ làm.',en:'Mechanic reps want to discuss hours.'}, kind:'neutral'}
   ];
 
   function render(){
@@ -1308,7 +1308,7 @@ const L5 = (function(){
         <div class="k" style="margin-top:8px;">${S.lang==='vi'?'Đã thử':'Tried'}: ${s.usedAbsolute?'✔':'✗'} ${S.lang==='vi'?'tuyệt đối':'absolute'} · ${s.usedRelative?'✔':'✗'} ${S.lang==='vi'?'tương đối':'relative'} · ${s.usedSuper?'✔':'✗'} ${S.lang==='vi'?'siêu ngạch':'super'}</div>
       </div>
       <div class="panel worker">
-        <h3>${S.lang==='vi'?'Thợ dệt':'The weavers'}</h3>
+        <h3>${S.lang==='vi'?'Thợ cơ khí':'The mechanics'}</h3>
         <div class="k">${S.lang==='vi'?'Sức khoẻ TB':'Avg health'}</div><div class="meter"><i style="width:${s.health}%"></i></div>
         <div class="k" style="margin-top:8px;">${S.lang==='vi'?'Bất mãn':'Discontent'}</div><div class="meter"><i style="width:${Math.min(100,s.discontent)}%"></i></div>
         <div class="k" style="margin-top:8px;">${S.lang==='vi'?'Ngày làm':'Workday'}: ${s.hours}h (t=${s.tHours}h)</div>
@@ -1328,10 +1328,10 @@ const L5 = (function(){
   function apply(kind){
     const s=ensure(); const event=s._event;
     let note='', capD=0,healthD=0,discD=0;
-    if(kind==='absolute'){ s.usedAbsolute=true; s.hours=Math.min(12,s.hours+2); unlock('absolute'); note=S.lang==='vi'?'Kéo dài ngày làm — m′ tăng nhanh, sức khoẻ & bất mãn tăng theo.':'Lengthened the day — m′ rises fast, health & discontent rise too.'; capD=900000; healthD=-12; discD=10; }
-    else if(kind==='relative'){ if(event.kind==='relative-trigger'){ s.usedRelative=true; s.tHours=Math.max(2,s.tHours-1); unlock('relative'); note=S.lang==='vi'?'Giá sinh hoạt giảm giúp t rút ngắn — t′ tăng mà thợ không mệt thêm.':'Cheaper living lets t shorten — t′ rises without extra fatigue.'; capD=700000; healthD=3; discD=-3; } else { note=S.lang==='vi'?'Chưa có điều kiện, chưa dùng được cách này.':'Conditions not met, cannot use this yet.'; } }
-    else if(kind==='super'){ s.usedSuper=true; s.superBoostTurns=3; unlock('super'); note=S.lang==='vi'?'Đầu tư máy mới trước đối thủ — thu chênh lệch tạm thời.':'Invested ahead of rivals — a temporary edge.'; capD=1200000; healthD=-3; discD=2; }
-    else { note=S.lang==='vi'?'Giữ nguyên vận hành.':'Kept operations unchanged.'; capD=300000; healthD=4; discD=-2; }
+    if(kind==='absolute'){ s.usedAbsolute=true; s.hours=Math.min(12,s.hours+2); unlock('absolute'); note=S.lang==='vi'?'Kéo dài ngày làm — m′ tăng nhanh, sức khoẻ & bất mãn tăng theo.':'Lengthened the day — m′ rises fast, health & discontent rise too.'; capD=90; healthD=-12; discD=10; }
+    else if(kind==='relative'){ if(event.kind==='relative-trigger'){ s.usedRelative=true; s.tHours=Math.max(2,s.tHours-1); unlock('relative'); note=S.lang==='vi'?'Giá sinh hoạt giảm giúp t rút ngắn — t′ tăng mà thợ không mệt thêm.':'Cheaper living lets t shorten — t′ rises without extra fatigue.'; capD=70; healthD=3; discD=-3; } else { note=S.lang==='vi'?'Chưa có điều kiện, chưa dùng được cách này.':'Conditions not met, cannot use this yet.'; } }
+    else if(kind==='super'){ s.usedSuper=true; s.superBoostTurns=3; unlock('super'); note=S.lang==='vi'?'Đầu tư máy mới trước đối thủ — thu chênh lệch tạm thời.':'Invested ahead of rivals — a temporary edge.'; capD=120; healthD=-3; discD=2; }
+    else { note=S.lang==='vi'?'Giữ nguyên vận hành.':'Kept operations unchanged.'; capD=30; healthD=4; discD=-2; }
     s.capital+=capD; s.health=Math.max(0,Math.min(100,s.health+healthD)); s.discontent=Math.max(0,s.discontent+discD);
     s.log.push(`${tr('monthLbl')} ${s.turn}: ${note}`); s.healthLog.push(s.health);
     s.turn++; s._event=null;
@@ -1355,12 +1355,12 @@ const L5 = (function(){
     return `${roadmap(5)}
     <div class="split">
       <div class="panel worker you"><span class="youtag">${S.lang==='vi'?'BẠN':'YOU'}</span>
-        <h3>${S.lang==='vi'?'Bạn — thợ dệt':'You — a weaver'}</h3>
+        <h3>${S.lang==='vi'?'Bạn — thợ cơ khí':'You — a mechanic'}</h3>
         <div class="k">${S.lang==='vi'?'Sức khoẻ':'Health'}</div><div class="meter"><i style="width:${s.health}%"></i></div>
         <div class="k" style="margin-top:8px;">${S.lang==='vi'?'Bất mãn':'Discontent'}</div><div class="meter"><i style="width:${Math.min(100,s.discontent)}%"></i></div>
       </div>
       <div class="panel capital">
-        <h3>${S.lang==='vi'?'Xưởng Thịnh Phát':'Thinh Phat Mill'}</h3>
+        <h3>${S.lang==='vi'?'Xưởng Ô Tô Thịnh Phát':'Thinh Phat Motor Works'}</h3>
         <p class="k">${S.lang==='vi'?'Đã quan sát':'Observed'}: ${s.sawAbsolute?'✔':'✗'} ${S.lang==='vi'?'tuyệt đối':'absolute'} · ${s.sawRelative?'✔':'✗'} ${S.lang==='vi'?'tương đối':'relative'} · ${s.sawSuper?'✔':'✗'} ${S.lang==='vi'?'siêu ngạch':'super'}</p>
       </div>
     </div>
@@ -1382,7 +1382,7 @@ const L5 = (function(){
     let note='',healthD=0,discD=0,wageD=0;
     if(choice==='accept'){ note=S.lang==='vi'?'Bạn chấp nhận, giữ hoà khí nhưng sức khoẻ hao mòn dần.':'You accept — keeps the peace, but health wears down.'; healthD=-6; }
     else if(choice==='resist'){ note=S.lang==='vi'?'Bạn phản đối để bảo vệ sức khoẻ, bất mãn của chủ xưởng với bạn tăng.':'You push back to protect your health; the owner grows less pleased.'; healthD=6; discD=8; }
-    else { const ok=Math.random()<0.35; if(ok){ note=S.lang==='vi'?'Chủ xưởng đồng ý chia một phần lợi ích tăng năng suất.':'The owner agrees to share a bit of the productivity gain.'; wageD=15000; } else { note=S.lang==='vi'?'Chủ xưởng từ chối chia sẻ lợi ích.':'The owner refuses to share the gain.'; healthD=-2; } }
+    else { const ok=Math.random()<0.35; if(ok){ note=S.lang==='vi'?'Chủ xưởng đồng ý chia một phần lợi ích tăng năng suất.':'The owner agrees to share a bit of the productivity gain.'; wageD=1.5; } else { note=S.lang==='vi'?'Chủ xưởng từ chối chia sẻ lợi ích.':'The owner refuses to share the gain.'; healthD=-2; } }
     s.wage+=wageD; s.health=Math.max(0,Math.min(100,s.health+healthD)); s.discontent=Math.max(0,s.discontent+discD);
     s.log.push(`${tr('monthLbl')} ${s.turn}: ${note}`); s.healthLog.push(s.health);
     s.turn++; s._event=null;
@@ -1396,7 +1396,7 @@ const L5 = (function(){
     const avg=Math.round((s.healthLog||[]).reduce((a,b)=>a+b,0)/Math.max(1,(s.healthLog||[]).length));
     if(s.mode==='capital'){
       if(s.result==='win') return `${roadmap(5)}<div class="card">${winArt()}<div class="pill win badge-pop">${S.lang==='vi'?'QUA MÀN':'STAGE CLEARED'}</div><h3>${S.lang==='vi'?'Bạn đã trải nghiệm đủ cả ba cách':'You experienced all three methods'}</h3><p>${S.lang==='vi'?'Cả ba đều làm m tăng theo những cách khác nhau — kể cả khi trả đúng giá trị sức lao động, m vẫn > 0.':'All three raise m in different ways — even paying exactly at value, m stays above zero.'}</p><button class="btn primary" onclick="L5.finish()">${S.lang==='vi'?'Sang màn 6':'Go to stage 6'} →</button></div>`;
-      if(s.result==='lose_strike') return `${roadmap(5)}<div class="card">${loseArt()}<div class="pill lose">${S.lang==='vi'?'ĐÌNH CÔNG':'STRIKE'}</div><h3>${S.lang==='vi'?'Thợ dệt đình công':'The weavers strike'}</h3><button class="btn" onclick="L5.retry()">${tr('retry')}</button></div>`;
+      if(s.result==='lose_strike') return `${roadmap(5)}<div class="card">${loseArt()}<div class="pill lose">${S.lang==='vi'?'ĐÌNH CÔNG':'STRIKE'}</div><h3>${S.lang==='vi'?'Thợ cơ khí đình công':'The mechanics strike'}</h3><button class="btn" onclick="L5.retry()">${tr('retry')}</button></div>`;
       if(s.result==='lose_health') return `${roadmap(5)}<div class="card">${loseArt()}<div class="pill lose">${S.lang==='vi'?'KIỆT SỨC':'BURNOUT'}</div><h3>${S.lang==='vi'?'Sức khoẻ trung bình quá thấp':'Average health too low'}</h3><button class="btn" onclick="L5.retry()">${tr('retry')}</button></div>`;
       return `${roadmap(5)}<div class="card"><div class="pill info">${S.lang==='vi'?'CHƯA TRỌN VẸN':'INCOMPLETE'}</div><h3>${S.lang==='vi'?'Sức khoẻ TB':'Avg health'} ${avg}, ${S.lang==='vi'?'bất mãn':'discontent'} ${s.discontent}</h3><button class="btn primary" onclick="L5.finish()">${S.lang==='vi'?'Sang màn 6':'Go to stage 6'} →</button> <button class="btn secondary" onclick="L5.retry()">${tr('retry')}</button></div>`;
     } else {
@@ -1417,8 +1417,8 @@ const L5 = (function(){
    ========================================================= */
 const L6 = (function(){
   const witnesses=[
-    {id:'capital', side:{vi:'Nhà tư bản (chủ xưởng)',en:'The capitalist (mill owner)'}, claim:{vi:'"Tôi bỏ vốn mua máy, nguyên liệu, chịu rủi ro phá sản, quản lý cả xưởng — lợi nhuận là phần thưởng chính đáng."',en:'"I put up the capital, bear the risk of bankruptcy, manage the whole mill — profit is a fair reward."'}, correct:'weak', rebuttal:{vi:'Máy móc và nguyên liệu (c) chỉ chuyển nguyên giá trị sẵn có vào sản phẩm, không tự sinh thêm — rủi ro và quản lý là có thật, nhưng không phải nguồn tạo ra m.',en:'Machines and materials (c) only transfer their existing value into the product — real risk and management, but not the source of m.'}},
-    {id:'worker', side:{vi:'Người thợ dệt',en:'The weaver'}, claim:{vi:'"Tôi được trả đúng như thoả thuận — nhưng tôi làm ra nhiều giá trị hơn số tiền lương tôi nhận."',en:'"I’m paid exactly as agreed — but I create more value than the wage I receive."'}, correct:'strong', rebuttal:{vi:'Đúng với dữ liệu bạn thu thập: lương trả đúng giá trị sức lao động, nhưng giá trị sử dụng của nó khi làm việc lớn hơn giá trị của bản thân nó.',en:'Matches your own data: the wage equals the value of labour-power, but its use-value when working exceeds its own value.'}},
+    {id:'capital', side:{vi:'Nhà tư bản (chủ xưởng)',en:'The capitalist (workshop owner)'}, claim:{vi:'"Tôi bỏ vốn mua máy, nguyên liệu, chịu rủi ro phá sản, quản lý cả xưởng — lợi nhuận là phần thưởng chính đáng."',en:'"I put up the capital, bear the risk of bankruptcy, manage the whole workshop — profit is a fair reward."'}, correct:'weak', rebuttal:{vi:'Máy móc và nguyên liệu (c) chỉ chuyển nguyên giá trị sẵn có vào sản phẩm, không tự sinh thêm — rủi ro và quản lý là có thật, nhưng không phải nguồn tạo ra m.',en:'Machines and materials (c) only transfer their existing value into the product — real risk and management, but not the source of m.'}},
+    {id:'worker', side:{vi:'Người thợ cơ khí',en:'The mechanic'}, claim:{vi:'"Tôi được trả đúng như thoả thuận — nhưng tôi làm ra nhiều giá trị hơn số tiền lương tôi nhận."',en:'"I’m paid exactly as agreed — but I create more value than the wage I receive."'}, correct:'strong', rebuttal:{vi:'Đúng với dữ liệu bạn thu thập: lương trả đúng giá trị sức lao động, nhưng giá trị sử dụng của nó khi làm việc lớn hơn giá trị của bản thân nó.',en:'Matches your own data: the wage equals the value of labour-power, but its use-value when working exceeds its own value.'}},
     {id:'market', side:{vi:'Nhà kinh tế thị trường',en:'The market economist'}, claim:{vi:'"Lợi nhuận là phần thưởng cho vốn, rủi ro, và đổi mới sáng tạo."',en:'"Profit rewards capital, risk, and innovation."'}, correct:'partial', rebuttal:{vi:'Đổi mới tạo lợi thế cạnh tranh tạm thời (siêu ngạch), nhưng không giải thích được nguồn m ổn định, lâu dài.',en:'Innovation does yield a temporary edge (super surplus), but doesn’t explain a stable, ongoing source of m.'}},
     {id:'marxist', side:{vi:'Nhà kinh tế Mác-xít',en:'The Marxist economist'}, claim:{vi:'"Trao đổi vẫn ngang giá, hợp đồng tự nguyện — nhưng bản chất là bóc lột vì m do lao động sống tạo ra bị chiếm hữu nhờ sở hữu tư liệu sản xuất."',en:'"The exchange is still equal, the contract voluntary — but it is exploitation in essence, because m created by living labour is captured through ownership of the means of production."'}, correct:'strong', rebuttal:{vi:'Khớp với toàn bộ dữ liệu bạn thu thập từ màn 1 đến 5.',en:'Matches all the data you gathered from stages 1 to 5.'}}
   ];
@@ -1438,7 +1438,7 @@ const L6 = (function(){
     if(s.phase==='surprise') return surpriseCard(s);
     if(s.idx>=s.order.length){ s.phase='surprise'; s.surprise=surpriseQ[Math.floor(Math.random()*surpriseQ.length)]; return surpriseCard(s); }
     const w=witnesses.find(x=>x.id===s.order[s.idx]);
-    const roleLine = S.role==='capital' ? (S.lang==='vi'?'Là chủ xưởng vừa trải qua hành trình trên, bạn ngồi nghe từng lời khai.':'As the owner who just lived through everything above, you sit and hear each testimony.') : (S.lang==='vi'?'Là thợ dệt vừa trải qua hành trình trên, bạn ngồi nghe từng lời khai.':'As the weaver who just lived through everything above, you sit and hear each testimony.');
+    const roleLine = S.role==='capital' ? (S.lang==='vi'?'Là chủ xưởng vừa trải qua hành trình trên, bạn ngồi nghe từng lời khai.':'As the owner who just lived through everything above, you sit and hear each testimony.') : (S.lang==='vi'?'Là thợ cơ khí vừa trải qua hành trình trên, bạn ngồi nghe từng lời khai.':'As the mechanic who just lived through everything above, you sit and hear each testimony.');
     return `${roadmap(6)}
     <div class="card" style="background:#efe4c6; border-color:#d6bf85;">
       <h3>${S.lang==='vi'?'Phiên toà: Hợp tác hay bóc lột?':'Tribunal: Cooperation or exploitation?'}</h3>
@@ -1489,8 +1489,8 @@ const L6 = (function(){
       <h3>${S.lang==='vi'?'Điểm vận dụng':'Applied score'}: ${s.score}/5</h3></div>
     <div class="card" style="border-left:5px solid var(--rust);">
       <h3>${S.lang==='vi'?'Kết luận':'Conclusion'}</h3>
-      <p><b>${S.lang==='vi'?'Về hình thức':'In form'}:</b> ${S.lang==='vi'?'quan hệ chủ xưởng – thợ dệt là hợp tác tự nguyện, bình đẳng trước pháp luật, trao đổi ngang giá.':'the owner–weaver relation is voluntary cooperation, equal before the law, an exchange at value.'}</p>
-      <p><b>${S.lang==='vi'?'Về bản chất':'In essence'}</b> (${S.lang==='vi'?'theo KTCT Mác-Lênin':'per Marxist political economy'}): ${S.lang==='vi'?'vẫn là quan hệ bóc lột giá trị thặng dư — người thợ dệt lao động t′ mà giá trị đó không thuộc về họ, do nhà tư bản sở hữu tư liệu sản xuất.':'it remains a relation of surplus-value exploitation — the weaver labours t′, but that value is not theirs, because the capitalist owns the means of production.'}</p>
+      <p><b>${S.lang==='vi'?'Về hình thức':'In form'}:</b> ${S.lang==='vi'?'quan hệ chủ xưởng – thợ cơ khí là hợp tác tự nguyện, bình đẳng trước pháp luật, trao đổi ngang giá.':'the owner–mechanic relation is voluntary cooperation, equal before the law, an exchange at value.'}</p>
+      <p><b>${S.lang==='vi'?'Về bản chất':'In essence'}</b> (${S.lang==='vi'?'theo KTCT Mác-Lênin':'per Marxist political economy'}): ${S.lang==='vi'?'vẫn là quan hệ bóc lột giá trị thặng dư — người thợ cơ khí lao động t′ mà giá trị đó không thuộc về họ, do nhà tư bản sở hữu tư liệu sản xuất.':'it remains a relation of surplus-value exploitation — the mechanic labours t′, but that value is not theirs, because the capitalist owns the means of production.'}</p>
       <div class="knowledge-note"><b>${S.lang==='vi'?'Ghi chú cân bằng':'Balance note'}:</b> ${S.lang==='vi'?'các trường phái khác coi lợi nhuận là phần thưởng chính đáng cho vốn, rủi ro, đổi mới. Ở Việt Nam hiện nay kinh tế tư nhân được thừa nhận và khuyến khích; vấn đề là điều tiết hợp lý và bảo vệ quyền lợi người lao động.':'other schools see profit as a fair reward for capital, risk and innovation. In Vietnam today private enterprise is recognised and encouraged; the real question is sensible regulation and protecting workers’ rights.'}</div>
     </div>
     ${!win?`<div class="card"><button class="btn" onclick="L6.retry()">${S.lang==='vi'?'Xem lại các màn để bổ sung hồ sơ':'Revisit earlier stages to build a stronger case'}</button></div>`:''}
@@ -1512,7 +1512,7 @@ function buildHeroFx(){
     html+=`<span class="puff" style="left:${(Math.random()*94)}%; animation-delay:${(Math.random()*8).toFixed(1)}s;"></span>`;
   }
   for(let i=0;i<8;i++){
-    const icons=['🧵','🧶'];
+    const icons=['🔧','🔩'];
     html+=`<span class="thread" style="top:${10+Math.random()*75}%; left:${5+Math.random()*88}%; animation-delay:${(Math.random()*6).toFixed(1)}s;">${icons[i%2]}</span>`;
   }
   el.innerHTML=html;
