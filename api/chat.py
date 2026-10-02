@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 from http.server import BaseHTTPRequestHandler
 
@@ -35,13 +36,14 @@ class handler(BaseHTTPRequestHandler):
             if not isinstance(message, str) or not message.strip():
                 return self._json(400, {"error": "Vui lòng nhập câu hỏi."})
 
-            api_key = os.environ.get("GEMINI_API_KEY")
+            api_key = os.environ.get("GEMINI_API_KEY", "").strip()
             if not api_key:
                 return self._json(503, {"error": "Máy chủ chưa được cấu hình GEMINI_API_KEY."})
 
+            model_name = os.environ.get("GEMINI_MODEL", "gemini-flash-latest").strip()
             client = genai.Client(api_key=api_key)
             result = client.models.generate_content(
-                model=os.environ.get("GEMINI_MODEL", "gemini-flash-latest"),
+                model=model_name,
                 contents=message.strip(),
                 config=types.GenerateContentConfig(system_instruction=SYSTEM_INSTRUCTION),
             )
@@ -49,9 +51,32 @@ class handler(BaseHTTPRequestHandler):
             if not reply:
                 return self._json(502, {"error": "AI không trả về nội dung. Vui lòng thử lại."})
             return self._json(200, {"reply": reply})
-        except Exception:
-            print("Gemini API request failed", flush=True)
-            return self._json(502, {"error": "Dịch vụ AI đang gặp sự cố. Vui lòng thử lại sau."})
+        except Exception as exc:
+            status = getattr(exc, "code", None)
+            if callable(status):
+                status = status()
+            try:
+                status = int(status)
+            except (TypeError, ValueError):
+                status = None
+
+            logging.exception(
+                "Gemini API request failed (exception=%s, provider_status=%s)",
+                type(exc).__name__, status,
+            )
+
+            messages = {
+                400: "Gemini từ chối yêu cầu. Hãy kiểm tra model GEMINI_MODEL và cấu hình API.",
+                401: "Google từ chối API key. Hãy tạo key Gemini API mới và cập nhật GEMINI_API_KEY.",
+                403: "API key không có quyền gọi Gemini API. Kiểm tra quyền, giới hạn key và cấu hình dự án Google.",
+                404: "Không tìm thấy model Gemini. Hãy kiểm tra giá trị GEMINI_MODEL.",
+                429: "Gemini API đã hết quota hoặc vượt giới hạn tốc độ. Kiểm tra quota rồi thử lại.",
+            }
+            message = messages.get(
+                status,
+                "Gemini API tạm thời lỗi. Hãy thử lại; nếu vẫn lỗi, xem Function Logs trên Vercel.",
+            )
+            return self._json(502, {"error": message, "providerStatus": status})
 
     def do_OPTIONS(self):
         self.send_response(204)
