@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Sơ đồ tư duy Kinh tế Chính trị Mác - Lênin">
     <meta name="author" content="Nguyễn Anh Khoa - Nhóm 1 ĐH Quốc Tế">
-    
+
     <title>Sơ Đồ Tư Duy - Chương 3 | ĐH Quốc Tế</title>
-    
+
     <link rel="icon" href="./Logo-HCMIU.png" type="image/png">
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -28,7 +28,7 @@
             }
         }
     </script>
-    
+
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -144,7 +144,7 @@
 
     <!-- KHU VỰC HỌC TẬP -->
     <main class="py-12 px-4 md:px-8 max-w-[1400px] mx-auto relative z-10 flex-grow w-full">
-        
+
         <!-- BẢNG ĐIỀU KHIỂN -->
         <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-10" data-aos="fade-up">
             <div class="flex bg-white dark:bg-darkCard p-1.5 rounded-full shadow-lg border border-gray-100 dark:border-gray-700 w-full md:w-auto z-20 relative">
@@ -159,7 +159,7 @@
                     <span class="lang-vi">Tỏa Trực Quan</span><span class="lang-en hidden">Radial Map</span>
                 </button>
             </div>
-            
+
             <div class="flex gap-3 w-full md:w-auto items-center">
                 <!-- Search -->
                 <div class="w-full md:w-80 relative z-20">
@@ -184,16 +184,16 @@
                 <button onclick="treeReset()" class="w-10 h-10 rounded-full bg-gray-100 hover:bg-yellow-400 dark:bg-gray-700 dark:hover:bg-yellow-500 hover:text-black transition-colors flex items-center justify-center sfx-btn"><i class="fa-solid fa-expand-arrows-alt"></i></button>
                 <button onclick="toggleFullscreen()" class="w-10 h-10 rounded-full bg-gray-900 text-yellow-400 hover:bg-black transition-colors flex items-center justify-center sfx-btn"><i class="fa-solid fa-expand"></i></button>
             </div>
-            
+
             <!-- Hiển thị mức Thu (Zoom) -->
             <div class="absolute top-6 left-6 z-30 pointer-events-none">
                 <p class="text-sm font-bold text-gray-500 dark:text-gray-400 bg-white/70 dark:bg-black/70 px-4 py-2 rounded-full backdrop-blur-md shadow-sm border border-gray-200 dark:border-gray-700">
-                    <i class="fa-solid fa-search-plus text-yellow-500 mr-1"></i> 
+                    <i class="fa-solid fa-search-plus text-yellow-500 mr-1"></i>
                     <span class="lang-vi">Mức thu: </span><span class="lang-en hidden">Zoom: </span>
                     <span id="zoom-level-display">85%</span>
                 </p>
             </div>
-            
+
             <!-- Vùng Canvas chứa Node & Đường vẽ SVG. Tọa độ Tuyệt đối căn giữa chuẩn 100% -->
             <div class="w-full h-full relative overflow-hidden">
                 <div id="tree-canvas" class="absolute transition-transform duration-75 flex items-center justify-center" style="width: 3000px; height: 2000px; left: 50%; top: 50%; transform-origin: center;">
@@ -309,7 +309,7 @@
                 preloader.style.opacity = '0';
                 preloader.style.visibility = 'hidden';
                 AOS.init({ once: true, offset: 50 });
-                
+
                 // Vẽ và căn giữa sơ đồ ngay khi load xong vì Sơ đồ là mặc định
                 updateTransform();
                 setTimeout(() => drawLines(), 100);
@@ -331,7 +331,7 @@
             currentLang = lang;
             document.querySelectorAll('.lang-vi').forEach(el => el.classList.toggle('hidden', lang === 'en'));
             document.querySelectorAll('.lang-en').forEach(el => el.classList.toggle('hidden', lang === 'vi'));
-            
+
             document.querySelectorAll('.lang-vi-ph').forEach(el => el.placeholder = (lang==='vi') ? el.getAttribute('placeholder') : 'Type your question...');
             document.querySelectorAll('.lang-en-ph').forEach(el => el.classList.toggle('hidden', true));
 
@@ -345,7 +345,7 @@
                 document.getElementById('userQueryInput').placeholder = 'Nhập câu hỏi của bạn...';
                 document.getElementById('searchInput').placeholder = 'Tìm kiếm nhanh (VD: Hàng hóa, Cạnh tranh)...';
             }
-            renderChat(); 
+            renderChat();
             // Cập nhật lại đường vẽ SVG vì chữ thay đổi có thể làm thay đổi kích thước thẻ
             setTimeout(drawLines, 50);
         }
@@ -423,7 +423,7 @@
         function normalizeText(str) { return str ? str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[đĐ]/g, 'd').toLowerCase() : ''; }
         function highlightText(text, query) {
             if (!text || !query) return text;
-            const regex = new RegExp(`(${query})`, 'gi'); 
+            const regex = new RegExp(`(${query})`, 'gi');
             return text.replace(regex, '<mark>$1</mark>');
         }
         function checkMatch(card, q) {
@@ -440,7 +440,7 @@
                 let filteredCards = q ? section.cards.filter(c => checkMatch(c, q)) : section.cards;
                 if (filteredCards.length === 0) return;
                 hasResult = true;
-                
+
                 let cardsHTML = '';
                 filteredCards.forEach((card) => {
                     const globalIndex = allCards.findIndex(c => c.title.vi === card.title.vi);
@@ -470,7 +470,7 @@
         // ==========================================
         // KHU VỰC VẼ SƠ ĐỒ TƯ DUY TỎA HƯỚNG
         // ==========================================
-        
+
         function initData() {
             allCards = [];
             mindmapData.forEach((s) => s.cards.forEach((c) => allCards.push(c)));
@@ -478,10 +478,10 @@
 
         function renderRadialTree() {
             const container = document.getElementById('tree-html-container');
-            
+
             const buildColumn = (sections, isLeft) => {
                 let html = `<div class="flex flex-col gap-12" id="col-${isLeft ? 'left' : 'right'}">`;
-                
+
                 sections.forEach(secObj => {
                     const sec = mindmapData[secObj.idx];
                     let leavesHTML = '';
@@ -556,11 +556,11 @@
                 icon.style.transform = 'rotate(0deg)';
             } else {
                 container.classList.remove('opacity-100', 'scale-100');
-                container.classList.add('opacity-0', 'scale-0', 'absolute'); 
+                container.classList.add('opacity-0', 'scale-0', 'absolute');
                 icon.style.transform = 'rotate(-90deg)';
             }
             sfxClick.play();
-            setTimeout(drawLines, 300); 
+            setTimeout(drawLines, 300);
         }
 
         // ĐỒNG BỘ TỌA ĐỘ VẼ ĐƯỜNG SVG (Bất chấp Zoom/Pan)
@@ -569,8 +569,8 @@
             const centerNode = document.getElementById('node-center');
             const treeCanvas = document.getElementById('tree-canvas');
             if(!centerNode || !svg || !treeCanvas) return;
-            
-            svg.innerHTML = ''; 
+
+            svg.innerHTML = '';
 
             // Hàm lấy Offset chuẩn từ chính tree-canvas nội bộ (không bị ảnh hưởng bởi scale hay translate của css)
             const getPos = (el) => {
@@ -594,11 +594,11 @@
                 const secNode = document.getElementById(`node-sec-${idx}`);
                 if(!secNode) return;
 
-                const isLeft = (idx < 2); 
+                const isLeft = (idx < 2);
                 const secPos = getPos(secNode);
                 const sx = secPos.x + secPos.w / 2;
                 const sy = secPos.y + secPos.h / 2;
-                
+
                 // Mỏ neo đường vẽ bắt đầu từ rìa khối Trung tâm
                 const startX = cx + (isLeft ? -cWidth/2 + 5 : cWidth/2 - 5);
                 const endX = sx + (isLeft ? secPos.w/2 : -secPos.w/2);
@@ -618,7 +618,7 @@
                         const leafPos = getPos(leafNode);
                         const lx = leafPos.x + leafPos.w / 2;
                         const ly = leafPos.y + leafPos.h / 2;
-                        
+
                         const sOutX = sx + (isLeft ? -secPos.w/2 : secPos.w/2);
                         const lInX = lx + (isLeft ? leafPos.w/2 : -leafPos.w/2);
 
@@ -630,9 +630,9 @@
 
         function drawBezierCurve(svg, x1, y1, x2, y2, strokeClass, width) {
             const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-            const offset = Math.abs(x2 - x1) * 0.45; 
+            const offset = Math.abs(x2 - x1) * 0.45;
             const d = `M ${x1} ${y1} C ${x1 + (x1<x2?offset:-offset)} ${y1}, ${x2 - (x1<x2?offset:-offset)} ${y2}, ${x2} ${y2}`;
-            
+
             path.setAttribute('d', d);
             path.setAttribute('class', `fill-none ${strokeClass}`);
             path.setAttribute('stroke-width', width);
@@ -655,7 +655,7 @@
         function updateTransform() {
             // CSS Transform Translate(-50%, -50%) giữ Canvas luôn ở giữa màn hình. PanX và PanY dựa trên Screen pixels rất mượt.
             treeCanvas.style.transform = `translate(calc(-50% + ${tPanX}px), calc(-50% + ${tPanY}px)) scale(${tScale})`;
-            
+
             const zoomDisplay = document.getElementById('zoom-level-display');
             if(zoomDisplay) zoomDisplay.textContent = Math.round(tScale * 100) + '%';
         }
@@ -675,9 +675,9 @@
             updateTransform();
         });
 
-        window.addEventListener('mouseup', () => { 
-            isDragging = false; 
-            treeWrapper.style.cursor = 'grab'; 
+        window.addEventListener('mouseup', () => {
+            isDragging = false;
+            treeWrapper.style.cursor = 'grab';
         });
 
         treeWrapper.addEventListener('wheel', (e) => {
@@ -718,7 +718,7 @@
         function openModal(index) {
             currentCardIndex = index;
             const card = allCards[index];
-            
+
             // Xử lý Gắn Modal vào document đang kích hoạt (Để hiển thị đè lên trên Fullscreen)
             if (document.fullscreenElement) {
                 document.fullscreenElement.appendChild(modalOverlay);
@@ -793,7 +793,7 @@
                 const isUser = msg.sender === 'user';
                 const textContent = currentLang === 'vi' ? (msg.textVi || msg.text) : (msg.textEn || msg.text);
                 const div = document.createElement('div');
-                div.className = isUser 
+                div.className = isUser
                     ? 'bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3 rounded-2xl rounded-tr-none shadow-sm text-sm max-w-[85%] font-medium leading-relaxed self-end text-black dark:text-white'
                     : 'bg-red-50/50 dark:bg-gray-800 border border-red-100 dark:border-gray-700 p-3 rounded-2xl rounded-tl-none shadow-sm text-sm max-w-[88%] font-medium leading-relaxed self-start text-gray-800 dark:text-gray-200';
                 div.innerHTML = textContent; chatLogs.appendChild(div);
@@ -816,26 +816,42 @@
             const input = document.getElementById('userQueryInput');
             const text = input.value.trim();
             if (!text) return;
+
             chatState.messages.push({ sender: 'user', text: text });
-            chatState.isLoading = true; input.value = ''; renderChat();
+            chatState.isLoading = true;
+            input.value = '';
+            renderChat();
+
             try {
-                const response = await fetch('http://127.0.0.1:5000/api/chat', {
-                    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: text })
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: text })
                 });
-                if (response.ok) {
-                    const data = await response.json(); chatState.messages.push({ sender: 'bot', text: data.reply || data.error });
-                } else throw new Error('API Error');
-            } catch (err) {
-                let fallbackVi = 'Hàng hóa là sản phẩm của lao động, thỏa mãn nhu cầu con người thông qua trao đổi! 💡';
-                let fallbackEn = 'A commodity is a product of labor that satisfies human needs through exchange! 💡';
-                const lowerT = text.toLowerCase();
-                if (lowerT.includes('thuộc tính') || lowerT.includes('attribute') || lowerT.includes('2')) {
-                    fallbackVi = 'Hàng hóa có 2 thuộc tính: Giá trị sử dụng (công dụng) và Giá trị (hao phí lao động).';
-                    fallbackEn = 'A commodity has 2 attributes: Use-value (utility) and Value (labor expenditure).';
+
+                const data = await response.json();
+
+                if (response.ok && data.reply) {
+                    chatState.messages.push({
+                        sender: 'bot',
+                        text: data.reply
+                    });
+                } else {
+                    chatState.messages.push({
+                        sender: 'bot',
+                        text: `⚠ Lỗi backend: ${data.error || 'Không thể lấy phản hồi từ AI'}`
+                    });
                 }
-                chatState.messages.push({ sender: 'bot', textVi: `${fallbackVi} <br><span class="text-[11px] text-gray-400 block mt-1">(Chế độ phản hồi nhanh Off-line)</span>`, textEn: `${fallbackEn} <br><span class="text-[11px] text-gray-400 block mt-1">(Off-line quick response)</span>` });
+            } catch (err) {
+                console.error("Lỗi kết nối:", err);
+                chatState.messages.push({
+                    sender: 'bot',
+                    text: '⚠ Không thể kết nối tới Server API! Vui lòng kiểm tra lại thiết lập trên Vercel.'
+                });
             } finally {
-                chatState.isLoading = false; renderChat(); sfxPop.play();
+                chatState.isLoading = false;
+                renderChat();
+                sfxPop.play();
             }
         }
 
@@ -850,5 +866,6 @@
             renderRadialTree();
         });
     </script>
+    <script src="/chat-widget.js" defer></script>
 </body>
 </html>

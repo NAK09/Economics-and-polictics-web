@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Nền tảng học tập, tìm hiểu Kinh tế Chính trị Mác - Lênin cho sinh viên ĐHQG và Việt Nam">
     <meta name="author" content="Nguyễn Anh Khoa - Nhóm 1 ĐH Quốc Tế">
-    
+
     <meta property="og:title" content="Kinh tế chính trị Mác - Lênin | ĐH Quốc Tế">
     <meta property="og:description" content="Nền tảng học tập, tìm hiểu Kinh tế Chính trị Mác - Lênin cho sinh viên ĐHQG và Việt Nam">
     <meta property="og:type" content="website">
     <meta property="og:image" content="./image_b6f8e2.jpg">
 
     <title>Kinh tế chính trị Mác - Lênin | ĐH Quốc Tế</title>
-    
+
     <link rel="icon" href="./Logo-HCMIU.png" type="image/png">
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -33,7 +33,7 @@
             }
         }
     </script>
-    
+
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -82,7 +82,7 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3), inset 0 0 20px rgba(255,255,255,0.1);
         }
-        
+
         .liquid-text {
             background: linear-gradient(to right, #facc15 20%, #ffffff 50%, #facc15 80%);
             background-size: 200% auto;
@@ -328,7 +328,7 @@
                             <span class="lang-en hidden">International University, Vietnam National University - Ho Chi Minh City</span>
                         </p>
                         <!-- LỖI ĐỊA CHỈ ĐÃ FIX -->
-                        <p><i class="fa-solid fa-location-dot w-5 text-yellow-400"></i> 
+                        <p><i class="fa-solid fa-location-dot w-5 text-yellow-400"></i>
                             <span class="lang-vi">Địa chỉ: Khu phố 6, phường Linh Trung, Thành phố Thủ Đức, TP.HCM</span>
                             <span class="lang-en hidden">Address: Quarter 6, Linh Trung Ward, Thu Duc City, Ho Chi Minh City</span>
                         </p>
@@ -442,7 +442,7 @@
             const html = document.documentElement;
             const icon = document.getElementById('theme-icon');
             html.classList.toggle('dark');
-            
+
             if (html.classList.contains('dark')) {
                 icon.classList.remove('fa-moon');
                 icon.classList.add('fa-sun');
@@ -487,7 +487,7 @@
                 enBtn.classList.remove('text-yellow-400');
                 inputField.placeholder = 'Nhập câu hỏi của bạn...';
             }
-            clearChat(); 
+            clearChat();
         }
 
         let chatState = {
@@ -518,10 +518,10 @@
                 const textContent = currentLang === 'vi' ? (msg.textVi || msg.text) : (msg.textEn || msg.text);
 
                 const div = document.createElement('div');
-                div.className = isUser 
+                div.className = isUser
                     ? 'bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3 rounded-2xl rounded-tr-none shadow-sm text-sm max-w-[85%] font-medium leading-relaxed self-end text-black dark:text-white'
                     : 'bg-red-50/50 dark:bg-gray-800 border border-red-100 dark:border-gray-700 p-3 rounded-2xl rounded-tl-none shadow-sm text-sm max-w-[88%] font-medium leading-relaxed self-start text-gray-800 dark:text-gray-200';
-                
+
                 div.innerHTML = textContent;
                 chatLogs.appendChild(div);
             });
@@ -540,7 +540,7 @@
         function clearChat() {
             const viGreet = 'Chào đồng chí đáng yêu! 🥰 Mình là <strong class="text-red-800 dark:text-yellow-400">Trợ lý AI Kinh tế Chính trị Mác - Lênin</strong> đây. Đừng ngại ngần, hãy hỏi mình bất cứ điều gì nha! ✨';
             const enGreet = 'Greetings, lovely comrade! 🥰 I am your <strong class="text-red-800 dark:text-yellow-400">Marxist-Leninist AI Assistant</strong>! Don\'t hesitate to ask me anything! ✨';
-            
+
             chatState.messages = [{
                 sender: 'bot',
                 textVi: viGreet,
@@ -566,29 +566,25 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ message: text })
                 });
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    chatState.messages.push({ sender: 'bot', text: data.reply || data.error });
+
+                const data = await response.json();
+
+                if (response.ok && data.reply) {
+                    chatState.messages.push({
+                        sender: 'bot',
+                        text: data.reply
+                    });
                 } else {
-                    throw new Error('API Error');
+                    chatState.messages.push({
+                        sender: 'bot',
+                        text: `⚠ Lỗi backend: ${data.error || 'Không thể lấy phản hồi từ AI'}`
+                    });
                 }
             } catch (err) {
-                let fallbackVi = 'Tư bản độc quyền sinh ra từ tự do cạnh tranh, dẫn đến tích tụ và tập trung sản xuất ngày càng cao! 💡';
-                let fallbackEn = 'Monopoly capitalism arises from free competition, leading to higher concentration of production! 💡';
-
-                if (text.toLowerCase().includes('đặc điểm') || text.toLowerCase().includes('monopoly')) {
-                    fallbackVi = '5 đặc điểm độc quyền: 1. Tập trung sản xuất, 2. Tư bản tài chính, 3. Xuất khẩu tư bản, 4. Liên minh kinh tế, 5. Phân chia thế giới.';
-                    fallbackEn = '5 Monopoly traits: 1. Production concentration, 2. Financial capital, 3. Capital export, 4. Economic alliances, 5. World division.';
-                } else if (text.toLowerCase().includes('tài chính') || text.toLowerCase().includes('finance')) {
-                    fallbackVi = 'Tư bản tài chính là sự hợp nhất giữa tư bản ngân hàng độc quyền và tư bản công nghiệp độc quyền!';
-                    fallbackEn = 'Financial capital is the merger of monopoly banking capital and monopoly industrial capital!';
-                }
-
+                console.error("Lỗi kết nối:", err);
                 chatState.messages.push({
                     sender: 'bot',
-                    textVi: `${fallbackVi} <br><span class="text-[11px] text-gray-400 block mt-1">(Chế độ phản hồi nhanh Off-line)</span>`,
-                    textEn: `${fallbackEn} <br><span class="text-[11px] text-gray-400 block mt-1">(Off-line quick response)</span>`
+                    text: '⚠ Không thể kết nối tới Server API! Vui lòng kiểm tra lại thiết lập trên Vercel.'
                 });
             } finally {
                 chatState.isLoading = false;
@@ -610,7 +606,7 @@
             const backToTopBtn = document.getElementById('backToTopBtn');
             const scrollPosition = window.scrollY + window.innerHeight;
             const triggerPoint = document.documentElement.scrollHeight * 0.85;
-            
+
             if (scrollPosition >= triggerPoint || window.scrollY > 400) {
                 backToTopBtn.classList.remove('opacity-0', 'invisible');
                 backToTopBtn.classList.add('opacity-100', 'visible');
@@ -624,5 +620,6 @@
             clearChat();
         });
     </script>
+    <script src="/chat-widget.js" defer></script>
 </body>
 </html>
