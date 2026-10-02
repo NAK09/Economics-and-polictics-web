@@ -284,7 +284,7 @@
                         </div>
                         
                         <h2 class="text-2xl md:text-3xl font-serif font-bold text-slate-900 dark:text-white mb-3">
-                            <span class="lang-vi">Trắc Nghiệm 7 <span class="inline-block align-baseline relative -top-0.5 mx-0.5 text-[0.48em] font-black italic tracking-tight text-red-600/65 dark:text-yellow-300/65 -rotate-6" title="Khối lượng kiến thức cần gánh" aria-label="100 kg kiến thức">100kg</span> Câu</span>
+                            <span class="lang-vi">Trắc Nghiệm 7 <span class="inline-block align-baseline relative -top-0.5 mx-0.5 text-[0.34em] font-medium italic tracking-tight text-slate-400/40 dark:text-slate-500/40 opacity-40 -rotate-6" title="Khối lượng kiến thức cần gánh" aria-label="100 kg kiến thức">100kg</span> Câu</span>
                             <span class="lang-en hidden">7-Question Quiz</span>
                         </h2>
                         
@@ -318,8 +318,8 @@
                         </h2>
                         
                         <p class="text-slate-600 dark:text-gray-300 text-xs leading-relaxed mb-6 flex-grow">
-                            <span class="lang-vi">Hoàn thành 30 câu liên tiếp. Chỉ khi còn ít thời gian, trả lời đúng mới được cộng thêm; trả lời sai sẽ bị choáng 2 giây.</span>
-                            <span class="lang-en hidden">Answer 30 questions in a row. Correct answers earn time only near the end; wrong answers stun you for 2 seconds.</span>
+                            <span class="lang-vi">Đúng đủ 30 câu để thắng. Câu sai được ưu tiên hỏi lại sau khi hết gói; gói câu hỏi tự lặp đến khi đủ điểm. Sai bị choáng 2 giây.</span>
+                            <span class="lang-en hidden">Get 30 correct answers to win. Missed questions return as a priority pack; packs repeat until you reach the goal. Wrong answers stun you for 2 seconds.</span>
                         </p>
                         
                         <span class="text-red-600 dark:text-red-400 font-bold text-xs flex items-center gap-2 group-hover:gap-3 transition-all mt-auto">
@@ -341,8 +341,8 @@
                     <span class="lang-en hidden">Are you ready?</span>
                 </h2>
                 <p class="text-slate-600 dark:text-gray-300 mb-5 text-xs leading-relaxed">
-                    <span class="lang-vi">Trả lời đúng khi còn 5 giây được +1 giây, còn 3 giây được +2 giây. Trả lời sai sẽ bị khóa thao tác trong 2 giây.</span>
-                    <span class="lang-en hidden">Correct answers earn +1s at 5 seconds and +2s at 3 seconds. A wrong answer stuns you for 2 seconds.</span>
+                    <span class="lang-vi">Cần đúng đủ 30 câu để thắng. Câu sai được hỏi lại ưu tiên sau khi hết gói; đúng khi còn tối đa 5 giây được +1 giây, tối đa 3 giây được +2 giây. Sai bị choáng 2 giây.</span>
+                    <span class="lang-en hidden">Get 30 correct answers to win. Missed questions are prioritized after the current pack; correct answers earn +1s at 5 seconds or less and +2s at 3 seconds or less. A wrong answer stuns you for 2 seconds.</span>
                 </p>
                 <div class="flex gap-3">
                     <button onclick="closeReadyModal()" class="flex-1 py-2.5 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 text-slate-700 dark:text-gray-200 rounded-xl font-bold text-sm transition-colors sfx-btn">
@@ -361,8 +361,8 @@
                 <div>
                     <h2 class="text-xl font-black flex items-center gap-2 uppercase text-red-900 dark:text-white">
                         <i class="fa-regular fa-circle-question text-blue-600 dark:text-yellow-400"></i>
-                        <span class="lang-vi">Trắc nghiệm ôn tập Chương 4</span>
-                        <span class="lang-en hidden">Chapter 4 Review Quiz</span>
+                        <span class="lang-vi">Trắc nghiệm ôn tập Chương II &amp; III</span>
+                        <span class="lang-en hidden">Chapters II &amp; III Review Quiz</span>
                     </h2>
                 </div>
                 <button onclick="renderPracticeQuestions()" class="px-3 py-1.5 bg-white dark:bg-darkCard rounded-lg font-bold text-xs hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm sfx-btn flex items-center gap-1.5 transition-colors">
@@ -403,10 +403,10 @@
             <div class="w-full flex justify-between items-center mb-4 liquid-glass-card p-3.5 rounded-xl">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center font-black text-sm border border-slate-200 dark:border-slate-700 shadow-inner">
-                        <span id="blitz-progress" class="text-blue-600 dark:text-yellow-400">1</span><span class="text-[10px] text-gray-400">/30</span>
+                        <span id="blitz-progress" class="text-blue-600 dark:text-yellow-400">0</span><span class="text-[10px] text-gray-400">/30</span>
                     </div>
                     <div class="font-bold text-xs text-slate-500 dark:text-gray-400 uppercase tracking-wider">
-                        <span class="lang-vi">Tiến độ</span><span class="lang-en hidden">Progress</span>
+                        <span class="lang-vi">Câu đúng</span><span class="lang-en hidden">Correct</span>
                     </div>
                 </div>
                 
@@ -494,249 +494,8 @@
     </script>
 
     <!-- NGÂN HÀNG CÂU HỎI & HỆ THỐNG XỬ LÝ SỰ KIỆN -->
+    <script src="/quiz-bank.js"></script>
     <script>
-        /* ================= NGÂN HÀNG CÂU HỎI KTCT MÁC - LÊNIN (35 CÂU CHI TIẾT) ================= */
-        const questionBank = [
-            { 
-                id: 1, 
-                text: { vi: "Từ cuối thế kỷ XIX đến đầu thế kỷ XX, cuộc khủng hoảng kinh tế thế giới năm nào đã làm phá sản hàng loạt doanh nghiệp vừa và nhỏ, thúc đẩy nhanh sự ra đời của các tổ chức độc quyền?", en: "From the late 19th to early 20th century, which world economic crisis bankrupted SMEs, accelerating monopolies?" }, 
-                options: { 
-                    vi: ["Khủng hoảng kinh tế thế giới năm 1929", "Khủng hoảng kinh tế thế giới năm 1873", "Khủng hoảng tài chính toàn cầu năm 2008", "Khủng hoảng năng lượng năm 1973"], 
-                    en: ["The 1929 World Economic Crisis", "The 1873 World Economic Crisis", "The 2008 Global Financial Crisis", "The 1973 Energy Crisis"] 
-                }, 
-                correct: 1, 
-                explanation: { vi: "Cuộc khủng hoảng kinh tế lớn năm 1873 làm phá sản vô số doanh nghiệp nhỏ, tập trung sản xuất vào tay các tư bản lớn hình thành tổ chức độc quyền (Giáo trình tr.89).", en: "The 1873 crisis bankrupted SMEs, concentrating production into monopolies (Textbook p.89)." }, 
-                tag: { vi: "TÍCH TỤ TƯ BẢN", en: "CAPITAL ACCUMULATION" } 
-            },
-            { 
-                id: 2, 
-                text: { vi: "Trong hình thức độc quyền Trust (Tờ-rớt), việc sản xuất và lưu thông hàng hóa của các xí nghiệp thành viên được quản lý như thế nào?", en: "In a Trust monopoly, how are production and circulation of member enterprises managed?" }, 
-                options: { 
-                    vi: ["Các xí nghiệp độc lập hoàn toàn cả sản xuất lẫn lưu thông", "Cả việc sản xuất và tiêu thụ hàng hóa đều do một Ban quản trị chung thống nhất quản lý", "Các xí nghiệp chỉ thỏa thuận chia thị trường tiêu thụ", "Các xí nghiệp chỉ liên kết đầu tư nghiên cứu khoa học"], 
-                    en: ["Enterprises are fully independent in production and circulation", "Both production and consumption are managed by a single joint Board", "Enterprises only agree to divide consumer markets", "Enterprises only link scientific research investments"] 
-                }, 
-                correct: 1, 
-                explanation: { vi: "Trong trust, cả việc sản xuất và tiêu thụ hàng hóa đều do một ban quản trị chung thống nhất quản lý, các xí nghiệp trở thành cổ đông thu lợi nhuận.", en: "In a trust, both production and sales are unified under a single management board; firms become shareholders." }, 
-                tag: { vi: "HÌNH THỨC ĐỘC QUYỀN", en: "MONOPOLY FORMS" } 
-            },
-            { 
-                id: 3, 
-                text: { vi: "Chiến lược 'Biên giới kinh tế mềm' của các tập đoàn tư bản độc quyền hiện đại nhằm mục đích gì?", en: "What is the purpose of the 'Soft economic border' strategy of modern monopolies?" }, 
-                options: { 
-                    vi: ["Xóa bỏ hoàn toàn đường biên giới địa lý của quốc gia chính quốc", "Bành trướng biên giới kinh tế chi phối nước khác bằng vốn, công nghệ và tiêu chuẩn sở hữu trí tuệ", "Xây dựng rào chắn hải quan tự nhiên bằng rừng phòng hộ", "Rút toàn bộ vốn tư bản về kinh doanh trong nội địa"], 
-                    en: ["Erase geographical borders of the home country", "Expand economic influence over other nations via capital, technology, and IP standards", "Build natural customs barriers using forests", "Withdraw all capital for domestic business"] 
-                }, 
-                correct: 1, 
-                explanation: { vi: "Chiến lược 'biên giới kinh tế mềm' nhằm bành trướng tầm ảnh hưởng kinh tế vượt ra ngoài biên giới lãnh thổ quốc gia bằng sức mạnh tài chính và công nghệ.", en: "The soft economic border strategy extends economic reach beyond national physical boundaries via capital and technology." }, 
-                tag: { vi: "BÀNH TRƯỚNG KINH TẾ", en: "ECONOMIC EXPANSION" } 
-            },
-            { 
-                id: 4, 
-                text: { vi: "Hình thức Conglomerate trong độc quyền hiện đại khác với Concern ở điểm chủ yếu nào?", en: "How does Conglomerate in modern monopolies primarily differ from Concern?" }, 
-                options: { 
-                    vi: ["Kết hợp các hãng không có liên quan sản xuất kỹ thuật, chủ yếu để đầu cơ chứng khoán tài chính", "Chỉ hoạt động trong ngành nông nghiệp nhỏ lẻ", "Là hợp tác xã thuộc quyền sở hữu toàn dân", "Không sử dụng đến tư bản ngân hàng"], 
-                    en: ["Combines firms with no technical production links, mainly for financial speculation", "Operates only in small-scale agriculture", "Is a cooperative owned by the public", "Does not utilize bank capital"] 
-                }, 
-                correct: 0, 
-                explanation: { vi: "Conglomerate là sự kết hợp của hàng chục hãng không có sự liên quan trực tiếp về công nghệ sản xuất, mục đích chủ yếu là thu lợi nhuận từ đầu cơ tài chính.", en: "A Conglomerate combines firms with no technical connection, primarily targeting financial speculation profits." }, 
-                tag: { vi: "ĐỘC QUYỀN HIỆN ĐẠI", en: "MODERN MONOPOLIES" } 
-            },
-            { 
-                id: 5, 
-                text: { vi: "Sự xuất hiện của chủ nghĩa tư bản độc quyền nhà nước là nhằm mục đích chính nào?", en: "What is the main purpose of the emergence of state monopoly capitalism?" }, 
-                options: { 
-                    vi: ["Phục vụ lợi ích của toàn thể quần chúng nhân dân lao động", "Cứu vãn chủ nghĩa tư bản, duy trì sự thống trị của giai cấp tư sản độc quyền", "Xóa bỏ triệt để chế độ tư hữu về tư liệu sản xuất", "Phát triển nền kinh tế tập thể phi lợi nhuận"], 
-                    en: ["Serve the overall interests of working people", "Save capitalism and maintain the rule of the monopoly bourgeoisie", "Abolish private ownership of production means", "Develop a non-profit collective economy"] 
-                }, 
-                correct: 1, 
-                explanation: { vi: "CNTB độc quyền nhà nước ra đời nhằm kết hợp sức mạnh nhà nước với tư bản độc quyền để cứu vãn CNTB và bảo vệ lợi ích giai cấp tư sản.", en: "State monopoly capitalism merges state power with private monopolies to sustain capitalism and safeguard elite bourgeois interests." }, 
-                tag: { vi: "ĐỘC QUYỀN NHÀ NƯỚC", en: "STATE MONOPOLY" } 
-            },
-            { 
-                id: 6, 
-                text: { vi: "Tư bản tài chính là sự dung hợp giữa những yếu tố nào sau đây?", en: "Finance capital is the merger between which of the following elements?" }, 
-                options: { 
-                    vi: ["Tư bản ngân hàng và tư bản thương nghiệp", "Tư bản công nghiệp độc quyền và tư bản ngân hàng độc quyền", "Tư bản nhà nước và tư bản tư nhân", "Tư bản cho vay và tư bản sản xuất"], 
-                    en: ["Bank and commercial capital", "Monopoly industrial and monopoly bank capital", "State and private capital", "Loan and productive capital"] 
-                }, 
-                correct: 1, 
-                explanation: { vi: "Theo V.I.Lênin, tư bản tài chính là kết quả của sự hợp nhất giữa tư bản ngân hàng độc quyền với tư bản công nghiệp độc quyền.", en: "According to Lenin, finance capital is the merger of monopoly bank capital and monopoly industrial capital." }, 
-                tag: { vi: "TƯ BẢN TÀI CHÍNH", en: "FINANCE CAPITAL" } 
-            },
-            { 
-                id: 7, 
-                text: { vi: "Xuất khẩu tư bản là đặc điểm kinh tế cơ bản của giai đoạn phát triển nào?", en: "Capital export is a fundamental economic feature of which development stage?" }, 
-                options: { 
-                    vi: ["Chủ nghĩa tư bản tự do cạnh tranh", "Chủ nghĩa tư bản độc quyền (Chủ nghĩa đế quốc)", "Thời kỳ tích lũy nguyên thủy của tư bản", "Chủ nghĩa xã hội sơ khai"], 
-                    en: ["Free-competition capitalism", "Monopoly capitalism (Imperialism)", "Primitive accumulation period", "Early stage socialism"] 
-                }, 
-                correct: 1, 
-                explanation: { vi: "Xuất khẩu tư bản thay thế xuất khẩu hàng hóa, trở thành một trong 5 đặc điểm kinh tế cơ bản của chủ nghĩa tư bản độc quyền.", en: "Capital export replaces commodity export as a core feature of monopoly capitalism." }, 
-                tag: { vi: "XUẤT KHẨU TƯ BẢN", en: "CAPITAL EXPORT" } 
-            },
-            { 
-                id: 8, 
-                text: { vi: "Bản chất của xuất khẩu tư bản là gì?", en: "What is the true essence of capital export?" }, 
-                options: { 
-                    vi: ["Viện trợ không hoàn lại giúp đỡ các nước nghèo phát triển", "Mở rộng quan hệ giao lưu văn hóa quốc tế", "Xuất khẩu giá trị ra nước ngoài nhằm chiếm đoạt giá trị thặng dư ở các nước nhập khẩu", "Chuyển giao miễn phí công nghệ hiện đại cho các nước đang phát triển"], 
-                    en: ["Non-refundable aid to help poor nations develop", "Expand international cultural exchange", "Export value abroad to extract surplus value in importing countries", "Transfer modern technology for free to developing countries"] 
-                }, 
-                correct: 2, 
-                explanation: { vi: "Bản chất của xuất khẩu tư bản là đầu tư tư bản ra nước ngoài để bóc lột giá trị thặng dư do lao động ở nước nhập khẩu tạo ra.", en: "Capital export invests capital abroad to extract surplus value created by workers in recipient nations." }, 
-                tag: { vi: "BẢN CHẤT XKTB", en: "ESSENCE OF CAP EXPORT" } 
-            },
-            { 
-                id: 9, 
-                text: { vi: "Hình thức độc quyền nào là sự liên kết dọc giữa các xí nghiệp thuộc các ngành kinh tế khác nhau nhưng liên quan về kỹ thuật?", en: "Which monopoly form involves vertical integration of firms across different technical industries?" }, 
-                options: { 
-                    vi: ["Cartel (Các-ten)", "Syndicate (Xanh-đi-ca)", "Trust (Tờ-rớt)", "Concern (Con-sơn)"], 
-                    en: ["Cartel", "Syndicate", "Trust", "Concern"] 
-                }, 
-                correct: 3, 
-                explanation: { vi: "Concern là tổ chức độc quyền đa ngành gồm hàng chục xí nghiệp liên kết dọc dựa trên sự liên quan về công nghệ kỹ thuật.", en: "Concern is a multi-industry monopoly linking firms based on technical manufacturing relationships." }, 
-                tag: { vi: "HÌNH THỨC ĐỘC QUYỀN", en: "MONOPOLY FORMS" } 
-            },
-            { 
-                id: 10, 
-                text: { vi: "Cơ chế thống trị của trùm tài chính được thực hiện chủ yếu thông qua hệ thống nào?", en: "The dominant mechanism of financial oligarchs is primarily executed through which system?" }, 
-                options: { 
-                    vi: ["Hệ thống tham quan du lịch", "Hệ thống ủy nhiệm chi tín dụng", "Hệ thống tham gia (chế độ tham dự)", "Hệ thống đấu thầu công khai"], 
-                    en: ["Tourism system", "Credit delegation system", "System of participation (holding system)", "Public bidding system"] 
-                }, 
-                correct: 2, 
-                explanation: { vi: "Trùm tài chính thống trị thông qua 'Chế độ tham dự' (chế độ tham gia) bằng cách nắm cổ phần khống chế công ty mẹ và các công ty con.", en: "Financial oligarchs dominate via the holding system by acquiring controlling shares in parent and subsidiary companies." }, 
-                tag: { vi: "TRÙM TÀI CHÍNH", en: "FINANCIAL OLIGARCH" } 
-            },
-            { 
-                id: 11, 
-                text: { vi: "Giá cả độc quyền bao gồm những yếu tố cấu thành nào?", en: "What components constitute monopoly price?" }, 
-                options: { 
-                    vi: ["Chi phí sản xuất cộng với lợi nhuận bình quân", "Chi phí sản xuất cộng với lợi nhuận độc quyền cao", "Chi phí lưu thông cộng với tiền thuế nhập khẩu", "Giá trị hàng hóa cộng với chi phí quảng cáo"], 
-                    en: ["Production cost plus average profit", "Production cost plus high monopoly profit", "Circulation cost plus import tax", "Commodity value plus advertising cost"] 
-                }, 
-                correct: 1, 
-                explanation: { vi: "Giá cả độc quyền bằng chi phí sản xuất cộng với lợi nhuận độc quyền cao (thường cao hơn giá cả sản xuất).", en: "Monopoly price equals production cost plus high monopoly profit (usually higher than production price)." }, 
-                tag: { vi: "GIÁ CẢ ĐỘC QUYỀN", en: "MONOPOLY PRICE" } 
-            },
-            { 
-                id: 12, 
-                text: { vi: "Sự ra đời của tổ chức thương mại quốc tế WTO thể hiện xu hướng nào của nền kinh tế hiện đại?", en: "The creation of WTO reflects which modern economic trend?" }, 
-                options: { 
-                    vi: ["Toàn cầu hóa và hội nhập kinh tế quốc tế", "Khép kín nền kinh tế tự cung tự cấp", "Tách rời thị trường tài chính khu vực", "Quốc hữu hóa toàn bộ các công ty tư nhân"], 
-                    en: ["Globalization and international economic integration", "Self-sufficient closed economy", "Separation of regional financial markets", "Nationalization of all private companies"] 
-                }, 
-                correct: 0, 
-                explanation: { vi: "WTO và các hiệp định thương mại tự do thể hiện xu thế toàn cầu hóa và tự do hóa thương mại dưới sự tác động của độc quyền quốc tế.", en: "WTO reflects economic globalization and trade liberalization driven by international monopolies." }, 
-                tag: { vi: "TOÀN CẦU HÓA", en: "GLOBALIZATION" } 
-            },
-            { 
-                id: 13, 
-                text: { vi: "Nguồn gốc bản chất của Lợi nhuận độc quyền cao là do đâu?", en: "What is the true origin of High Monopoly Profit?" }, 
-                options: { 
-                    vi: ["Do sự may mắn trên thị trường tài chính", "Do sự sáng tạo của người tiêu dùng", "Bóc lột lao động làm thuê trong xí nghiệp độc quyền và chèn ép người sản xuất nhỏ", "Do sự trợ cấp hoàn toàn từ ngân sách nhà nước"], 
-                    en: ["Luck in financial markets", "Consumer creativity", "Exploitation of wage labor in monopoly firms and squeezing small producers", "Complete subsidies from state budget"] 
-                }, 
-                correct: 2, 
-                explanation: { vi: "Lợi nhuận độc quyền cao có nguồn gốc từ lao động thặng dư của công nhân xí nghiệp độc quyền, lao động của người sản xuất nhỏ và nhân dân các nước thuộc địa.", en: "Monopoly profit originates from surplus labor of workers, small producers, and colonially exploited labor." }, 
-                tag: { vi: "LỢI NHUẬN ĐỘC QUYỀN", en: "MONOPOLY PROFIT" } 
-            },
-            { 
-                id: 14, 
-                text: { vi: "Các liên minh độc quyền phân chia thế giới về mặt kinh tế hình thành dưới dạng nào?", en: "Under what forms do economic alliances dividing the world operate?" }, 
-                options: { 
-                    vi: ["Các liên hợp quốc tế Cartel, Syndicate, Trust quốc tế", "Các khối quân sự NATO và SEATO", "Các tổ chức phi chính phủ bảo vệ môi trường", "Các hiệp hội từ thiện xuyên quốc gia"], 
-                    en: ["International Cartels, Syndicates, and Trusts", "Military blocs like NATO and SEATO", "Environmental non-governmental organizations", "Transnational charitable associations"] 
-                }, 
-                correct: 0, 
-                explanation: { vi: "Các liên minh độc quyền quốc tế phân chia thị trường thế giới dưới dạng các Cartel, Syndicate, Trust quốc tế.", en: "International monopoly alliances divide global markets as international Cartels, Syndicates, and Trusts." }, 
-                tag: { vi: "PHÂN CHIA THẾ GIỚI", en: "WORLD DIVISION" } 
-            },
-            { 
-                id: 15, 
-                text: { vi: "Mối quan hệ giữa Cạnh tranh và Độc quyền trong nền kinh tế thị trường tư bản chủ nghĩa là gì?", en: "What is the relationship between Competition and Monopoly in capitalism?" }, 
-                options: { 
-                    vi: ["Độc quyền thủ tiêu hoàn toàn cạnh tranh", "Độc quyền sinh ra từ cạnh tranh, nhưng không thủ tiêu cạnh tranh mà làm cạnh tranh gay gắt hơn", "Cạnh tranh và độc quyền không bao giờ tồn tại song song", "Cạnh tranh luôn luôn triệt hạ độc quyền"], 
-                    en: ["Monopoly completely eliminates competition", "Monopoly springs from competition, but intensifies competition rather than eliminating it", "Competition and monopoly never co-exist", "Competition always destroys monopoly"] 
-                }, 
-                correct: 1, 
-                explanation: { vi: "Độc quyền sinh ra từ tự do cạnh tranh, nhưng độc quyền không thủ tiêu cạnh tranh mà làm cho cạnh tranh trở nên gay gắt và phức tạp hơn.", en: "Monopoly arises from competition; it doesn't eliminate competition but renders it more fierce." }, 
-                tag: { vi: "CẠNH TRANH & ĐỘC QUYỀN", en: "COMPETITION & MONOPOLY" } 
-            },
-            { 
-                id: 16, 
-                text: { vi: "Thế nào là Xuất khẩu tư bản nhà nước?", en: "What characterizes State Capital Export?" }, 
-                options: { 
-                    vi: ["Tư nhân đem vốn tự có đầu tư ra nước ngoài", "Nhà nước tư bản dùng ngân sách đầu tư hoặc cho vay nhằm mục tiêu kinh tế - chính trị - quân sự", "Các khoản quyên góp từ thiện của người dân sang nước láng giềng", "Chuyển tiền kiều hối của người lao động về nước"], 
-                    en: ["Private individuals investing abroad", "Capitalist state investing budget funds or loans for economic/political/military goals", "Charity donations to neighboring countries", "Migrant worker remittances back home"] 
-                }, 
-                correct: 1, 
-                explanation: { vi: "Xuất khẩu tư bản nhà nước do nhà nước tư bản thực hiện bằng nguồn ngân sách hướng tới mục tiêu địa chính trị và tạo điều kiện cho tư bản tư nhân.", en: "State capital export uses state budget for geopolitical objectives and paving the path for private capital." }, 
-                tag: { vi: "TƯ BẢN NHÀ NƯỚC", en: "STATE CAPITAL" } 
-            },
-            { 
-                id: 17, 
-                text: { vi: "Tổ chức độc quyền Cartel (Các-ten) thỏa thuận với nhau về phương diện nào?", en: "In what aspect do Cartel member enterprises agree upon?" }, 
-                options: { 
-                    vi: ["Giá cả, sản lượng và thị trường tiêu thụ (xí nghiệp độc lập về sản xuất và tiêu thụ)", "Sản xuất độc lập nhưng tiêu thụ chung qua một đầu mối", "Thống nhất hoàn toàn cả sản xuất lẫn tiêu thụ", "Chuyển giao quyền sở hữu tài sản cho nhà nước"], 
-                    en: ["Price, output, and sales market (firms remain independent in production & sales)", "Independent production but joint sales via one hub", "Fully unified production and sales", "Transfer asset ownership to state"] 
-                }, 
-                correct: 0, 
-                explanation: { vi: "Cartel là hình thức độc quyền sơ khai, các thành viên thỏa thuận về giá cả, phân chia thị trường nhưng vẫn độc lập về sản xuất và tiêu thụ.", en: "A Cartel is an early monopoly form where firms agree on price and quota while retaining independence." }, 
-                tag: { vi: "CARTEL", en: "CARTEL" } 
-            },
-            { 
-                id: 18, 
-                text: { vi: "Tổ chức độc quyền Syndicate (Xanh-đi-ca) mất đi tính độc lập ở khâu nào?", en: "At which stage do member enterprises in a Syndicate lose independence?" }, 
-                options: { 
-                    vi: ["Khâu sản xuất hàng hóa", "Khâu lưu thông (mua nguyên liệu và bán hàng hóa)", "Khâu tuyển dụng lao động", "Khâu nghiên cứu phát triển công nghệ"], 
-                    en: ["Production stage", "Circulation stage (buying materials & selling goods)", "Recruitment stage", "R&D technology stage"] 
-                }, 
-                correct: 1, 
-                explanation: { vi: "Trong Syndicate, việc lưu thông (mua nguyên liệu, bán sản phẩm) do một ban quản trị đảm nhiệm, còn sản xuất vẫn độc lập.", en: "In a Syndicate, circulation is centrally managed while production stays independent." }, 
-                tag: { vi: "SYNDICATE", en: "SYNDICATE" } 
-            },
-            { 
-                id: 19, 
-                text: { vi: "Khái niệm 'Chủ nghĩa tư bản độc quyền nhà nước' thể hiện sự kết hợp của hai sức mạnh nào?", en: "State monopoly capitalism represents the combination of which two powers?" }, 
-                options: { 
-                    vi: ["Sức mạnh của tổ chức độc quyền tư nhân và sức mạnh của nhà nước tư sản", "Sức mạnh của giai cấp công nhân và sức mạnh nhà nước", "Sức mạnh kinh tế tư bản và sức mạnh xã hội chủ nghĩa", "Sức mạnh tài chính ngân hàng và sức mạnh nông nghiệp"], 
-                    en: ["Power of private monopolies and power of the bourgeois state", "Power of working class and state power", "Capitalist and socialist economic powers", "Banking financial power and agricultural power"] 
-                }, 
-                correct: 0, 
-                explanation: { vi: "CNTB độc quyền nhà nước là sự kết hợp sức mạnh của các tổ chức độc quyền tư nhân với sức mạnh của nhà nước tư sản thành một bộ máy duy nhất.", en: "It merges private monopoly forces with the bourgeois state apparatus into a unified system." }, 
-                tag: { vi: "ĐỘC QUYỀN NHÀ NƯỚC", en: "STATE MONOPOLY" } 
-            },
-            { 
-                id: 20, 
-                text: { vi: "Sự phân chia thế giới về lãnh thổ địa lý giữa các cường quốc tư bản hoàn thành vào thời gian nào?", en: "When was the territorial division of the world among capitalist powers completed?" }, 
-                options: { 
-                    vi: ["Đầu thế kỷ XIX", "Cuối thế kỷ XIX - Đầu thế kỷ XX", "Sau Chiến tranh thế giới thứ hai (1945)", "Đầu thế kỷ XXI"], 
-                    en: ["Early 19th century", "Late 19th - Early 20th century", "After World War II (1945)", "Early 21st century"] 
-                }, 
-                correct: 1, 
-                explanation: { vi: "Đến cuối thế kỷ XIX đầu thế kỷ XX, các cường quốc đế quốc đã hoàn thành việc phân chia lãnh thổ thế giới thành các thuộc địa.", en: "By the late 19th and early 20th century, imperial powers completed colonial division of the globe." }, 
-                tag: { vi: "PHÂN CHIA LÃNH THỔ", en: "TERRITORIAL DIVISION" } 
-            },
-            /* Bổ sung các câu hỏi tiếp theo đảm bảo đủ số lượng phong phú */
-            ...Array.from({length: 15}, (_, i) => ({
-                id: 21 + i,
-                text: { 
-                    vi: `Quy luật giá trị thặng dư biểu hiện như thế nào trong giai đoạn Chủ nghĩa tư bản độc quyền (Câu ${21+i})?`, 
-                    en: `How does the law of surplus value manifest in Monopoly Capitalism (Question ${21+i})?`
-                },
-                options: {
-                    vi: ["Chuyển hóa thành quy luật giá trị hàng hóa", "Chuyển hóa thành quy luật lợi nhuận độc quyền cao", "Chuyển hóa thành quy luật cung cầu thị trường", "Chuyển hóa thành quy luật bình ổn giá cả"],
-                    en: ["Transforms into law of commodity value", "Transforms into law of high monopoly profit", "Transforms into law of supply and demand", "Transforms into law of price stabilization"]
-                },
-                correct: 1,
-                explanation: {
-                    vi: "Trong giai đoạn độc quyền, quy luật giá trị thặng dư biểu hiện thành quy luật lợi nhuận độc quyền cao do các tập đoàn chi phối.",
-                    en: "Under monopoly, the law of surplus value manifests as the law of high monopoly profit."
-                },
-                tag: { vi: "QUY LUẬT KINH TẾ", en: "ECONOMIC LAW" }
-            }))
-        ];
-
         let currentLang = (() => { try { return localStorage.getItem('ktct-language') || 'vi'; } catch (_) { return 'vi'; } })();
 
         /* ================= TIỆN ÍCH HỆ THỐNG ================= */
@@ -1010,13 +769,46 @@
             setTimeout(startBlitzMode, 300);
         }
 
-        /* LẤY CÂU HỎI NGẪU NHIÊN - ĐẢM BẢO 2 CÂU LIỀN KỀ KHÁC NHAU HOÀN TOÀN */
+        let blitzDeck = [];
+        let blitzPriorityQueue = [];
+        let blitzPrioritySet = new Set();
+
+        /* Hỏi hết gói hiện tại trước; sau đó đưa câu sai lên đầu gói kế tiếp. */
         function getRandomBlitzQuestion() {
-            let available = questionBank.filter(q => q.id !== lastBlitzQuestionId);
-            if (!available.length) available = questionBank;
-            let selected = available[Math.floor(Math.random() * available.length)];
+            if (!blitzDeck.length) {
+                if (blitzPriorityQueue.length) {
+                    blitzDeck = blitzPriorityQueue
+                        .map(id => questionBank.find(q => q.id === id))
+                        .filter(Boolean);
+                    blitzPriorityQueue = [];
+                    blitzPrioritySet.clear();
+                } else {
+                    blitzDeck = shuffle(questionBank.slice());
+                }
+            }
+
+            const available = blitzDeck.filter(q => q.id !== lastBlitzQuestionId);
+            if (!available.length) {
+                // Defer the just-seen question and choose another one to break adjacency.
+                const alternatives = questionBank.filter(q => q.id !== lastBlitzQuestionId);
+                const selected = alternatives[Math.floor(Math.random() * alternatives.length)];
+                const queuedIndex = blitzDeck.findIndex(q => q.id === selected.id);
+                if (queuedIndex >= 0) blitzDeck.splice(queuedIndex, 1);
+                lastBlitzQuestionId = selected.id;
+                return selected;
+            }
+
+            const selected = available[Math.floor(Math.random() * available.length)];
+            blitzDeck.splice(blitzDeck.findIndex(q => q.id === selected.id), 1);
             lastBlitzQuestionId = selected.id;
             return selected;
+        }
+
+        function queueMissedBlitzQuestion(question) {
+            if (!blitzPrioritySet.has(question.id)) {
+                blitzPrioritySet.add(question.id);
+                blitzPriorityQueue.push(question.id);
+            }
         }
 
         function startBlitzMode() {
@@ -1028,6 +820,9 @@
             blitzAnswerLocked = false;
             lastBlitzQuestionId = null;
             clearTimeout(blitzStunTimeout);
+            blitzDeck = shuffle(questionBank.slice());
+            blitzPriorityQueue = [];
+            blitzPrioritySet.clear();
             
             nextBlitzQuestion();
             
@@ -1043,7 +838,7 @@
         }
 
         function nextBlitzQuestion() {
-            if (blitzCount >= BLITZ_GOAL) {
+            if (blitzScore >= BLITZ_GOAL) {
                 endBlitz(true);
                 return;
             }
@@ -1073,8 +868,7 @@
             const text = currentLang === 'vi' ? q.text.vi : q.text.en;
             const opts = currentLang === 'vi' ? q.options.vi : q.options.en;
             
-            document.getElementById('blitz-progress').textContent = blitzCount;
-            document.getElementById('blitz-question-text').textContent = text;
+            document.getElementById('blitz-progress').textContent = blitzScore;
             
             const optionsContainer = document.getElementById('blitz-options');
             optionsContainer.innerHTML = '';
@@ -1128,6 +922,7 @@
             } else {
                 // Sai không trừ điểm thời gian trực tiếp; người chơi bị choáng 2 giây.
                 sfx.wrong.play();
+                queueMissedBlitzQuestion(q);
                 triggerFlash('wrong');
                 optionsContainer.querySelectorAll('button').forEach(button => {
                     button.disabled = true;
@@ -1175,7 +970,7 @@
                 document.getElementById('blitz-result-icon').textContent = '🏆';
                 title.textContent = currentLang === 'vi' ? 'CHIẾN THẮNG!' : 'VICTORY!';
                 title.className = 'text-3xl font-black mb-1 uppercase tracking-tight text-yellow-500';
-                desc.textContent = currentLang === 'vi' ? 'Bạn đã hoàn thành xuất sắc 30 câu hỏi liên hoàn!' : 'You successfully completed 30 continuous questions!';
+                desc.textContent = currentLang === 'vi' ? 'Bạn đã trả lời đúng đủ 30/30 câu hỏi!' : 'You answered all 30 questions correctly!';
             } else {
                 sfx.lose.play();
                 document.getElementById('blitz-result-icon').textContent = '💀';
@@ -1203,7 +998,7 @@
             document.getElementById('btn-submit-practice').classList.add('hidden');
             document.getElementById('practice-status').innerHTML = `<span class="text-emerald-600 font-bold">${currentLang==='vi'?'Kết quả Blitz':'Blitz Result'}: ${blitzScore}/${BLITZ_GOAL} ${currentLang==='vi'?'câu đúng':'correct'}</span>`;
 
-            questionBank.slice(0, 15).forEach((q, index) => {
+            questionBank.forEach((q, index) => {
                 const text = currentLang === 'vi' ? q.text.vi : q.text.en;
                 const opts = currentLang === 'vi' ? q.options.vi : q.options.en;
                 const exp = currentLang === 'vi' ? q.explanation.vi : q.explanation.en;
