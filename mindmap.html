@@ -8,7 +8,7 @@
 
     <script>try { if (localStorage.getItem('ktct-theme') === 'dark') document.documentElement.classList.add('dark'); } catch (_) {}</script>
 
-    <title>Sơ Đồ Tư Duy - Chương 3 | ĐH Quốc Tế</title>
+    <title>Sơ Đồ Tư Duy - Chương IV | ĐH Quốc Tế</title>
 
     <link rel="icon" href="./Logo-HCMIU.png" type="image/png">
 
@@ -141,12 +141,12 @@
                 <i class="fa-solid fa-network-wired"></i>
             </div>
             <h1 class="text-3xl md:text-5xl font-serif font-black mb-4 uppercase tracking-wide leading-tight liquid-text">
-                <span class="lang-vi">SƠ ĐỒ TƯ DUY - CHƯƠNG 3</span>
-                <span class="lang-en hidden">MIND MAP - CHAPTER 3</span>
+                <span class="lang-vi">SƠ ĐỒ TƯ DUY - CHƯƠNG IV</span>
+                <span class="lang-en hidden">MIND MAP - CHAPTER IV</span>
             </h1>
             <p class="text-lg md:text-xl text-white/90 font-bold drop-shadow-md">
-                <span class="lang-vi">Sản xuất hàng hóa và các quy luật kinh tế</span>
-                <span class="lang-en hidden">Commodity production and economic laws</span>
+                <span class="lang-vi">Sản xuất giá trị thặng dư - Quy luật kinh tế cơ bản của chủ nghĩa tư bản</span>
+                <span class="lang-en hidden">Surplus value production - The fundamental economic law of capitalism</span>
             </p>
         </div>
     </header>
@@ -172,8 +172,8 @@
             <div class="flex gap-3 w-full md:w-auto items-center">
                 <!-- Search -->
                 <div class="w-full md:w-80 relative z-20">
-                    <input type="text" id="searchInput" placeholder="Tìm kiếm nhanh (VD: Hàng hóa, Cạnh tranh)..." class="w-full bg-white dark:bg-darkCard border border-gray-200 dark:border-gray-700 rounded-full px-5 py-3 pl-12 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-yellow-400 dark:text-white transition-all shadow-sm lang-vi-ph">
-                    <input type="text" id="searchInputEn" placeholder="Quick search (e.g. Market, Value)..." class="w-full bg-white dark:bg-darkCard border border-gray-200 dark:border-gray-700 rounded-full px-5 py-3 pl-12 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-yellow-400 dark:text-white transition-all shadow-sm hidden lang-en-ph">
+                    <input type="text" id="searchInput" placeholder="Tìm kiếm nhanh (VD: Giá trị thặng dư, Tích lũy tư bản)..." class="w-full bg-white dark:bg-darkCard border border-gray-200 dark:border-gray-700 rounded-full px-5 py-3 pl-12 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-yellow-400 dark:text-white transition-all shadow-sm lang-vi-ph">
+                    <input type="text" id="searchInputEn" placeholder="Quick search (e.g. Surplus value, Capital accumulation)..." class="w-full bg-white dark:bg-darkCard border border-gray-200 dark:border-gray-700 rounded-full px-5 py-3 pl-12 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-yellow-400 dark:text-white transition-all shadow-sm hidden lang-en-ph">
                     <i class="fa-solid fa-magnifying-glass absolute left-5 top-1/2 -translate-y-1/2 text-gray-400"></i>
                 </div>
             </div>
@@ -291,11 +291,11 @@
         <div id="chat-logs" class="p-4 h-72 overflow-y-auto flex flex-col gap-4 bg-white dark:bg-gray-900"></div>
 
         <div class="flex gap-2 p-3 overflow-x-auto border-t border-gray-100 dark:border-gray-800 scrollbar-hide whitespace-nowrap bg-gray-50 dark:bg-gray-800">
-            <button onclick="sendSuggestion('Hàng hóa là gì?', 'What is a commodity?')" class="px-4 py-1.5 bg-white dark:bg-gray-700 border border-red-200 dark:border-gray-600 text-red-800 dark:text-yellow-400 rounded-full text-xs font-bold shadow-sm hover:bg-red-50 transition-colors sfx-btn">
-                <span class="lang-vi">🌸 Hàng hóa là gì?</span><span class="lang-en hidden">🌸 What is commodity?</span>
+            <button onclick="sendSuggestion('Giá trị thặng dư được tạo ra như thế nào?', 'How is surplus value produced?')" class="px-4 py-1.5 bg-white dark:bg-gray-700 border border-red-200 dark:border-gray-600 text-red-800 dark:text-yellow-400 rounded-full text-xs font-bold shadow-sm hover:bg-red-50 transition-colors sfx-btn">
+                <span class="lang-vi">🌸 Giá trị thặng dư là gì?</span><span class="lang-en hidden">🌸 What is surplus value?</span>
             </button>
-            <button onclick="sendSuggestion('Hai thuộc tính của hàng hóa?', 'Two attributes of commodity?')" class="px-4 py-1.5 bg-white dark:bg-gray-700 border border-red-200 dark:border-gray-600 text-red-800 dark:text-yellow-400 rounded-full text-xs font-bold shadow-sm hover:bg-red-50 transition-colors sfx-btn">
-                <span class="lang-vi">💡 2 thuộc tính hàng hóa?</span><span class="lang-en hidden">💡 2 Commodity traits?</span>
+            <button onclick="sendSuggestion('Tư bản bất biến và tư bản khả biến khác nhau thế nào?', 'How do constant and variable capital differ?')" class="px-4 py-1.5 bg-white dark:bg-gray-700 border border-red-200 dark:border-gray-600 text-red-800 dark:text-yellow-400 rounded-full text-xs font-bold shadow-sm hover:bg-red-50 transition-colors sfx-btn">
+                <span class="lang-vi">💡 Tư bản c và v?</span><span class="lang-en hidden">💡 Constant and variable capital?</span>
             </button>
         </div>
 
@@ -350,11 +350,11 @@
             if (lang === 'en') {
                 viBtn.classList.replace('text-yellow-400', 'text-white'); enBtn.classList.replace('text-white', 'text-yellow-400');
                 document.getElementById('userQueryInput').placeholder = 'Type your question...';
-                document.getElementById('searchInput').placeholder = 'Quick search (e.g. Market, Value)...';
+                document.getElementById('searchInput').placeholder = 'Quick search (e.g. Surplus value, Capital accumulation)...';
             } else {
                 viBtn.classList.replace('text-white', 'text-yellow-400'); enBtn.classList.replace('text-yellow-400', 'text-white');
                 document.getElementById('userQueryInput').placeholder = 'Nhập câu hỏi của bạn...';
-                document.getElementById('searchInput').placeholder = 'Tìm kiếm nhanh (VD: Hàng hóa, Cạnh tranh)...';
+                document.getElementById('searchInput').placeholder = 'Tìm kiếm nhanh (VD: Giá trị thặng dư, Tích lũy tư bản)...';
             }
             renderChat();
             // Cập nhật lại đường vẽ SVG vì chữ thay đổi có thể làm thay đổi kích thước thẻ
@@ -379,55 +379,113 @@
             }
         }
 
-        // DATABASE CHƯƠNG 3
+        // DATABASE CHƯƠNG IV
+        const cardData = (tagVi, tagEn, titleVi, titleEn, icon, coreVi, coreEn, detailsVi, detailsEn, tipVi, tipEn) => ({
+            tag: { vi: tagVi, en: tagEn }, title: { vi: titleVi, en: titleEn }, icon,
+            core: { vi: coreVi, en: coreEn }, details: { vi: detailsVi, en: detailsEn }, tip: { vi: tipVi, en: tipEn }
+        });
+
         const mindmapData = [
             {
-                sectionName: { vi: "I. ĐIỀU KIỆN, ĐẶC TRƯNG & ƯU THẾ", en: "I. CONDITIONS, CHARACTERISTICS" },
+                sectionName: { vi: "I. SỰ CHUYỂN HÓA TIỀN THÀNH TƯ BẢN", en: "I. THE TRANSFORMATION OF MONEY INTO CAPITAL" },
                 theme: { bgLight: "bg-red-50 dark:bg-red-950/30", bgIcon: "bg-red-100 dark:bg-red-900/50", textIcon: "text-red-600 dark:text-red-400", hoverShadow: "hover:shadow-[0_20px_50px_rgba(220,38,38,0.15)]", textColor: "text-red-800 dark:text-yellow-400", borderCard: "border-red-200 dark:border-red-900", stroke: "stroke-red-500 dark:stroke-red-600" },
                 cards: [
-                    { tag: { vi: "KHÁI NIỆM", en: "CONCEPT" }, title: { vi: "Sản xuất hàng hóa", en: "Commodity Production" }, icon: "fa-box-open", core: { vi: "Tổ chức kinh tế sản xuất sản phẩm để bán, đáp ứng nhu cầu người khác qua trao đổi.", en: "Economic organization where products are made to be sold, fulfilling others' needs." }, details: { vi: ["Không phải để đáp ứng nhu cầu tiêu dùng của chính người sản xuất.", "Là bước phát triển cao hơn thay thế kinh tế tự nhiên."], en: ["Not for self-consumption.", "A higher stage replacing natural economy."] }, tip: { vi: "Từ khóa: 'Để bán' và 'Trao đổi'.", en: "Keywords: 'For sale' and 'Exchange'." }},
-                    { tag: { vi: "ĐIỀU KIỆN", en: "CONDITIONS" }, title: { vi: "2 Điều kiện ra đời", en: "2 Emergence Conditions" }, icon: "fa-code-branch", core: { vi: "Cần phân công lao động xã hội (ĐK cần) và Sự tách biệt kinh tế (ĐK đủ).", en: "Requires social division of labor (Necessary) and Economic separation (Sufficient)." }, details: { vi: ["Phân công LĐXH: Mỗi người làm 1 loại SP, nhưng cần nhiều loại -> Tất yếu trao đổi.", "Sự tách biệt KT: Chế độ tư hữu làm SP thuộc sở hữu riêng."], en: ["Social Division: Specialized production creates need to exchange.", "Economic Separation: Private ownership."] }, tip: { vi: "Phân công (Cần nhau) + Sở hữu tư nhân (Độc lập nhau) = Hàng hóa.", en: "Division of Labor + Private Property = Commodity." }},
-                    { tag: { vi: "ĐẶC TRƯNG", en: "FEATURES" }, title: { vi: "Đặc trưng cơ bản", en: "Features & Contradictions" }, icon: "fa-bolt", core: { vi: "Lao động mang tính tư nhân nhưng phục vụ nhu cầu xã hội.", en: "Labor is private but serves social needs." }, details: { vi: ["Mục đích sản xuất là để trao đổi.", "Mâu thuẫn cơ bản: LĐ tư nhân vs LĐ xã hội."], en: ["Production strictly for exchange.", "Contradiction: Private vs Social labor."] }, tip: { vi: "Sản xuất là TƯ NHÂN, tiêu dùng là XÃ HỘI.", en: "Production is PRIVATE, consumption is SOCIAL." }}
+                    cardData("CÔNG THỨC CHUNG", "GENERAL FORMULA", "Công thức chung của tư bản", "The General Formula of Capital", "fa-arrows-left-right",
+                        "T - H - T′: tiền được ứng ra để thu về lượng tiền lớn hơn; phần tăng thêm ΔT là giá trị thặng dư (m).", "M - C - M′: money is advanced to return as a greater sum; the increment ΔM is surplus value (s).",
+                        ["H - T - H: bán rồi mua, tiền làm trung gian và mục đích là giá trị sử dụng.", "T - H - T′: mua rồi bán, hàng hóa làm trung gian; T′ = T + ΔT.", "Trao đổi ngang giá không làm tổng giá trị tăng; trao đổi không ngang giá chỉ chuyển giá trị giữa các bên.", "Đứng ngoài lưu thông, tiền không thể tự tăng lên. Theo C. Mác, tư bản xuất hiện trong lưu thông nhưng không thể bắt nguồn từ lưu thông."],
+                        ["C - M - C: selling then buying; money is the intermediary and use-value is the aim.", "M - C - M′: buying then selling; commodities are the intermediary; M′ = M + ΔM.", "Equivalent exchange does not increase total value; non-equivalent exchange only transfers value between parties.", "Money cannot grow outside circulation. According to Marx, capital appears in circulation but cannot originate from circulation alone."],
+                        "Tư bản vận động để thu về giá trị thặng dư: T - H - T′, với T′ lớn hơn T.", "Capital circulates to obtain surplus value: M - C - M′, where M′ exceeds M."),
+                    cardData("HÀNG HÓA ĐẶC BIỆT", "A SPECIAL COMMODITY", "Hàng hóa sức lao động", "Labour-Power as a Commodity", "fa-person-digging",
+                        "Sức lao động là toàn bộ năng lực thể lực và trí lực của con người được sử dụng trong sản xuất.", "Labour-power is the total physical and mental capacity a person uses in production.",
+                        ["Người lao động tự do về thân thể, có quyền định đoạt sức lao động của mình.", "Người lao động không có đủ tư liệu sản xuất cần thiết nên phải bán sức lao động để sống.", "Hàng hóa sức lao động là chìa khóa giải quyết mâu thuẫn của công thức chung tư bản."],
+                        ["Workers are personally free and can dispose of their labour-power.", "Workers lack the necessary means of production and must sell their labour-power to live.", "Labour-power as a commodity is the key to resolving the contradiction in capital's general formula."],
+                        "Hai điều kiện: tự do thân thể và không có tư liệu sản xuất cần thiết.", "Two conditions: personal freedom and lack of the necessary means of production."),
+                    cardData("HAI THUỘC TÍNH", "TWO ATTRIBUTES", "Giá trị và giá trị sử dụng", "Value and Use-Value", "fa-scale-balanced",
+                        "Giá trị sử dụng đặc biệt của sức lao động là tạo ra giá trị mới lớn hơn giá trị của chính nó.", "The special use-value of labour-power is its ability to create more value than its own value.",
+                        ["Giá trị sức lao động do giá trị tư liệu sinh hoạt cần thiết để tái sản xuất sức lao động quyết định, gồm nhu cầu gia đình người lao động.", "Giá trị này còn mang yếu tố tinh thần và lịch sử.", "Phần giá trị mới vượt quá giá trị sức lao động là giá trị thặng dư."],
+                        ["The value of labour-power is determined by the subsistence needed to reproduce it, including the worker's family needs.", "This value also has a historical and moral element.", "New value beyond the value of labour-power is surplus value."],
+                        "Sức lao động tạo ra giá trị lớn hơn giá trị của chính nó.", "Labour-power creates value greater than its own value.")
                 ]
             },
             {
-                sectionName: { vi: "II. HÀNG HÓA", en: "II. COMMODITY" },
+                sectionName: { vi: "II. SẢN XUẤT GIÁ TRỊ THẶNG DƯ", en: "II. THE PRODUCTION OF SURPLUS VALUE" },
                 theme: { bgLight: "bg-[#eff6ff] dark:bg-blue-950/30", bgIcon: "bg-blue-100 dark:bg-blue-900/50", textIcon: "text-blue-600 dark:text-blue-400", hoverShadow: "hover:shadow-[0_20px_50px_rgba(37,99,235,0.15)]", textColor: "text-blue-800 dark:text-blue-400", borderCard: "border-blue-200 dark:border-blue-900", stroke: "stroke-blue-500 dark:stroke-blue-600" },
                 cards: [
-                    { tag: { vi: "KHÁI NIỆM", en: "CONCEPT" }, title: { vi: "Bản chất Hàng hóa", en: "Nature of Commodity" }, icon: "fa-cube", core: { vi: "Sản phẩm của lao động, thỏa mãn nhu cầu qua trao đổi.", en: "Product of labor satisfying human needs through exchange." }, details: { vi: ["Dạng hữu hình (vật chất) hoặc vô hình (dịch vụ)."], en: ["Can be tangible or intangible."] }, tip: { vi: "3 Yếu tố: Do LĐ tạo ra + Có ích + Đem bán.", en: "3 Elements: Made by labor + Useful + For sale." }},
-                    { tag: { vi: "THUỘC TÍNH 1", en: "ATTRIBUTE 1" }, title: { vi: "Giá trị sử dụng", en: "Use-Value" }, icon: "fa-hand-holding-heart", core: { vi: "Công dụng của hàng hóa thỏa mãn nhu cầu con người.", en: "The utility of a commodity satisfying human needs." }, details: { vi: ["Do thuộc tính tự nhiên quy định, là phạm trù vĩnh viễn.", "Là vật mang giá trị trao đổi."], en: ["Determined by physical properties, permanent category.", "Bearer of exchange value."] }, tip: { vi: "Giá trị sử dụng = CÔNG DỤNG.", en: "Use-Value = UTILITY." }},
-                    { tag: { vi: "THUỘC TÍNH 2", en: "ATTRIBUTE 2" }, title: { vi: "Giá trị hàng hóa", en: "Value of Commodity" }, icon: "fa-gem", core: { vi: "Lao động xã hội kết tinh trong hàng hóa.", en: "Social labor crystallized in the commodity." }, details: { vi: ["Biểu hiện qua giá trị trao đổi.", "Phản ánh quan hệ xã hội, là phạm trù lịch sử."], en: ["Expressed through exchange value.", "Historical category reflecting relations."] }, tip: { vi: "Giá trị = HAO PHÍ LAO ĐỘNG.", en: "Value = LABOR EXPENDITURE." }},
-                    { tag: { vi: "TÍNH CHẤT", en: "LABOR NATURE" }, title: { vi: "LĐ Cụ thể & Trừu tượng", en: "Concrete & Abstract Labor" }, icon: "fa-yin-yang", core: { vi: "Tính 2 mặt của lao động sx hàng hóa.", en: "Two-fold character of commodity-producing labor." }, details: { vi: ["LĐ Cụ thể: Tạo Giá trị sử dụng (tính tư nhân).", "LĐ Trừu tượng: Sự tiêu hao sức lực -> Tạo Giá trị (tính xh)."], en: ["Concrete: Creates Use-Value.", "Abstract: Creates Value."] }, tip: { vi: "Cụ thể tạo Công dụng | Trừu tượng tạo Giá trị.", en: "Concrete -> Utility | Abstract -> Value." }},
-                    { tag: { vi: "LƯỢNG GIÁ TRỊ", en: "MAGNITUDE" }, title: { vi: "Thước đo Lượng giá trị", en: "Measurement & Factors" }, icon: "fa-ruler-combined", core: { vi: "Đo bằng Thời gian lao động xã hội cần thiết.", en: "Measured by Socially necessary labor time." }, details: { vi: ["Năng suất tăng -> Giá trị 1 SP giảm.", "Cường độ tăng -> Giá trị 1 SP KHÔNG ĐỔI.", "LĐ phức tạp = LĐ giản đơn nhân lên."], en: ["Productivity up -> Value down.", "Intensity up -> Value UNCHANGED.", "Complex labor = multiplied simple labor."] }, tip: { vi: "Năng suất nghịch biến, Cường độ giữ nguyên giá trị.", en: "Productivity inversely proportional; Intensity leaves unit value unchanged." }}
+                    cardData("QUÁ TRÌNH SẢN XUẤT", "PRODUCTION PROCESS", "Quá trình sản xuất giá trị thặng dư", "The Production of Surplus Value", "fa-industry",
+                        "Sản xuất giá trị thặng dư thống nhất quá trình tạo ra giá trị sử dụng và quá trình làm tăng giá trị.", "Surplus-value production unites the creation of use-values with the process of valorization.",
+                        ["Ngày lao động gồm thời gian lao động tất yếu và thời gian lao động thặng dư.", "Trong thời gian tất yếu, công nhân tạo giá trị ngang bằng giá trị sức lao động.", "Trong thời gian thặng dư, công nhân tạo ra giá trị bị nhà tư bản chiếm đoạt.", "Giá trị thặng dư (m) là phần giá trị mới dôi ra ngoài giá trị sức lao động."],
+                        ["The working day consists of necessary and surplus labour-time.", "During necessary time, workers create value equal to the value of their labour-power.", "During surplus time, workers create value appropriated by the capitalist.", "Surplus value (s) is new value beyond the value of labour-power."],
+                        "Thời gian lao động thặng dư tạo ra giá trị thặng dư.", "Surplus labour-time produces surplus value."),
+                    cardData("TƯ BẢN C VÀ V", "CONSTANT AND VARIABLE CAPITAL", "Tư bản bất biến và khả biến", "Constant and Variable Capital", "fa-gears",
+                        "Tư bản bất biến (c) chuyển giá trị tư liệu sản xuất; tư bản khả biến (v) mua sức lao động và gắn với việc tạo ra giá trị mới.", "Constant capital (c) transfers the value of production means; variable capital (v) buys labour-power and is linked to new value creation.",
+                        ["c tồn tại dưới hình thức máy móc, nhà xưởng, nguyên nhiên vật liệu; lao động cụ thể chuyển giá trị của nó vào sản phẩm.", "v dùng để mua sức lao động; lao động trừu tượng tạo giá trị mới lớn hơn giá trị sức lao động.", "c là điều kiện cần thiết; v giữ vai trò quyết định trực tiếp trong việc tạo giá trị thặng dư."],
+                        ["c takes the form of machinery, buildings, and materials; concrete labour transfers its value to the product.", "v buys labour-power; abstract labour creates new value greater than the value of labour-power.", "c is necessary; v plays the direct, decisive role in producing surplus value."],
+                        "c chuyển giá trị cũ; v gắn với việc tạo giá trị mới và giá trị thặng dư.", "c transfers existing value; v is linked to new value and surplus value."),
+                    cardData("TỶ SUẤT VÀ KHỐI LƯỢNG", "RATE AND MASS", "Tỷ suất và khối lượng giá trị thặng dư", "Rate and Mass of Surplus Value", "fa-chart-pie",
+                        "Tỷ suất m′ phản ánh trình độ bóc lột; khối lượng M phản ánh quy mô giá trị thặng dư thu được.", "The rate m′ indicates the degree of exploitation; the mass M indicates the scale of surplus value obtained.",
+                        ["Tỷ suất: m′ = (m / v) × 100% = (t′ / t) × 100%; t′ là thời gian thặng dư, t là thời gian tất yếu.", "Khối lượng: M = m′ × V; V là tổng tư bản khả biến ứng trước.", "Tỷ suất thể hiện quan hệ giữa m và v; khối lượng là tổng giá trị thặng dư thu được trong một thời gian."],
+                        ["Rate: s′ = (s / v) × 100% = (t′ / t) × 100%; t′ is surplus time and t is necessary time.", "Mass: M = s′ × V; V is the total variable capital advanced.", "The rate shows the relation between s and v; the mass is the total surplus value obtained over a period."],
+                        "m′ đo tỷ lệ; M đo tổng lượng giá trị thặng dư.", "m′ measures the rate; M measures the total mass of surplus value."),
+                    cardData("BA PHƯƠNG PHÁP", "THREE METHODS", "Các phương pháp sản xuất giá trị thặng dư", "Methods of Producing Surplus Value", "fa-forward-fast",
+                        "Ba phương pháp là giá trị thặng dư tuyệt đối, tương đối và siêu ngạch.", "The three methods are absolute, relative, and super surplus value.",
+                        ["Tuyệt đối: kéo dài ngày lao động hoặc tăng cường độ lao động khi năng suất và thời gian tất yếu không đổi.", "Tương đối: nâng năng suất lao động xã hội để rút ngắn thời gian tất yếu, làm giảm giá trị sức lao động; ngày lao động không đổi.", "Siêu ngạch: áp dụng công nghệ mới sớm hơn, làm giá trị cá biệt thấp hơn giá trị thị trường.", "Giá trị thặng dư siêu ngạch thúc đẩy cải tiến kỹ thuật và là hình thức biến tướng của giá trị thặng dư tương đối theo C. Mác."],
+                        ["Absolute: lengthen the working day or intensify labour while productivity and necessary time stay unchanged.", "Relative: raise social productivity to shorten necessary time and lower labour-power's value, with the working day unchanged.", "Super: adopt new technology earlier, making individual value lower than market value.", "Super surplus value drives innovation and, according to Marx, is a transformed form of relative surplus value."],
+                        "Tuyệt đối: kéo dài ngày. Tương đối: rút ngắn thời gian tất yếu. Siêu ngạch: hạ giá trị cá biệt.", "Absolute: lengthen the day. Relative: shorten necessary time. Super: lower individual value."),
+                    cardData("QUY LUẬT CƠ BẢN", "FUNDAMENTAL LAW", "Quy luật kinh tế cơ bản của chủ nghĩa tư bản", "The Fundamental Economic Law of Capitalism", "fa-scale-unbalanced",
+                        "Sản xuất ngày càng nhiều giá trị thặng dư bằng cách tăng cường bóc lột công nhân làm thuê.", "Produce ever more surplus value by intensifying the exploitation of hired workers.",
+                        ["Quy luật giá trị thặng dư chi phối các mặt cơ bản của đời sống kinh tế tư bản chủ nghĩa.", "Quy luật thúc đẩy lực lượng sản xuất phát triển mạnh mẽ.", "Đồng thời, quy luật làm sâu sắc thêm mâu thuẫn giữa tư bản và lao động."],
+                        ["The law of surplus value governs fundamental aspects of capitalist economic life.", "It strongly drives the development of productive forces.", "It also deepens the contradiction between capital and labour."],
+                        "Mục đích sản xuất tư bản chủ nghĩa là ngày càng nhiều giá trị thặng dư.", "The aim of capitalist production is to produce ever more surplus value.")
                 ]
             },
             {
-                sectionName: { vi: "III. TIỀN TỆ", en: "III. MONEY" },
+                sectionName: { vi: "III. TIỀN CÔNG TRONG CHỦ NGHĨA TƯ BẢN", en: "III. WAGES UNDER CAPITALISM" },
                 theme: { bgLight: "bg-[#ecfdf5] dark:bg-green-950/30", bgIcon: "bg-green-100 dark:bg-green-900/50", textIcon: "text-green-600 dark:text-green-400", hoverShadow: "hover:shadow-[0_20px_50px_rgba(34,197,94,0.15)]", textColor: "text-green-800 dark:text-green-400", borderCard: "border-green-200 dark:border-green-900", stroke: "stroke-green-500 dark:stroke-green-600" },
                 cards: [
-                    { tag: { vi: "BẢN CHẤT", en: "NATURE" }, title: { vi: "Bản chất Tiền tệ", en: "Nature of Money" }, icon: "fa-coins", core: { vi: "Hàng hóa đặc biệt làm vật ngang giá chung.", en: "Special commodity acting as universal equivalent." }, details: { vi: ["4 hình thái: Giản đơn -> Đầy đủ -> Chung -> Tiền tệ.", "Phản ánh quan hệ sản xuất."], en: ["4 stages: Simple -> Expanded -> General -> Money."] }, tip: { vi: "Tiền thực chất là 1 HÀNG HÓA ĐẶC BIỆT.", en: "Money is essentially a SPECIAL COMMODITY." }},
-                    { tag: { vi: "CHỨC NĂNG", en: "FUNCTIONS" }, title: { vi: "5 Chức năng của Tiền", en: "5 Functions of Money" }, icon: "fa-sack-dollar", core: { vi: "Đảm nhận 5 vai trò cốt lõi trong lưu thông.", en: "Assumes 5 core roles in the economy." }, details: { vi: ["1. Thước đo giá trị", "2. Phương tiện lưu thông", "3. Phương tiện cất trữ", "4. Phương tiện thanh toán", "5. Tiền thế giới"], en: ["1. Measure of value", "2. Medium of circulation", "3. Hoarding", "4. Means of payment", "5. World money"] }, tip: { vi: "Đo lường - Lưu thông - Cất trữ - Thanh toán - Thế giới.", en: "Measure - Circulate - Hoard - Pay - World." }}
+                    cardData("BẢN CHẤT", "NATURE", "Bản chất của tiền công", "The Nature of Wages", "fa-money-bill-wave",
+                        "Tiền công là biểu hiện bằng tiền của giá trị hàng hóa sức lao động, hay giá cả của sức lao động.", "Wages are the monetary expression of the value of labour-power, or its price.",
+                        ["Tiền công thường biểu hiện như giá cả của lao động.", "Về bản chất, người lao động bán sức lao động chứ không bán lao động."],
+                        ["Wages appear as the price of labour.", "In essence, workers sell their labour-power, not labour itself."],
+                        "Tiền công là giá cả của sức lao động, không phải giá cả của lao động.", "Wages are the price of labour-power, not the price of labour."),
+                    cardData("HÌNH THỨC", "FORMS", "Tiền công theo thời gian và sản phẩm", "Time and Piece Wages", "fa-clock",
+                        "Tiền công tính theo thời gian lao động hoặc theo số sản phẩm, khối lượng công việc hoàn thành.", "Wages are based on time worked or on output and completed work.",
+                        ["Theo thời gian: trả theo giờ, ngày, tuần hoặc tháng.", "Theo sản phẩm: trả theo số lượng sản phẩm hoặc khối lượng công việc hoàn thành."],
+                        ["Time wages: payment by the hour, day, week, or month.", "Piece wages: payment by output or amount of work completed."],
+                        "Thời gian đo thời lượng lao động; sản phẩm gắn tiền công với kết quả.", "Time wages measure hours; piece wages link pay to output."),
+                    cardData("DANH NGHĨA VÀ THỰC TẾ", "NOMINAL AND REAL", "Tiền công danh nghĩa và thực tế", "Nominal and Real Wages", "fa-basket-shopping",
+                        "Tiền công danh nghĩa là số tiền nhận được; tiền công thực tế là lượng hàng hóa và dịch vụ mua được.", "Nominal wages are money received; real wages are the goods and services that money can buy.",
+                        ["Danh nghĩa: số tiền người công nhân nhận được khi bán sức lao động.", "Thực tế: khối lượng tư liệu tiêu dùng và dịch vụ mua được bằng tiền công danh nghĩa.", "Sức mua của tiền công thực tế phụ thuộc vào giá cả hàng hóa và dịch vụ."],
+                        ["Nominal: the money workers receive for selling their labour-power.", "Real: the consumer goods and services workers can buy with nominal wages.", "Real wages' purchasing power depends on prices."],
+                        "Tiền công thực tế cho biết sức mua và mức sống vật chất.", "Real wages indicate purchasing power and material living standards.")
                 ]
             },
             {
-                sectionName: { vi: "IV. CÁC QUY LUẬT KINH TẾ", en: "IV. ECONOMIC LAWS" },
+                sectionName: { vi: "IV. TÍCH LŨY TƯ BẢN CHỦ NGHĨA", en: "IV. CAPITALIST ACCUMULATION" },
                 theme: { bgLight: "bg-[#faf5ff] dark:bg-purple-950/30", bgIcon: "bg-purple-100 dark:bg-purple-900/50", textIcon: "text-purple-600 dark:text-purple-400", hoverShadow: "hover:shadow-[0_20px_50px_rgba(168,85,247,0.15)]", textColor: "text-purple-800 dark:text-purple-400", borderCard: "border-purple-200 dark:border-purple-900", stroke: "stroke-purple-500 dark:stroke-purple-600" },
                 cards: [
-                    { tag: { vi: "QUY LUẬT 1", en: "LAW 1" }, title: { vi: "Quy luật Giá trị", en: "Law of Value" }, icon: "fa-scale-balanced", core: { vi: "Quy luật cơ bản; sx & trao đổi phải dựa trên hao phí LĐXH cần thiết.", en: "Basic law; production based on socially necessary labor." }, details: { vi: ["Điều tiết sx và lưu thông.", "Kích thích cải tiến kỹ thuật.", "Phân hóa giàu nghèo."], en: ["Regulates production.", "Stimulates tech progress.", "Differentiates producers."] }, tip: { vi: "Hao phí cá biệt <= Hao phí xã hội cần thiết.", en: "Individual labor <= Socially necessary labor." }},
-                    { tag: { vi: "QUY LUẬT 2", en: "LAW 2" }, title: { vi: "Quy luật Cạnh tranh", en: "Law of Competition" }, icon: "fa-hand-fist", core: { vi: "Sự ganh đua kinh tế nhằm giành điều kiện thuận lợi.", en: "Economic rivalry to seize favorable conditions." }, details: { vi: ["Động lực thúc đẩy sản xuất.", "Tác động tiêu cực: Tổn hại môi trường, cạnh tranh không lành mạnh."], en: ["Driving force for tech improvement.", "Negative: Unfair competition."] }, tip: { vi: "Cạnh tranh là động lực, nhưng có tính 2 mặt.", en: "Competition is the driving force but has a dual nature." }},
-                    { tag: { vi: "QUY LUẬT 3", en: "LAW 3" }, title: { vi: "Cung Cầu & Lạm phát", en: "Supply-Demand & Inflation" }, icon: "fa-chart-line", core: { vi: "Quan hệ quyết định giá cả thị trường xoay quanh giá trị.", en: "Relationship determining market price around value." }, details: { vi: ["Cung > Cầu -> Giá < Giá trị.", "Cung < Cầu -> Giá > Giá trị.", "Lạm phát: tiền giấy vượt quá lượng tiền cần thiết."], en: ["Supply > Demand -> Price < Value.", "Supply < Demand -> Price > Value.", "Inflation: paper money exceeds circulation."] }, tip: { vi: "Cung Cầu ảnh hưởng Giá cả. Lạm phát làm tiền mất giá.", en: "Supply-Demand affects Price. Inflation devalues money." }}
-                ]
-            },
-            {
-                sectionName: { vi: "V. THỊ TRƯỜNG & GIÁ CẢ", en: "V. MARKET & PRICE" },
-                theme: { bgLight: "bg-[#fff7ed] dark:bg-orange-950/30", bgIcon: "bg-orange-100 dark:bg-orange-900/50", textIcon: "text-orange-600 dark:text-orange-400", hoverShadow: "hover:shadow-[0_20px_50px_rgba(234,88,12,0.15)]", textColor: "text-orange-800 dark:text-orange-400", borderCard: "border-orange-200 dark:border-orange-900", stroke: "stroke-orange-500 dark:stroke-orange-600" },
-                cards: [
-                    { tag: { vi: "THỊ TRƯỜNG", en: "MARKET" }, title: { vi: "Khái niệm Thị trường", en: "Market Concept" }, icon: "fa-store", core: { vi: "Nơi trao đổi, mua bán hoặc tổng thể các quan hệ kinh tế.", en: "Place of exchange or totality of economic relations." }, details: { vi: ["Thừa nhận công dụng xã hội của hàng hóa.", "Cung cấp thông tin.", "Kích thích hoặc hạn chế sx."], en: ["Acknowledges social utility.", "Provides info.", "Stimulates production."] }, tip: { vi: "Thị trường là tấm gương phản chiếu mọi quan hệ.", en: "The market reflects all economic relations." }},
-                    { tag: { vi: "GIÁ CẢ", en: "PRICE" }, title: { vi: "Giá cả Thị trường", en: "Market Price" }, icon: "fa-tags", core: { vi: "Là giá bán thực tế, lấy Giá trị làm cơ sở.", en: "Actual selling price, based on Value." }, details: { vi: ["Giá cả xoay quanh giá trị dưới tác động của cung cầu, cạnh tranh."], en: ["Price fluctuates around value based on supply/demand."] }, tip: { vi: "Giá trị là Trục, Giá cả là đường lượn sóng xoay quanh.", en: "Value is the Axis, Price waves around it." }}
+                    cardData("THỰC CHẤT VÀ NHÂN TỐ", "ESSENCE AND FACTORS", "Thực chất và quy mô tích lũy", "Essence and Scale of Accumulation", "fa-piggy-bank",
+                        "Tích lũy tư bản chuyển một phần giá trị thặng dư thành tư bản để mở rộng sản xuất; giá trị thặng dư là nguồn duy nhất.", "Capital accumulation converts part of surplus value into capital to expand production; surplus value is its sole source.",
+                        ["Trình độ bóc lột giá trị thặng dư (m′).", "Năng suất lao động xã hội.", "Chênh lệch giữa tư bản sử dụng và tiêu dùng, thể hiện sự phục vụ không công của máy móc.", "Đại lượng tư bản ứng trước (V)."],
+                        ["The rate of exploitation (s′).", "Social labour productivity.", "The gap between capital employed and consumed, reflecting the unpaid services of machinery.", "The amount of capital advanced (V)."],
+                        "Tích lũy biến một phần giá trị thặng dư thành tư bản mới.", "Accumulation turns part of surplus value into new capital."),
+                    cardData("CẤU TẠO HỮU CƠ", "ORGANIC COMPOSITION", "Tư bản bất biến tăng nhanh hơn", "Constant Capital Grows Faster", "fa-chart-simple",
+                        "Cấu tạo kỹ thuật thay đổi làm cấu tạo giá trị thay đổi; tư bản bất biến (c) tăng nhanh hơn tư bản khả biến (v).", "Changes in technical composition alter value composition; constant capital (c) grows faster than variable capital (v).",
+                        ["Cấu tạo kỹ thuật phản ánh quan hệ giữa tư liệu sản xuất và số lượng lao động.", "Cấu tạo hữu cơ biểu hiện cấu tạo kỹ thuật dưới hình thức giá trị, qua quan hệ c/v.", "Cùng với tích lũy và phát triển kỹ thuật, c/v có xu hướng tăng."],
+                        ["Technical composition reflects the relation between production means and labour.", "Organic composition expresses technical composition in value terms through c/v.", "With accumulation and technical development, c/v tends to rise."],
+                        "Cấu tạo hữu cơ tăng nghĩa là c tăng tương đối nhanh hơn v.", "A rising organic composition means c grows relatively faster than v."),
+                    cardData("TÍCH TỤ VÀ TẬP TRUNG", "CONCENTRATION AND CENTRALIZATION", "Hai cách tăng quy mô tư bản", "Two Ways Capital Grows in Scale", "fa-object-group",
+                        "Tích tụ làm tư bản cá biệt lớn lên nhờ tích lũy; tập trung hợp nhất các tư bản đã có.", "Concentration enlarges individual capital through accumulation; centralization combines existing capitals.",
+                        ["Tích tụ: tích lũy của từng nhà tư bản làm tăng tư bản cá biệt và tư bản xã hội.", "Tập trung: hợp nhất nhiều tư bản nhỏ; tư bản cá biệt tăng nhưng tổng tư bản xã hội không đổi.", "Cả hai quá trình đều làm quy mô tư bản cá biệt lớn hơn."],
+                        ["Concentration: each capitalist's accumulation increases individual and social capital.", "Centralization: smaller capitals merge; individual capital grows while total social capital stays unchanged.", "Both processes enlarge individual capital."],
+                        "Tích tụ làm tăng tư bản xã hội; tập trung hợp nhất các tư bản đã có.", "Concentration increases social capital; centralization combines existing capital."),
+                    cardData("QUY LUẬT CHUNG", "GENERAL LAW", "Tích lũy và sự bần cùng hóa", "Accumulation and Impoverishment", "fa-people-group",
+                        "Cấu tạo hữu cơ tăng làm giảm cầu tương đối về sức lao động, tạo nhân khẩu thừa tương đối và xu hướng bần cùng hóa.", "A rising organic composition lowers relative demand for labour, creates a relative surplus population, and tends toward impoverishment.",
+                        ["Cầu tương đối về sức lao động giảm có thể dẫn đến thất nghiệp và nhân khẩu thừa tương đối.", "Bần cùng hóa tuyệt đối: mức sống công nhân giảm.", "Bần cùng hóa tương đối: tỷ lệ thu nhập của công nhân trong tổng thu nhập quốc dân giảm."],
+                        ["Declining relative demand for labour can lead to unemployment and a relative surplus population.", "Absolute impoverishment: workers' living standards decline.", "Relative impoverishment: workers' share of national income declines."],
+                        "Tích lũy mở rộng sản xuất đồng thời làm sâu sắc các mâu thuẫn xã hội tư bản.", "Accumulation expands production while deepening capitalist social contradictions.")
                 ]
             }
         ];
-
         let allCards = [];
 
         // HÀM TÌM KIẾM
@@ -539,7 +597,7 @@
             };
 
             const leftData = [{idx: 0}, {idx: 1}];
-            const rightData = [{idx: 2}, {idx: 3}, {idx: 4}];
+            const rightData = [{idx: 2}, {idx: 3}];
 
             container.innerHTML = `
                 ${buildColumn(leftData, true)}
@@ -547,10 +605,10 @@
                 <div id="node-center" class="relative z-10 bg-gradient-to-br from-yellow-400 to-yellow-600 text-red-950 p-8 rounded-3xl shadow-[0_0_40px_rgba(250,204,21,0.4)] border-4 border-white dark:border-gray-800 text-center w-[300px] shrink-0 tree-node-hover">
                     <i class="fa-solid fa-network-wired text-4xl mb-3"></i>
                     <h2 class="font-serif font-black text-2xl uppercase tracking-widest leading-tight">
-                        <span class="lang-vi ${currentLang==='vi'?'':'hidden'}">CHƯƠNG 3</span>
-                        <span class="lang-en ${currentLang==='en'?'':'hidden'}">CHAPTER 3</span>
+                        <span class="lang-vi ${currentLang==='vi'?'':'hidden'}">CHƯƠNG IV</span>
+                        <span class="lang-en ${currentLang==='en'?'':'hidden'}">CHAPTER IV</span>
                     </h2>
-                    <p class="font-bold text-sm mt-2 opacity-90"><span class="lang-vi ${currentLang==='vi'?'':'hidden'}">Sản xuất Hàng hóa</span><span class="lang-en ${currentLang==='en'?'':'hidden'}">Commodity Production</span></p>
+                    <p class="font-bold text-sm mt-2 opacity-90"><span class="lang-vi ${currentLang==='vi'?'':'hidden'}">Giá trị thặng dư và tích lũy tư bản</span><span class="lang-en ${currentLang==='en'?'':'hidden'}">Surplus Value and Capital Accumulation</span></p>
                 </div>
                 ${buildColumn(rightData, false)}
             `;
@@ -819,7 +877,7 @@
         }
 
         function clearChat() {
-            chatState.messages = [{ sender: 'bot', textVi: 'Chào đồng chí đáng yêu! 🥰 Hãy hỏi mình bất cứ điều gì về Sản xuất hàng hóa nha! ✨', textEn: 'Greetings! 🥰 Ask me anything about Commodity Production! ✨' }];
+            chatState.messages = [{ sender: 'bot', textVi: 'Chào đồng chí đáng yêu! 🥰 Hãy hỏi mình bất cứ điều gì về giá trị thặng dư và tích lũy tư bản nha! ✨', textEn: 'Greetings! 🥰 Ask me anything about surplus value and capital accumulation! ✨' }];
             chatState.isLoading = false; renderChat();
         }
 
