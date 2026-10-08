@@ -199,13 +199,13 @@
                 <p class="text-sm font-bold text-gray-500 dark:text-gray-400 bg-white/70 dark:bg-black/70 px-4 py-2 rounded-full backdrop-blur-md shadow-sm border border-gray-200 dark:border-gray-700">
                     <i class="fa-solid fa-search-plus text-yellow-500 mr-1"></i>
                     <span class="lang-vi">Mức thu: </span><span class="lang-en hidden">Zoom: </span>
-                    <span id="zoom-level-display">85%</span>
+                    <span id="zoom-level-display">65%</span>
                 </p>
             </div>
 
             <!-- Vùng Canvas chứa Node & Đường vẽ SVG. Tọa độ Tuyệt đối căn giữa chuẩn 100% -->
             <div class="w-full h-full relative overflow-hidden">
-                <div id="tree-canvas" class="absolute transition-transform duration-75 flex items-center justify-center" style="width: 3000px; height: 2000px; left: 50%; top: 50%; transform-origin: center;">
+                <div id="tree-canvas" class="absolute transition-transform duration-75 flex items-center justify-center" style="width: 4200px; height: 2800px; left: 50%; top: 50%; transform-origin: center;">
                     <!-- SVG Lớp dưới cùng để vẽ nét cong uyển chuyển -->
                     <svg id="mindmap-svg" class="absolute inset-0 w-full h-full pointer-events-none z-0"></svg>
                     <!-- Chứa toàn bộ các khối Node -->
@@ -486,6 +486,39 @@
                 ]
             }
         ];
+        // Nhánh phụ để sơ đồ thể hiện rõ các tầng ý như trong tài liệu.
+        mindmapData[0].cards[0].mapGroups = [
+            {
+                title: { vi: "So sánh hai công thức lưu thông", en: "Compare the Two Circulation Formulas" },
+                details: {
+                    vi: ["H - T - H: bán rồi mua; mục đích là giá trị sử dụng.", "T - H - T′: mua rồi bán; mục đích là giá trị tăng thêm, T′ = T + ΔT."],
+                    en: ["C - M - C: sell then buy; the aim is use-value.", "M - C - M′: buy then sell; the aim is increased value, M′ = M + ΔM."]
+                }
+            },
+            {
+                title: { vi: "Mâu thuẫn của công thức chung", en: "The Contradiction in the General Formula" },
+                details: {
+                    vi: ["Trao đổi ngang giá không làm tổng giá trị tăng lên.", "Trao đổi không ngang giá chỉ chuyển giá trị giữa các bên.", "Đứng ngoài lưu thông, tiền không thể tự tăng lên.", "Theo C. Mác, tư bản xuất hiện trong lưu thông nhưng không bắt nguồn từ lưu thông."],
+                    en: ["Equivalent exchange does not increase total value.", "Non-equivalent exchange only transfers value between parties.", "Money cannot grow outside circulation.", "According to Marx, capital appears in circulation but does not originate from circulation."]
+                }
+            }
+        ];
+        mindmapData[0].cards[1].mapGroups = [
+            {
+                title: { vi: "Khái niệm và điều kiện ra đời", en: "Definition and Conditions" },
+                details: {
+                    vi: ["Sức lao động là năng lực thể lực và trí lực được sử dụng trong sản xuất.", "Người lao động tự do về thân thể và có quyền bán sức lao động.", "Người lao động không có tư liệu sản xuất cần thiết."],
+                    en: ["Labour-power is physical and mental capacity used in production.", "Workers are personally free and can sell their labour-power.", "Workers lack the necessary means of production."]
+                }
+            },
+            {
+                title: { vi: "Hai thuộc tính của hàng hóa sức lao động", en: "Two Attributes of Labour-Power" },
+                details: {
+                    vi: ["Giá trị: do tư liệu sinh hoạt cần thiết quyết định, có yếu tố tinh thần và lịch sử.", "Giá trị sử dụng: tạo ra giá trị mới lớn hơn giá trị sức lao động."],
+                    en: ["Value: determined by necessary means of subsistence, with a historical and moral element.", "Use-value: creates new value greater than the value of labour-power."]
+                }
+            }
+        ];
         let allCards = [];
 
         // HÀM TÌM KIẾM
@@ -545,6 +578,10 @@
             mindmapData.forEach((s) => s.cards.forEach((c) => allCards.push(c)));
         }
 
+        function getTreeGroups(card) {
+            return card.mapGroups || [{ title: null, details: card.details }];
+        }
+
         function renderRadialTree() {
             const container = document.getElementById('tree-html-container');
 
@@ -553,46 +590,71 @@
 
                 sections.forEach(secObj => {
                     const sec = mindmapData[secObj.idx];
-                    let leavesHTML = '';
+                    let topicsHTML = '';
+
                     sec.cards.forEach((card) => {
                         const globalIdx = allCards.findIndex(c => c.title.vi === card.title.vi);
-                        leavesHTML += `
-                            <div id="node-leaf-${secObj.idx}-${globalIdx}" onclick="openModal(${globalIdx})" class="tree-node-hover bg-white dark:bg-darkCard p-3 rounded-xl border ${sec.theme.borderCard} shadow-md w-[260px] cursor-pointer relative z-10 transition-all">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 ${sec.theme.bgIcon} ${sec.theme.textIcon} rounded-lg flex items-center justify-center shrink-0">
-                                        <i class="fa-solid ${card.icon}"></i>
-                                    </div>
-                                    <div>
-                                        <div class="text-[10px] font-bold ${sec.theme.textIcon} uppercase tracking-wider mb-0.5">
-                                            <span class="lang-vi ${currentLang==='vi'?'':'hidden'}">${card.tag.vi}</span>
-                                            <span class="lang-en ${currentLang==='en'?'':'hidden'}">${card.tag.en}</span>
+                        const direction = isLeft ? 'flex-row-reverse' : 'flex-row';
+                        let groupsHTML = '';
+
+                        getTreeGroups(card).forEach((group, groupIdx) => {
+                            const groupId = `node-group-${secObj.idx}-${globalIdx}-${groupIdx}`;
+                            const groupNode = group.title ? `
+                                <div id="${groupId}" class="mindmap-subbranch bg-gray-50 dark:bg-gray-800 px-4 py-2.5 rounded-xl border-2 ${sec.theme.borderCard} shadow-sm w-[230px] shrink-0 text-sm font-semibold ${sec.theme.textColor} leading-snug">
+                                    <span class="lang-vi ${currentLang==='vi'?'':'hidden'}">${group.title.vi}</span>
+                                    <span class="lang-en ${currentLang==='en'?'':'hidden'}">${group.title.en}</span>
+                                </div>` : '';
+                            const detailNodes = group.details.vi.map((label, detailIdx) => `
+                                <div id="node-detail-${secObj.idx}-${globalIdx}-${groupIdx}-${detailIdx}" class="tree-detail-node bg-white dark:bg-darkCard px-3 py-2 rounded-lg border ${sec.theme.borderCard} shadow-sm w-[320px] text-[12px] leading-snug text-gray-700 dark:text-gray-200">
+                                    <span class="lang-vi ${currentLang==='vi'?'':'hidden'}">${label}</span>
+                                    <span class="lang-en ${currentLang==='en'?'':'hidden'}">${group.details.en[detailIdx]}</span>
+                                </div>
+                            `).join('');
+
+                            groupsHTML += `
+                                <div class="flex items-center gap-4 ${direction}">
+                                    ${groupNode}
+                                    <div class="flex flex-col gap-3">${detailNodes}</div>
+                                </div>`;
+                        });
+
+                        topicsHTML += `
+                            <div class="flex items-center gap-6 ${direction}">
+                                <div id="node-topic-${secObj.idx}-${globalIdx}" onclick="openModal(${globalIdx})" class="tree-node-hover bg-white dark:bg-darkCard p-3 rounded-xl border ${sec.theme.borderCard} shadow-md w-[260px] shrink-0 cursor-pointer relative z-10 transition-all">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 ${sec.theme.bgIcon} ${sec.theme.textIcon} rounded-lg flex items-center justify-center shrink-0">
+                                            <i class="fa-solid ${card.icon}"></i>
                                         </div>
-                                        <div class="font-bold text-gray-800 dark:text-gray-100 text-sm leading-tight">
-                                            <span class="lang-vi ${currentLang==='vi'?'':'hidden'}">${card.title.vi}</span>
-                                            <span class="lang-en ${currentLang==='en'?'':'hidden'}">${card.title.en}</span>
+                                        <div>
+                                            <div class="text-[10px] font-bold ${sec.theme.textIcon} uppercase tracking-wider mb-0.5">
+                                                <span class="lang-vi ${currentLang==='vi'?'':'hidden'}">${card.tag.vi}</span>
+                                                <span class="lang-en ${currentLang==='en'?'':'hidden'}">${card.tag.en}</span>
+                                            </div>
+                                            <div class="font-bold text-gray-800 dark:text-gray-100 text-sm leading-tight">
+                                                <span class="lang-vi ${currentLang==='vi'?'':'hidden'}">${card.title.vi}</span>
+                                                <span class="lang-en ${currentLang==='en'?'':'hidden'}">${card.title.en}</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        `;
+                                <div class="flex flex-col gap-5">${groupsHTML}</div>
+                            </div>`;
                     });
 
                     const flexDir = isLeft ? 'flex-row-reverse' : 'flex-row';
                     html += `
-                        <div class="flex items-center gap-16 ${flexDir}">
-                            <!-- Node Nhánh (Section) -->
-                            <div id="node-sec-${secObj.idx}" class="mindmap-sec px-6 py-3 rounded-full bg-white dark:bg-gray-800 border-2 ${sec.theme.borderCard} shadow-lg font-bold text-[15px] ${sec.theme.textColor} z-10 whitespace-nowrap cursor-pointer flex items-center gap-2 hover:scale-105 transition-transform" onclick="toggleSection(${secObj.idx})">
+                        <div class="flex items-center gap-12 ${flexDir}">
+                            <div id="node-sec-${secObj.idx}" class="mindmap-sec px-5 py-3 rounded-2xl bg-white dark:bg-gray-800 border-2 ${sec.theme.borderCard} shadow-lg font-bold text-[14px] ${sec.theme.textColor} z-10 max-w-[300px] whitespace-normal text-center cursor-pointer flex items-center justify-center gap-2 hover:scale-105 transition-transform" onclick="toggleSection(${secObj.idx})">
                                 <span class="lang-vi ${currentLang==='vi'?'':'hidden'}">${sec.sectionName.vi}</span>
                                 <span class="lang-en ${currentLang==='en'?'':'hidden'}">${sec.sectionName.en}</span>
-                                <i id="icon-sec-${secObj.idx}" class="fa-solid fa-chevron-down text-xs transition-transform duration-300"></i>
+                                <i id="icon-sec-${secObj.idx}" class="fa-solid fa-chevron-down text-xs transition-transform duration-300 shrink-0"></i>
                             </div>
-                            <!-- Vùng Lá -->
-                            <div id="leaves-container-${secObj.idx}" class="flex flex-col gap-4 transition-all duration-300 opacity-100 scale-100 transform origin-${isLeft?'right':'left'}">
-                                ${leavesHTML}
+                            <div id="leaves-container-${secObj.idx}" class="flex flex-col gap-6 transition-all duration-300 opacity-100 scale-100 transform origin-${isLeft?'right':'left'}">
+                                ${topicsHTML}
                             </div>
-                        </div>
-                    `;
+                        </div>`;
                 });
+
                 return html + `</div>`;
             };
 
@@ -601,7 +663,6 @@
 
             container.innerHTML = `
                 ${buildColumn(leftData, true)}
-                <!-- NODE TRUNG TÂM -->
                 <div id="node-center" class="relative z-10 bg-gradient-to-br from-yellow-400 to-yellow-600 text-red-950 p-8 rounded-3xl shadow-[0_0_40px_rgba(250,204,21,0.4)] border-4 border-white dark:border-gray-800 text-center w-[300px] shrink-0 tree-node-hover">
                     <i class="fa-solid fa-network-wired text-4xl mb-3"></i>
                     <h2 class="font-serif font-black text-2xl uppercase tracking-widest leading-tight">
@@ -613,7 +674,6 @@
                 ${buildColumn(rightData, false)}
             `;
         }
-
         function toggleSection(idx) {
             const container = document.getElementById(`leaves-container-${idx}`);
             const icon = document.getElementById(`icon-sec-${idx}`);
@@ -641,7 +701,6 @@
 
             svg.innerHTML = '';
 
-            // Hàm lấy Offset chuẩn từ chính tree-canvas nội bộ (không bị ảnh hưởng bởi scale hay translate của css)
             const getPos = (el) => {
                 let x = 0, y = 0;
                 let w = el.offsetWidth, h = el.offsetHeight;
@@ -653,50 +712,52 @@
                 }
                 return { x, y, w, h };
             };
+            const connectNodes = (parent, child, isLeft, width, strokeClass) => {
+                if(!parent || !child) return;
+                const p = getPos(parent), c = getPos(child);
+                const x1 = p.x + (isLeft ? 0 : p.w);
+                const y1 = p.y + p.h / 2;
+                const x2 = c.x + (isLeft ? c.w : 0);
+                const y2 = c.y + c.h / 2;
+                drawBezierCurve(svg, x1, y1, x2, y2, strokeClass, width);
+            };
 
             const centerPos = getPos(centerNode);
             const cx = centerPos.x + centerPos.w / 2;
             const cy = centerPos.y + centerPos.h / 2;
-            const cWidth = centerPos.w;
 
             mindmapData.forEach((sec, idx) => {
                 const secNode = document.getElementById(`node-sec-${idx}`);
-                if(!secNode) return;
+                const topicsContainer = document.getElementById(`leaves-container-${idx}`);
+                if(!secNode || !topicsContainer || topicsContainer.classList.contains('opacity-0')) return;
 
-                const isLeft = (idx < 2);
+                const isLeft = idx < 2;
                 const secPos = getPos(secNode);
                 const sx = secPos.x + secPos.w / 2;
                 const sy = secPos.y + secPos.h / 2;
-
-                // Mỏ neo đường vẽ bắt đầu từ rìa khối Trung tâm
-                const startX = cx + (isLeft ? -cWidth/2 + 5 : cWidth/2 - 5);
-                const endX = sx + (isLeft ? secPos.w/2 : -secPos.w/2);
+                const startX = cx + (isLeft ? -centerPos.w / 2 + 5 : centerPos.w / 2 - 5);
+                const endX = sx + (isLeft ? secPos.w / 2 : -secPos.w / 2);
                 const strokeClass = `${sec.theme.stroke} opacity-50 dark:opacity-60`;
-
-                // 1. Vẽ từ TÂM -> NHÁNH
                 drawBezierCurve(svg, startX, cy, endX, sy, strokeClass, 4);
 
-                // 2. Vẽ từ NHÁNH -> LÁ
-                const leavesContainer = document.getElementById(`leaves-container-${idx}`);
-                if (!leavesContainer.classList.contains('opacity-0')) {
-                    sec.cards.forEach((card) => {
-                        const globalIdx = allCards.findIndex(c => c.title.vi === card.title.vi);
-                        const leafNode = document.getElementById(`node-leaf-${idx}-${globalIdx}`);
-                        if(!leafNode) return;
+                sec.cards.forEach(card => {
+                    const globalIdx = allCards.findIndex(c => c.title.vi === card.title.vi);
+                    const topicNode = document.getElementById(`node-topic-${idx}-${globalIdx}`);
+                    if(!topicNode) return;
+                    connectNodes(secNode, topicNode, isLeft, 2.5, strokeClass);
 
-                        const leafPos = getPos(leafNode);
-                        const lx = leafPos.x + leafPos.w / 2;
-                        const ly = leafPos.y + leafPos.h / 2;
-
-                        const sOutX = sx + (isLeft ? -secPos.w/2 : secPos.w/2);
-                        const lInX = lx + (isLeft ? leafPos.w/2 : -leafPos.w/2);
-
-                        drawBezierCurve(svg, sOutX, sy, lInX, ly, strokeClass, 2.5);
+                    getTreeGroups(card).forEach((group, groupIdx) => {
+                        const groupNode = group.title ? document.getElementById(`node-group-${idx}-${globalIdx}-${groupIdx}`) : null;
+                        if(groupNode) connectNodes(topicNode, groupNode, isLeft, 2, strokeClass);
+                        const parent = groupNode || topicNode;
+                        group.details.vi.forEach((_, detailIdx) => {
+                            const detailNode = document.getElementById(`node-detail-${idx}-${globalIdx}-${groupIdx}-${detailIdx}`);
+                            connectNodes(parent, detailNode, isLeft, 1.8, strokeClass);
+                        });
                     });
-                }
+                });
             });
         }
-
         function drawBezierCurve(svg, x1, y1, x2, y2, strokeClass, width) {
             const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
             const offset = Math.abs(x2 - x1) * 0.45;
@@ -718,7 +779,7 @@
         // HỆ THỐNG PAN & ZOOM MƯỢT MÀ, LUÔN CĂN GIỮA
         const treeWrapper = document.getElementById('view-tree-container');
         const treeCanvas = document.getElementById('tree-canvas');
-        let tPanX = 0, tPanY = 0, tScale = 0.85;
+        let tPanX = 0, tPanY = 0, tScale = 0.65;
         let isDragging = false, startX, startY;
 
         function updateTransform() {
@@ -761,7 +822,7 @@
         }
 
         function treeReset() {
-            tScale = 0.85; // Mức thu mặc định
+            tScale = 0.65; // Mức thu mặc định cho sơ đồ nhiều tầng
             tPanX = 0; tPanY = 0; // Trở về vị trí Trung tâm gốc tuyệt đối
             updateTransform();
             sfxClick.play();
