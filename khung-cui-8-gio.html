@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Xưởng Ô Tô 8 Giờ</title>
+<title>Xưởng Xe Hơi 8 Giờ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
@@ -243,6 +243,34 @@ ul.tight li{margin-bottom:3px; font-size:.87rem;}
   nav.side h4, nav.side .footer-credit{display:none;}
   .start-box h1{font-size:2.1rem;}
 }
+
+.banner{margin:0 0 14px;border-radius:14px;overflow:hidden;border:1px solid #d8c79c;background:#efe3c4}
+.banner svg{display:block;width:100%;height:auto}
+.banner .cap{padding:9px 14px;font-size:.82rem;background:var(--card);border-top:1px solid #e4d3a8;color:#5a4726;line-height:1.5}
+.ico{float:right;margin:-4px 0 6px 10px}
+@keyframes sm{0%{transform:translateY(0);opacity:.7}100%{transform:translateY(-26px) scale(1.6);opacity:0}}
+@keyframes belt{to{transform:translateX(-16px)}}
+@keyframes bob{50%{transform:translateY(-3px)}}
+.sm{animation:sm 3s ease-out infinite}.belt{animation:belt 1s linear infinite}.bob{animation:bob 1.6s ease-in-out infinite}
+@media(prefers-reduced-motion:reduce){.sm,.belt,.bob{animation:none}}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:12px;border-radius:7px;border:1px solid #b99a55;background:linear-gradient(90deg,#bd8a34 var(--p,50%),#eadcb8 var(--p,50%));outline:none;cursor:pointer;touch-action:pan-y;margin:12px 0 4px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:50%;background:#fff8ea;border:5px solid #9c6a1c;box-shadow:0 2px 6px rgba(0,0,0,.35);cursor:grab}
+input[type=range]:active::-webkit-slider-thumb{cursor:grabbing;transform:scale(1.12)}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#fff8ea;border:5px solid #9c6a1c;cursor:grab}
+input[type=range]:focus-visible{box-shadow:0 0 0 3px rgba(189,138,52,.45)}
+@keyframes sp{to{transform:rotate(360deg)}}@keyframes spr{to{transform:rotate(-360deg)}}@keyframes bv{to{stroke-dashoffset:-20}}
+.spin,.spinr{transform-box:fill-box;transform-origin:center;animation:sp 9s linear infinite}.spinr{animation-name:spr}.wheel{animation-duration:1.1s}.beltv{animation:bv .8s linear infinite}
+@media(prefers-reduced-motion:reduce){.spin,.spinr,.beltv{animation:none}}
+#hero-art{max-width:540px;margin:0 auto 16px;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.25);box-shadow:0 12px 34px rgba(0,0,0,.45)}
+.role-card .emoji svg{display:block;margin:0 auto 6px}
+#story-screen{position:fixed;inset:0;z-index:80;overflow:auto;background:radial-gradient(circle at 50% 0%,#8a2438,#150709 75%);color:#f3ead6;align-items:center;justify-content:center;padding:24px}
+#story-box{max-width:720px;width:100%;text-align:center;margin:auto}
+.story-art{border-radius:16px;overflow:hidden;border:2px solid rgba(255,255,255,.2);box-shadow:0 14px 40px rgba(0,0,0,.5);animation:popIn .4s ease-out}
+.story-art svg{display:block;width:100%;height:auto}
+.story-dots{display:flex;gap:8px;justify-content:center;margin:14px 0 4px}.story-dots i{width:9px;height:9px;border-radius:5px;background:rgba(255,255,255,.25);transition:width .2s}.story-dots i.on{background:var(--brass);width:26px}
+#story-box h2{color:#fbf3df;font-size:1.7rem;margin-top:8px}#story-box p{color:#e8dcc0;max-width:600px;margin:.4em auto;font-size:1.02rem}
+#story-box p.story-you{color:#e8c988;font-weight:700}
+.gearicon{display:inline-flex;animation:none}
 </style>
 </head>
 <body>
@@ -252,7 +280,7 @@ ul.tight li{margin-bottom:3px; font-size:.87rem;}
   <div class="hero-bgfx" id="hero-bgfx"></div>
   <div class="start-box">
     <div class="lang-toggle" id="lang-toggle-start"></div>
-    <div style="font-size:2.1rem; margin-bottom:8px;">🏭</div>
+    <div id="hero-art"></div>
     <div class="kicker" id="s-kicker"></div>
     <h1 id="s-title"></h1>
     <p class="sub" id="s-sub"></p>
@@ -292,13 +320,14 @@ ul.tight li{margin-bottom:3px; font-size:.87rem;}
   </div>
 </div>
 
+<div id="story-screen" style="display:none;"><div id="story-box"></div></div>
 <div id="app" style="display:none;"></div>
 <div id="overlay"><div class="modal" id="modal-body"></div></div>
 <div id="toast"></div>
 
 <script>
 /* =========================================================
-   XƯỞNG Ô TÔ 8 GIỜ — xưởng ô tô thuở sơ khai ngành công nghiệp
+   XƯỞNG Ô TÔ 8 GIỜ — xưởng xe hơi thuở sơ khai ngành công nghiệp
    Mô phỏng quản lý 6 màn · song ngữ VI/EN · KTCT Mác-Lênin
    ========================================================= */
 
@@ -317,7 +346,7 @@ const DIFF = {
   easy:{
     label:{vi:'Dễ',en:'Easy'}, emoji:'🌤️',
     desc:{vi:'Hợp để làm quen luật chơi và các khái niệm.',en:'Good for getting used to the rules and concepts.'},
-    L1start:250, L1target:700,
+    L1start:250, L1target:480,
     L4target:1400, L4mrate:80, L4workhealth:30,
     L5health:30, L5discCap:75, L5discWork:85,
     L6score:3
@@ -325,7 +354,7 @@ const DIFF = {
   normal:{
     label:{vi:'Vừa',en:'Normal'}, emoji:'⚖️',
     desc:{vi:'Cân bằng — đúng như đề cương thiết kế.',en:'Balanced — matches the original design.'},
-    L1start:200, L1target:1000,
+    L1start:200, L1target:500,
     L4target:2000, L4mrate:100, L4workhealth:40,
     L5health:40, L5discCap:60, L5discWork:70,
     L6score:4
@@ -333,7 +362,7 @@ const DIFF = {
   hard:{
     label:{vi:'Khó',en:'Hard'}, emoji:'🔥',
     desc:{vi:'Thử thách — biên độ sai lầm rất hẹp.',en:'Challenging — very little room for error.'},
-    L1start:160, L1target:1400,
+    L1start:160, L1target:500,
     L4target:2800, L4mrate:130, L4workhealth:50,
     L5health:50, L5discCap:45, L5discWork:55,
     L6score:5
@@ -424,10 +453,10 @@ function openModal(html){ document.getElementById('modal-body').innerHTML=html; 
    TEXT DICTIONARY (UI chrome)
    ========================================================= */
 const UI = {
-  gameTitle:{vi:'Xưởng Ô Tô 8 Giờ', en:'The 8-Hour Auto Workshop'},
-  gameSub:{vi:'Xưởng ô tô · Buổi bình minh ngành công nghiệp ô tô', en:'An auto workshop · The dawn of the automobile industry'},
+  gameTitle:{vi:'Xưởng Xe Hơi 8 Giờ', en:'The 8-Hour Auto Workshop'},
+  gameSub:{vi:'Xưởng xe hơi · Buổi bình minh ngành công nghiệp xe hơi', en:'An auto workshop · The dawn of the automobile industry'},
   startKicker:{vi:'MÔ PHỎNG QUẢN LÝ · KTCT MÁC – LÊNIN', en:'MANAGEMENT SIMULATION · MARXIST POLITICAL ECONOMY'},
-  startSub:{vi:'Từ máy tiện tay của một thợ cơ khí tự do, đến một xưởng ô tô đầy công nhân — rồi một phiên toà để bạn tự trả lời: đây là hợp tác, hay là bóc lột?', en:'From a lone mechanic at a hand lathe to a car workshop full of workers — then a tribunal where you answer for yourself: cooperation, or exploitation?'},
+  startSub:{vi:'Từ máy tiện tay của thợ cơ khí Yi Long Ma đến hãng xe Lesta đầy công nhân — rồi một phiên toà để bạn tự trả lời: đây là hợp tác, hay là bóc lột?', en:'From mechanic Yi Long Ma’s hand lathe to the Lesta car company full of workers — then a tribunal where you answer for yourself: cooperation, or exploitation?'},
   play:{vi:'▶ Bắt đầu', en:'▶ Start'},
   rules:{vi:'📜 Luật chơi', en:'📜 Rules'},
   credit:{vi:'6 màn · 1 lượt = 1 tháng', en:'6 stages · 1 turn = 1 month'},
@@ -451,15 +480,15 @@ const UI = {
   diffTitle:{vi:'Chọn độ khó', en:'Choose a difficulty'},
   diffSub:{vi:'Mỗi độ khó đổi mục tiêu cần đạt ở các màn có thắng/thua. Chọn xong sẽ giữ nguyên suốt ván chơi.', en:'Each difficulty changes the targets in the win/lose stages. Once chosen, it stays fixed for the whole playthrough.'},
   diffWarn:{vi:'⚠️ Không thể đổi lại giữa chừng — chỉ đổi được khi chơi lại từ đầu.', en:'⚠️ Cannot be changed mid-game — only by restarting from the beginning.'},
-  roleCapTitle:{vi:'Nhà tư bản', en:'The Workshop Owner'},
+  roleCapTitle:{vi:'Yi Long Ma · Chủ hãng Lesta', en:'Yi Long Ma · Owner of Lesta'},
   roleCapDesc:{vi:'Bạn điều hành xưởng: định giá, trả lương, mua máy móc, quyết định giờ làm — và nhìn thấy toàn bộ sổ sách W = c + v + m.', en:'You run the workshop: set prices, pay wages, buy machinery, decide hours — and see the full ledger, W = c + v + m.'},
-  roleWorkTitle:{vi:'Người thợ cơ khí', en:'The Mechanic'},
+  roleWorkTitle:{vi:'Thợ cơ khí của Lesta', en:'A Lesta Mechanic'},
   roleWorkDesc:{vi:'Bạn là một công nhân: nhận hay từ chối lời mời làm việc, chấp nhận hay phản đối tăng ca — và cảm nhận hậu quả trên chính sức khoẻ của mình.', en:'You are a worker: accept or refuse job offers, agree to or resist overtime — and feel the consequences in your own health.'},
   continue:{vi:'Tiếp tục →', en:'Continue →'},
   back:{vi:'← Quay lại', en:'← Back'},
-  menuGreet:{vi:'Chào mừng đến xưởng ô tô 👋', en:'Welcome to the workshop 👋'},
-  menuIntroCap:{vi:'Bạn sẽ đi từ một thợ cơ khí tự do, đến chủ một xưởng ô tô đầy công nhân, rồi một phiên toà để tự trả lời: quan hệ chủ xưởng – thợ cơ khí là hợp tác tự nguyện, hay còn là bóc lột?', en:'You will go from a free mechanic, to the owner of a car workshop full of workers, to a tribunal where you answer for yourself: is the owner–mechanic relation just voluntary cooperation, or still exploitation?'},
-  menuIntroWork:{vi:'Bạn sẽ đi từ một thợ cơ khí tự do, đến một công nhân trong xưởng ô tô, rồi một phiên toà để tự trả lời: bạn có đang bị bóc lột, dù mọi thứ trông có vẻ công bằng?', en:'You will go from a free mechanic, to a worker inside a car workshop, to a tribunal where you answer for yourself: are you being exploited, even when everything looks fair on paper?'},
+  menuGreet:{vi:'Chào mừng đến xưởng xe hơi 👋', en:'Welcome to the workshop 👋'},
+  menuIntroCap:{vi:'Bạn sẽ đi từ một thợ cơ khí tự do, đến chủ một xưởng xe hơi đầy công nhân, rồi một phiên toà để tự trả lời: quan hệ chủ xưởng – thợ cơ khí là hợp tác tự nguyện, hay còn là bóc lột?', en:'You will go from a free mechanic, to the owner of a car workshop full of workers, to a tribunal where you answer for yourself: is the owner–mechanic relation just voluntary cooperation, or still exploitation?'},
+  menuIntroWork:{vi:'Bạn sẽ đi từ một thợ cơ khí tự do, đến một công nhân trong xưởng xe hơi, rồi một phiên toà để tự trả lời: bạn có đang bị bóc lột, dù mọi thứ trông có vẻ công bằng?', en:'You will go from a free mechanic, to a worker inside a car workshop, to a tribunal where you answer for yourself: are you being exploited, even when everything looks fair on paper?'},
   startL1:{vi:'Bắt đầu màn 1 →', en:'Start stage 1 →'},
   knowledgeLib:{vi:'📖 Thư viện kiến thức', en:'📖 Knowledge library'},
   rulesSide:{vi:'❓ Luật chơi', en:'❓ Rules'},
@@ -521,7 +550,7 @@ function levelMeta(){
     {n:1, id:'L1', name:{vi:'Thợ cơ khí tự do', en:'The free mechanic'}, tag:'H–T–H'},
     {n:2, id:'L2', name:{vi:'Tiền đẻ ra tiền?', en:'Money begets money?'}, tag:'T–H–T′'},
     {n:3, id:'L3', name:{vi:'Việc làm đầu tiên', en:'The first job'}, tag:{vi:'Sức lao động', en:'Labour-power'}},
-    {n:4, id:'L4', name:{vi:'Xưởng ô tô', en:'The car workshop'}, tag:'c · v · m'},
+    {n:4, id:'L4', name:{vi:'Xưởng xe hơi', en:'The car workshop'}, tag:'c · v · m'},
     {n:5, id:'L5', name:{vi:'Ba cách tăng thặng dư', en:'Three ways to raise surplus'}, tag:{vi:'m tuyệt đối/tương đối', en:'absolute/relative m'}},
     {n:6, id:'L6', name:{vi:'Phiên toà: bóc lột?', en:'Tribunal: exploitation?'}, tag:{vi:'Kết luận', en:'Conclusion'}}
   ];
@@ -535,8 +564,7 @@ function render(){
   app.innerHTML = `
     <div class="topbar">
       <div class="brand">
-        <span style="font-size:1.2rem;">🏭</span>
-        <span class="gearicon">⚙️</span>
+        <span class="gearicon">${ART.logo()}</span>
         <div><h1>${tr('gameTitle')}</h1><span>${tr('gameSub')}</span></div>
       </div>
       <div class="midchip">${S.screen.startsWith('L') ? (L(meta.find(m=>m.id===S.screen).name)) : tr('menuGreet')}</div>
@@ -610,7 +638,7 @@ function rulesBodyHTML(){
   ${stageRule(3,'Việc làm đầu tiên','The first job',
     `<u>Nhà tư bản:</u> thương lượng lương với 2 ứng viên, tối đa 3 vòng. <b>Qua màn:</b> thuê được 1 người với mức ≥ giá trị sức lao động của họ. <b>Thua:</b> hết vòng hoặc bất mãn ≥ 50 mà chưa thuê được ai.<br><u>Công nhân:</u> nhận lời mời lương qua tối đa 4 vòng. <b>Qua màn:</b> chấp nhận 1 lời mời trước khi hết vòng. <b>Thua:</b> "sức chịu đựng" về 0 trước khi nhận việc.`,
     `<u>Owner:</u> negotiate wages with 2 candidates, up to 3 rounds. <b>Clear:</b> hire someone at or above their labour-power value. <b>Fail:</b> run out of rounds or discontent reaches 50 with no hire.<br><u>Worker:</u> respond to wage offers over up to 4 rounds. <b>Clear:</b> accept an offer before rounds run out. <b>Fail:</b> "endurance" hits 0 first.`)}
-  ${stageRule(4,'Xưởng ô tô (c · v · m)','The car workshop (c · v · m)',
+  ${stageRule(4,'Xưởng xe hơi (c · v · m)','The car workshop (c · v · m)',
     `Màn trung tâm — 6 tháng, có 2 thí nghiệm bắt buộc để thấy chỉ v tạo ra m.<br><u>Nhà tư bản:</u> <b>qua màn</b> khi m′ ≥ ${c.L4mrate}% <i>và</i> vốn ≥ ${FMT(c.L4target)} sau tháng 6. <b>Thua:</b> vốn âm 2 tháng liên tiếp.<br><u>Công nhân:</u> <b>qua màn</b> khi sức khoẻ cuối màn ≥ ${c.L4workhealth}. <b>Thua:</b> sức khoẻ ≤ 15 giữa chừng.`,
     `The central stage — 6 months, 2 required experiments show only v creates m.<br><u>Owner:</u> <b>clear</b> when m′ ≥ ${c.L4mrate}% <i>and</i> capital ≥ ${FMT(c.L4target)} by month 6. <b>Fail:</b> capital negative two months running.<br><u>Worker:</u> <b>clear</b> when final health ≥ ${c.L4workhealth}. <b>Fail:</b> health drops to ≤ 15.`)}
   ${stageRule(5,'Ba cách tăng giá trị thặng dư','Three ways to raise surplus value',
@@ -648,7 +676,7 @@ function renderMenu(){
     <div class="card hoverable">
       <h3>${tr('menuGreet')}</h3>
       <p>${intro}</p>
-      <button class="btn primary" onclick="goto('L1')">${tr('startL1')}</button>
+      <button class="btn primary" onclick="goto('L1')">${tr('startL1')}</button> <button class="btn secondary" onclick="showStory()">📖 ${S.lang==='vi'?'Xem lại cốt truyện':'Replay the story'}</button>
     </div>
     <div class="row">
       ${levelMeta().map(m=>`
@@ -715,7 +743,7 @@ const L1 = (function(){
       {label:{vi:'Cố dùng tạm, năng suất giảm',en:'Limp along, lower output'}, effect:s=>{s.demandMult=(s.demandMult||1)*0.85;}}
     ]}
   ];
-  function init(){ return {money:DCFG().L1start, yarn:20, turn:1, maxTurn:6, price:1.5, bolts:40, buyYarn:8, log:[], done:false, result:null}; }
+  function init(){ return {money:DCFG().L1start, yarn:20, turn:1, maxTurn:6, price:2.0, bolts:55, buyYarn:8, log:[], done:false, result:null}; }
   function ensure(){ if(!S.L1) S.L1=init(); return S.L1; }
 
   function render(){
@@ -736,11 +764,11 @@ const L1 = (function(){
         <h3>${S.lang==='vi'?'Kế hoạch tháng':'Plan for month'} ${s.turn}</h3>
         <div class="row">
           <div class="col"><label>${S.lang==='vi'?'Số phụ tùng định gia công':'Parts to machine'}: <b>${s.bolts}</b></label>
-            <input type="range" min="10" max="80" value="${s.bolts}" oninput="L1.set('bolts',+this.value)">${stepper('L1','bolts',1,10,80)}</div>
+            <input type="range" min="10" max="80" value="${s.bolts}" oninput="liveSet(this,'L1','bolts')" onchange="L1.set('bolts',+this.value)">${stepper('L1','bolts',1,10,80)}</div>
           <div class="col"><label>${S.lang==='vi'?'Giá bán mỗi phụ tùng':'Price per part'}: <b>$${s.price.toLocaleString('en-US')}</b></label>
-            <input type="range" min="0.9" max="2.6" step="0.05" value="${s.price}" oninput="L1.set('price',+this.value)">${stepper('L1','price',0.05,0.9,2.6)}</div>
+            <input type="range" min="0.9" max="2.6" step="0.05" value="${s.price}" oninput="liveSet(this,'L1','price')" onchange="L1.set('price',+this.value)">${stepper('L1','price',0.05,0.9,2.6)}</div>
           <div class="col"><label>${S.lang==='vi'?'Mua sắt (kg, $4/kg)':'Buy iron (kg, $4/kg)'}: <b>${s.buyYarn}</b></label>
-            <input type="range" min="0" max="25" value="${s.buyYarn}" oninput="L1.set('buyYarn',+this.value)">${stepper('L1','buyYarn',1,0,25)}</div>
+            <input type="range" min="0" max="25" value="${s.buyYarn}" oninput="liveSet(this,'L1','buyYarn')" onchange="L1.set('buyYarn',+this.value)">${stepper('L1','buyYarn',1,0,25)}</div>
         </div>
         <p class="small">${S.lang==='vi'?'1 phụ tùng cần khoảng 0,2kg sắt. Phụ tùng không bán hết coi như mất trắng (hàng tồn giảm giá trị).':'Each part needs about 0.2kg of iron. Unsold parts are a straight loss.'}</p>
         <button class="btn primary" onclick="L1.playTurn()">${S.lang==='vi'?'Tiến hành tháng':'Run month'} ${s.turn} →</button>
@@ -764,12 +792,12 @@ const L1 = (function(){
     const maxByYarn=Math.floor((s.yarn+s.buyYarn)/0.2);
     const actualBolts=Math.min(s.bolts, ctx.yarnCapCut?Math.floor(maxByYarn*0.6):maxByYarn);
     const price=ctx.priceOverride||s.price;
-    let baseDemand=Math.max(5, Math.round(30+(2.1-price)/0.05));
+    let baseDemand=Math.max(10, Math.round(2*(30+(2.1-price)/0.05)));
     const demand=Math.round(baseDemand*(ctx.demandMult||1))+(ctx.demandBonus||0);
     const sold=Math.min(actualBolts,demand);
     const revenue=sold*price;
     const yarnCost=s.buyYarn*4*(ctx.yarnPriceMult||1);
-    const living=40; const repair=ctx.repairCost||0;
+    const living=20; const repair=ctx.repairCost||0;
     const net=revenue-yarnCost-living-repair;
     s.yarn=Math.max(0,(s.yarn+s.buyYarn)-actualBolts*0.2);
     s.money+=net;
@@ -924,7 +952,7 @@ const L3 = (function(){
     <div class="split">
       <div class="panel capital you"><span class="youtag">${S.lang==='vi'?'BẠN':'YOU'}</span>
         <h3>${S.lang==='vi'?'Góc chủ xưởng':'The owner’s desk'}</h3>
-        <p class="k">${S.lang==='vi'?'Bạn cần tuyển 1 người cho xưởng ô tô sắp mở rộng.':'You need to hire one mechanic for your expanding workshop.'}</p>
+        <p class="k">${S.lang==='vi'?'Bạn là Yi Long Ma — cần tuyển thêm 1 thợ cho hãng Lesta đang mở rộng.':'You are Yi Long Ma — you need to hire one more mechanic for expanding Lesta.'}</p>
         <div class="k" style="margin-top:10px;">${S.lang==='vi'?'Giá trị sức lao động tối thiểu hiện nay':'Current minimum value of labour-power'}</div>
         <div class="v">${FMT(s.baseline)} / ${S.lang==='vi'?'ngày':'day'}</div>
         <div class="k" style="margin-top:10px;">${S.lang==='vi'?'Bất mãn thị trường lao động':'Labour-market discontent'}</div>
@@ -942,7 +970,7 @@ const L3 = (function(){
     <div class="card">
       <h3>${S.lang==='vi'?'Thương lượng — vòng':'Negotiation — round'} ${s.turn}/${s.maxTurn}</h3>
       <label>${S.lang==='vi'?'Đề nghị lương/ngày':'Wage offer per day'}: <b>$${s.offer.toLocaleString('en-US')}</b></label>
-      <input type="range" min="15" max="32" step="0.5" value="${s.offer}" oninput="L3.set('offer',+this.value)">${stepper('L3','offer',0.5,15,32)}
+      <input type="range" min="15" max="32" step="0.5" value="${s.offer}" oninput="liveSet(this,'L3','offer')" onchange="L3.set('offer',+this.value)">${stepper('L3','offer',0.5,15,32)}
       <div class="row" style="margin-top:10px;">
         <button class="btn" onclick="L3.negotiate('A')">${S.lang==='vi'?'Đề nghị với':'Offer to'} ${L(s.candidates[0].name)}</button>
         <button class="btn" onclick="L3.negotiate('B')">${S.lang==='vi'?'Đề nghị với':'Offer to'} ${L(s.candidates[1].name)}</button>
@@ -984,12 +1012,12 @@ const L3 = (function(){
     <div class="split">
       <div class="panel worker you"><span class="youtag">${S.lang==='vi'?'BẠN':'YOU'}</span>
         <h3>${S.lang==='vi'?'Bạn — thợ cơ khí mất máy tiện':'You — a mechanic who lost your lathe'}</h3>
-        <p class="k">${S.lang==='vi'?'Xưởng ô tô lớn cạnh tranh khiến máy tiện riêng của bạn không còn sống nổi. Giờ bạn phải đi tìm việc làm thuê.':'Big workshops undercut your own lathe; you can no longer make a living from it. Now you must find waged work.'}</p>
+        <p class="k">${S.lang==='vi'?'Xưởng xe hơi lớn cạnh tranh khiến máy tiện riêng của bạn không còn sống nổi. Giờ bạn phải đi tìm việc làm thuê.':'Big workshops undercut your own lathe; you can no longer make a living from it. Now you must find waged work.'}</p>
         <div class="k" style="margin-top:10px;">${S.lang==='vi'?'Sức chịu đựng (còn trụ được bao lâu chưa có việc)':'Endurance (how long you can hold out unemployed)'}</div>
         <div class="meter"><i style="width:${Math.min(100,s.endurance)}%"></i></div>
       </div>
       <div class="panel capital">
-        <h3>${S.lang==='vi'?'Chủ xưởng Tuấn':'Owner Tuan'}</h3>
+        <h3>${S.lang==='vi'?'Yi Long Ma — chủ hãng Lesta':'Yi Long Ma — owner of Lesta'}</h3>
         <p class="k">${S.lang==='vi'?'Giá trị sức lao động tối thiểu để bạn sống':'Minimum value of your labour-power to live'}</p>
         <div class="v">${FMT(s.baseline)} / ${S.lang==='vi'?'ngày':'day'}</div>
       </div>
@@ -1072,12 +1100,15 @@ const L4 = (function(){
     {title:{vi:'Mất điện nửa ngày',en:'Power cut for half a day'}, desc:{vi:'Xưởng ngừng vài giờ.',en:'The workshop halts for hours.'}, effect:s=>{s.outputMult=(s.outputMult||1)*0.85;}},
     {title:{vi:'Giá sắt giảm 15%',en:'Iron price drops 15%'}, desc:{vi:'Nguồn cung dồi dào.',en:'Supply is plentiful.'}, effect:s=>{s.cottonMult=(s.cottonMult||1)*0.85;}},
     {title:{vi:'Thợ cơ khí tay nghề cao xin nghỉ',en:'A skilled mechanic quits'}, desc:{vi:'Chuyển sang xưởng khác trả cao hơn.',en:'Moves to a workshop paying more.'}, effect:s=>{s.workers=Math.max(1,s.workers-1);}},
-    {title:{vi:'Đơn hàng tăng mạnh',en:'Orders surge'}, desc:{vi:'Một đại lý ô tô đặt số lượng lớn.',en:'A car dealership places a big order.'}, effect:s=>{s.outputMult=(s.outputMult||1)*1.2;}}
+    {title:{vi:'Đơn hàng tăng mạnh',en:'Orders surge'}, desc:{vi:'Một đại lý xe hơi đặt số lượng lớn.',en:'A car dealership places a big order.'}, effect:s=>{s.outputMult=(s.outputMult||1)*1.2;}}
   ];
   const deckWork=[
     {title:{vi:'Chủ xưởng đề nghị tăng ca',en:'The owner asks for overtime'}, desc:{vi:'Đơn hàng gấp, cần thêm giờ.',en:'A rush order needs extra hours.'}},
     {title:{vi:'Máy tiện gần bạn kêu lạ',en:'The lathe next to you sounds off'}, desc:{vi:'Có thể mất an toàn nếu không báo cáo.',en:'Could be unsafe if unreported.'}},
-    {title:{vi:'Đồng nghiệp rủ xin tăng lương',en:'A coworker suggests asking for a raise'}, desc:{vi:'Cùng nhau đề nghị chủ xưởng.',en:'Approach the owner together.'}}
+    {title:{vi:'Đồng nghiệp rủ xin tăng lương',en:'A coworker suggests asking for a raise'}, desc:{vi:'Cùng nhau đề nghị chủ xưởng.',en:'Approach the owner together.'}},
+    {title:{vi:'Tai nạn suýt xảy ra',en:'A near-miss on the floor'}, desc:{vi:'Dây curoa lỏng, suýt cuốn tay một đồng nghiệp.',en:'A loose belt nearly catches a coworker’s hand.'}},
+    {title:{vi:'Ca đêm bất ngờ',en:'A surprise night shift'}, desc:{vi:'Chủ xưởng muốn chạy máy suốt đêm để kịp đơn.',en:'The owner wants the machines running all night for a deadline.'}},
+    {title:{vi:'Thợ học việc mới vào',en:'New apprentices arrive'}, desc:{vi:'Chủ thuê người lương rẻ hơn — bạn lo bị thay thế.',en:'Cheaper apprentices are hired — you worry about being replaced.'}}
   ];
 
   function computeWvm(workers,machines,wage,cottonKg,extraHours){
@@ -1119,9 +1150,9 @@ const L4 = (function(){
     <div class="card">
       <h3>${S.lang==='vi'?'Quyết định tháng':'Decisions for month'} ${s.turn}</h3>
       <div class="row">
-        <div class="col"><label>${S.lang==='vi'?'Số máy tiện':'Lathes'}: <b>${s.machines}</b></label><input type="range" min="1" max="6" value="${s.machines}" oninput="L4.set('machines',+this.value)">${stepper('L4','machines',1,1,6)}</div>
-        <div class="col"><label>${S.lang==='vi'?'Số công nhân':'Workers'}: <b>${s.workers}</b></label><input type="range" min="1" max="6" value="${s.workers}" oninput="L4.set('workers',+this.value)">${stepper('L4','workers',1,1,6)}</div>
-        <div class="col"><label>${S.lang==='vi'?'Lương/ngày':'Wage/day'}: <b>$${s.wage.toLocaleString('en-US')}</b></label><input type="range" min="18" max="32" step="0.5" value="${s.wage}" oninput="L4.set('wage',+this.value)">${stepper('L4','wage',0.5,18,32)}</div>
+        <div class="col"><label>${S.lang==='vi'?'Số máy tiện':'Lathes'}: <b>${s.machines}</b></label><input type="range" min="1" max="6" value="${s.machines}" oninput="liveSet(this,'L4','machines')" onchange="L4.set('machines',+this.value)">${stepper('L4','machines',1,1,6)}</div>
+        <div class="col"><label>${S.lang==='vi'?'Số công nhân':'Workers'}: <b>${s.workers}</b></label><input type="range" min="1" max="6" value="${s.workers}" oninput="liveSet(this,'L4','workers')" onchange="L4.set('workers',+this.value)">${stepper('L4','workers',1,1,6)}</div>
+        <div class="col"><label>${S.lang==='vi'?'Lương/ngày':'Wage/day'}: <b>$${s.wage.toLocaleString('en-US')}</b></label><input type="range" min="18" max="32" step="0.5" value="${s.wage}" oninput="liveSet(this,'L4','wage')" onchange="L4.set('wage',+this.value)">${stepper('L4','wage',0.5,18,32)}</div>
       </div>
       <button class="btn primary" style="margin-top:10px;" onclick="L4.playTurn()">${S.lang==='vi'?'Tiến hành tháng':'Run month'} ${s.turn} →</button>
     </div>
@@ -1158,12 +1189,12 @@ const L4 = (function(){
     const s=ensure();
     const card=deckCap[Math.floor(Math.random()*deckCap.length)];
     openModal(`<div class="tag">${tr('monthLbl')} ${s.turn}</div><h3>${L(card.title)}</h3><p>${L(card.desc)}</p>
-      <button class="choicebtn" onclick="L4.resolve()">${S.lang==='vi'?'Tiếp tục sản xuất':'Continue production'}</button>`);
+      <button class="choicebtn" onclick="L4.resolve('safe')">${S.lang==='vi'?'🛡️ An toàn: giữ nhịp bình thường':'🛡️ Safe: keep the normal pace'}</button><button class="choicebtn" onclick="L4.resolve('push')">${S.lang==='vi'?'🚀 Tăng tốc: +15% sản lượng, 30% nguy cơ tai nạn (−$60)':'🚀 Push: +15% output, 30% accident risk (−$60)'}</button>`);
     L4._card=card;
   }
-  function resolve(){
+  function resolve(mode){
     const s=ensure(); const card=L4._card;
-    s.outputMult=1; s.cottonMult=1; s.oneTimeC=0; card.effect(s); closeModal();
+    s.outputMult=1; s.cottonMult=1; s.oneTimeC=0; card.effect(s); closeModal(); if(mode==='push'){ s.outputMult*=1.15; if(Math.random()<.3){ s.oneTimeC+=60; toast(S.lang==='vi'?'⚠️ Tai nạn trong xưởng! Tốn $60 bồi thường và sửa chữa.':'⚠️ Accident on the floor! $60 in compensation and repairs.'); } }
     const {c:baseC,v,m,W}=computeWvm(s.workers,s.machines,s.wage,s.cottonKg,0);
     const c=baseC*(s.cottonMult||1)+(s.oneTimeC||0);
     const revenue=(c+v+m)*(s.outputMult||1)*1.05;
@@ -1289,7 +1320,11 @@ const L5 = (function(){
     {title:{vi:'Giá gạo, thịt, điện giảm',en:'Rice, meat, electricity get cheaper'}, desc:{vi:'Nông nghiệp được mùa, hàng thiết yếu rẻ đi.',en:'A good harvest makes necessities cheaper.'}, kind:'relative-trigger'},
     {title:{vi:'Đối thủ mua dây chuyền mới',en:'A rival buys new machinery'}, desc:{vi:'Giá thị trường bắt đầu giảm theo.',en:'Market prices start to drop.'}, kind:'super-pressure'},
     {title:{vi:'Đơn hàng gấp dồn dập',en:'Rush orders pile up'}, desc:{vi:'Cám dỗ tăng ca.',en:'The temptation to add overtime.'}, kind:'neutral'},
-    {title:{vi:'Công đoàn đề nghị đối thoại',en:'The union asks to talk'}, desc:{vi:'Đại diện thợ cơ khí xin gặp bàn về giờ làm.',en:'Mechanic reps want to discuss hours.'}, kind:'neutral'}
+    {title:{vi:'Công đoàn đề nghị đối thoại',en:'The union asks to talk'}, desc:{vi:'Đại diện thợ cơ khí xin gặp bàn về giờ làm.',en:'Mechanic reps want to discuss hours.'}, kind:'neutral'},
+    {title:{vi:'Cảng nhập sắt thép rẻ',en:'Cheap steel arrives at the port'}, desc:{vi:'Nguyên liệu và hàng thiết yếu rẻ đi trông thấy.',en:'Materials and necessities get visibly cheaper.'}, kind:'relative-trigger'},
+    {title:{vi:'Đối thủ lắp băng chuyền',en:'A rival installs a conveyor line'}, desc:{vi:'Xe của họ ra nhanh hơn, giá bán bị kéo xuống.',en:'Their cars roll out faster, pulling prices down.'}, kind:'super-pressure'},
+    {title:{vi:'Thanh tra đến xưởng',en:'An inspector visits'}, desc:{vi:'Họ hỏi về giờ làm và an toàn máy móc.',en:'They ask about hours and machine safety.'}, kind:'neutral'},
+    {title:{vi:'Khách đặt xe gấp',en:'A buyer wants cars fast'}, desc:{vi:'Tiền thưởng nếu giao sớm — cám dỗ kéo dài ngày làm.',en:'A bonus for early delivery — tempting you to stretch the day.'}, kind:'neutral'}
   ];
 
   function render(){
@@ -1360,7 +1395,7 @@ const L5 = (function(){
         <div class="k" style="margin-top:8px;">${S.lang==='vi'?'Bất mãn':'Discontent'}</div><div class="meter"><i style="width:${Math.min(100,s.discontent)}%"></i></div>
       </div>
       <div class="panel capital">
-        <h3>${S.lang==='vi'?'Xưởng Ô Tô Thịnh Phát':'Thinh Phat Motor Works'}</h3>
+        <h3>${S.lang==='vi'?'Hãng xe Lesta':'Lesta Motor Works'}</h3>
         <p class="k">${S.lang==='vi'?'Đã quan sát':'Observed'}: ${s.sawAbsolute?'✔':'✗'} ${S.lang==='vi'?'tuyệt đối':'absolute'} · ${s.sawRelative?'✔':'✗'} ${S.lang==='vi'?'tương đối':'relative'} · ${s.sawSuper?'✔':'✗'} ${S.lang==='vi'?'siêu ngạch':'super'}</p>
       </div>
     </div>
@@ -1628,8 +1663,7 @@ function pickDifficulty(key){
 document.getElementById('d-continue').addEventListener('click', ()=>{
   if(!S.difficulty) return;
   document.getElementById('diff-screen').style.display='none';
-  document.getElementById('app').style.display='flex';
-  goto('menu');
+  showStory();
 });
 document.getElementById('d-back').addEventListener('click', ()=>{
   document.getElementById('diff-screen').style.display='none';
@@ -1640,6 +1674,228 @@ document.getElementById('d-back').addEventListener('click', ()=>{
 setTimeout(()=>{ const af=document.getElementById('arrive-fx'); if(af){ af.classList.add('hide'); setTimeout(()=>af.remove(),550); } }, 150);
 showStart();
 </script>
-    <script src="/chat-widget.js" defer></script>
+
+<script>
+/* ===== ART v2: minh họa vẽ bằng code (SVG), cốt truyện Lesta, thanh kéo ===== */
+const ART=(()=>{
+const V=(a,b)=>S.lang==='vi'?a:b;
+const T=(x,y,s,c,f=13,w=700,a='middle')=>`<text x="${x}" y="${y}" fill="${c}" font-size="${f}" font-weight="${w}" text-anchor="${a}" font-family="Inter,sans-serif">${s}</text>`;
+const pill=(x,y,s,w)=>`<rect x="${x-w/2}" y="${y-13}" width="${w}" height="19" rx="9.5" fill="#22090d" opacity=".72"/>`+T(x,y+1,s,'#fff4d8',11);
+function defs(p,a,b,c){return `<defs>
+<linearGradient id="${p}s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${a}"/><stop offset=".65" stop-color="${b}"/><stop offset="1" stop-color="${c}"/></linearGradient>
+<pattern id="${p}b" width="16" height="8" patternUnits="userSpaceOnUse"><rect width="16" height="8" fill="#a5563a"/><path d="M0 .5H16M0 4.5H16M8 .5V4.5M0 4.5V8M16 4.5V8" stroke="#7c3b28" stroke-width="1" fill="none"/></pattern>
+<pattern id="${p}p" width="20" height="10" patternUnits="userSpaceOnUse"><rect width="20" height="10" fill="#8a5f3a"/><path d="M0 .5H20M10 .5V10" stroke="#5e3d22" stroke-width="1"/></pattern>
+<radialGradient id="${p}g" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffe9a8" stop-opacity=".95"/><stop offset="1" stop-color="#ffe9a8" stop-opacity="0"/></radialGradient>
+<linearGradient id="${p}m" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d7dbe0"/><stop offset="1" stop-color="#6d747c"/></linearGradient>
+<linearGradient id="${p}r" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff2c0" stop-opacity=".55"/><stop offset="1" stop-color="#fff2c0" stop-opacity="0"/></linearGradient>
+</defs>`;}
+const sky=(p,W=600,H=220)=>`<rect width="${W}" height="${H}" fill="url(#${p}s)"/>`;
+const sun=(p,x,y,r=70)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="url(#${p}g)"/><circle cx="${x}" cy="${y}" r="${r/4}" fill="#fff3c4"/>`;
+const skyline=(y,c='#cdb083')=>{let o='',x=0,i=0;const h=[26,40,22,50,30,44,24,36,52,28,42,32];while(x<600){const w=34+(i*13)%22,hh=h[i%h.length];o+=`<rect x="${x}" y="${y-hh}" width="${w}" height="${hh+40}" fill="${c}"/>`;if(i%3===1)o+=`<rect x="${x+w-12}" y="${y-hh-16}" width="7" height="18" fill="${c}"/>`;x+=w+2;i++;}return `<g opacity=".55">${o}</g>`;};
+const ground=(y,c1='#8b7a55',c2='#6f5f40',H=220)=>{let o=`<rect y="${y}" width="600" height="${H-y}" fill="${c1}"/><rect y="${y}" width="600" height="4" fill="${c2}"/>`;for(let i=0;i<24;i++)o+=`<ellipse cx="${(i*47)%600}" cy="${y+10+(i*13)%(H-y-12)}" rx="14" ry="3.5" fill="${c2}" opacity=".45"/>`;return o;};
+function gearPath(r,n,ro){let d='';for(let i=0;i<n*2;i++){const a=Math.PI*i/n,rr=i%2?r:ro,b=Math.PI/n*.35,a1=a-b,a2=a+b;d+=(i?'L':'M')+(Math.cos(a1)*rr).toFixed(1)+' '+(Math.sin(a1)*rr).toFixed(1)+'L'+(Math.cos(a2)*rr).toFixed(1)+' '+(Math.sin(a2)*rr).toFixed(1);}return d+'z';}
+const gear=(x,y,r,n=10,c='#7b838b',cls='spin',hole='#3a2f27')=>`<g transform="translate(${x} ${y})"><g class="${cls}"><path d="${gearPath(r*.86,n,r)}" fill="${c}" stroke="#4a5158" stroke-width="1.5"/><circle r="${r*.3}" fill="${hole}"/><circle r="${r*.12}" fill="#c9ced4"/></g></g>`;
+const coin=(x,y,r=12)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="#d9a441" stroke="#8a5f1a" stroke-width="2"/><circle cx="${x}" cy="${y}" r="${r*.72}" fill="none" stroke="#f5d688" stroke-width="1.2"/>`+T(x,y+r*.36,'$','#6b470f',r*1.05,800);
+const arr=(x,y,c='#fff4d8')=>`<path d="M${x} ${y}h28m-9-8l9 8-9 8" stroke="${c}" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`;
+const smoke=(x,y)=>[0,1,2].map(i=>`<circle class="sm" cx="${x}" cy="${y}" r="${7+i*2}" fill="#fff" opacity=".6" style="animation-delay:${i}s"/>`).join('');
+const crate=(x,y,s=1)=>`<g transform="translate(${x} ${y}) scale(${s})"><rect x="-12" y="-22" width="24" height="22" fill="#b98a4e" stroke="#6b4a24" stroke-width="2"/><path d="M-12-22L12 0M12-22L-12 0" stroke="#6b4a24" stroke-width="2"/></g>`;
+const barrel=(x,y)=>`<g transform="translate(${x} ${y})"><path d="M-9 0V-22Q-13-11-9 0M9 0V-22Q13-11 9 0" fill="none"/><rect x="-10" y="-24" width="20" height="24" rx="5" fill="#8d5a2b" stroke="#4a2f15" stroke-width="2"/><path d="M-10-16H10M-10-7H10" stroke="#4a2f15" stroke-width="2.5"/></g>`;
+const lamp=(x,y,p)=>`<g><path d="M${x} 0V${y}" stroke="#3a2f27" stroke-width="2"/><path d="M${x-8} ${y+9}Q${x} ${y-6} ${x+8} ${y+9}z" fill="#3a2f27"/><circle cx="${x}" cy="${y+12}" r="4" fill="#fff0b0"/><circle cx="${x}" cy="${y+14}" r="34" fill="url(#${p}g)"/></g>`;
+function person(x,y,o={}){const {coat='#3f6d8a',hat='cap',skin='#e8c39a',s=1,pose='down',apron=false,stache=false,dim=false,flip=false}=o;
+const c=dim?'#847876':coat;
+const arms=pose==='work'?`<path d="M-10-50L-2-34L10-32" stroke="${c}" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M10-50L14-36L18-32" stroke="${c}" stroke-width="7" fill="none" stroke-linecap="round"/><circle cx="11" cy="-31" r="3.5" fill="${skin}"/><circle cx="19" cy="-31" r="3.5" fill="${skin}"/>`
+:pose==='cheer'?`<path d="M-10-50L-20-70M10-50L20-70" stroke="${c}" stroke-width="7" stroke-linecap="round"/><circle cx="-20" cy="-72" r="3.6" fill="${skin}"/><circle cx="20" cy="-72" r="3.6" fill="${skin}"/>`
+:pose==='hand'?`<path d="M-10-50L-14-28M10-50L26-40" stroke="${c}" stroke-width="7" stroke-linecap="round"/><circle cx="-14" cy="-26" r="3.5" fill="${skin}"/><circle cx="28" cy="-39" r="3.5" fill="${skin}"/>`
+:`<path d="M-10-50L-14-28M10-50L14-28" stroke="${c}" stroke-width="7" stroke-linecap="round"/><circle cx="-14" cy="-26" r="3.5" fill="${skin}"/><circle cx="14" cy="-26" r="3.5" fill="${skin}"/>`;
+const H=hat==='top'?`<rect x="-6.5" y="-84" width="13" height="16" rx="1.5" fill="#1a1410"/><rect x="-6.5" y="-72" width="13" height="3" fill="#8a2438"/><rect x="-11" y="-68.5" width="22" height="3.2" rx="1.5" fill="#1a1410"/>`
+:hat==='cap'?`<path d="M-8.5-64Q-8-75 0-75Q8-75 8.5-64z" fill="#4a3a2a"/><rect x="0" y="-65" width="12" height="3" rx="1.5" fill="#33271b"/>`
+:hat==='straw'?`<ellipse cy="-66" rx="14" ry="3.5" fill="#d9bd72"/><path d="M-7-66Q-7-76 0-76Q7-76 7-66z" fill="#e7cf8a"/>`:'';
+return `<g transform="translate(${x} ${y}) scale(${flip?-s:s} ${s})"><ellipse cy="1" rx="13" ry="3.2" fill="#000" opacity=".2"/>
+<rect x="-8" y="-24" width="7" height="24" fill="#2b2118"/><rect x="1" y="-24" width="7" height="24" fill="#2b2118"/><rect x="-9" y="-3" width="9" height="4" rx="1.5" fill="#15100b"/><rect x="0" y="-3" width="9" height="4" rx="1.5" fill="#15100b"/>
+<path d="M-12-54H12L14-22H-14z" fill="${c}"/>${apron?`<path d="M-8-44H8L9-22H-9z" fill="#d8ccb0"/>`:''}
+<path d="M-4-54L0-42L4-54z" fill="#f4ecd8"/>${hat==='top'?`<path d="M-9-34Q0-30 9-40" stroke="#d9a441" stroke-width="1.6" fill="none"/><circle cx="9" cy="-40" r="2" fill="#d9a441"/>`:''}
+${arms}<circle cy="-62" r="8.5" fill="${skin}"/>${stache?`<path d="M-5.5-58Q0-55.5 5.5-58Q0-60 -5.5-58z" fill="#2b1a10"/>`:''}<circle cx="-3" cy="-63.5" r="1" fill="#2b1a10"/><circle cx="3" cy="-63.5" r="1" fill="#2b1a10"/>${H}</g>`;}
+function car(x,y,o={}){const {c='#7a1c2c',s=1,spin=false,top='#2b2118',flip=false}=o;
+const wheel=(cx)=>`<g transform="translate(${cx} 54)"><circle r="12" fill="#1c1410"/><g class="${spin?'spin wheel':''}"><circle r="10" fill="none" stroke="#c9a35a" stroke-width="2"/>${[0,1,2,3,4,5,6,7].map(i=>`<line x1="0" y1="0" x2="${(Math.cos(i*Math.PI/4)*10).toFixed(1)}" y2="${(Math.sin(i*Math.PI/4)*10).toFixed(1)}" stroke="#c9a35a" stroke-width="1.4"/>`).join('')}<circle r="3" fill="#d9a441"/></g></g>`;
+return `<g transform="translate(${x} ${y}) scale(${flip?-s:s} ${s}) translate(-60 -64)"><ellipse cx="60" cy="66" rx="58" ry="4" fill="#000" opacity=".22"/>
+<path d="M14 26Q14 8 32 8H64Q72 8 72 20V28H14z" fill="${top}"/><rect x="20" y="8" width="3" height="20" fill="#5a4630"/><rect x="66" y="8" width="3" height="20" fill="#5a4630"/>
+<rect x="24" y="12" width="40" height="16" fill="#9db7c0" opacity=".28"/>
+<rect x="12" y="28" width="66" height="17" rx="3" fill="${c}"/><rect x="12" y="34" width="66" height="2.4" fill="#e6b95a"/>
+<rect x="76" y="28" width="36" height="14" rx="3" fill="${c}"/><rect x="76" y="34" width="36" height="2.4" fill="#e6b95a"/>
+<path d="M72 12L76 28" stroke="#cfe0e6" stroke-width="3"/><rect x="110" y="26" width="8" height="18" rx="2" fill="#d9a441"/><circle cx="119" cy="24" r="4.5" fill="#fff0a8"/>
+<circle cx="50" cy="20" r="5" fill="#e8c39a"/><path d="M45 18Q50 12 55 18z" fill="#4a3a2a"/><rect x="45" y="25" width="10" height="7" fill="#3f6d8a"/><circle cx="66" cy="34" r="6" fill="none" stroke="#2b2118" stroke-width="2"/>
+<rect x="16" y="45" width="92" height="3.5" rx="1.5" fill="#2b2118"/>
+<path d="M12 50Q13 34 28 34Q43 34 44 50M76 50Q78 36 93 36Q108 36 110 50" fill="none" stroke="#1c1410" stroke-width="4.5"/>${wheel(28)}${wheel(93)}</g>`;}
+const lathe=(x,y,s=1)=>`<g transform="translate(${x} ${y}) scale(${s})"><rect x="3" y="-19" width="6" height="19" fill="#2f2620"/><rect x="52" y="-19" width="6" height="19" fill="#2f2620"/><rect x="0" y="-27" width="62" height="9" rx="2" fill="#3f342b"/><rect x="0" y="-46" width="17" height="21" rx="2" fill="#5b6770"/><rect x="2" y="-44" width="13" height="4" fill="#8894a0"/><circle cx="19" cy="-33" r="8" fill="#39424a" stroke="#9aa5ae" stroke-width="2"/><rect x="21" y="-35" width="26" height="4.5" fill="#d3d8dd"/><rect x="47" y="-42" width="12" height="20" rx="2" fill="#5b6770"/><circle cx="60" cy="-31" r="6" fill="none" stroke="#c98a2e" stroke-width="2.6"/><path d="M60-37V-25M54-31H66" stroke="#c98a2e" stroke-width="2"/></g>`;
+const lineshaft=(y,x1,x2,xs)=>`<g><rect x="${x1}" y="${y-2.5}" width="${x2-x1}" height="5" fill="#59616a"/>${xs.map(x=>`<path d="M${x-8} 0V${y-2}" stroke="#3a2f27" stroke-width="3"/>${gear(x,y,8,8,'#8a939b','spin','#3a2f27')}`).join('')}</g>`;
+function bal(x,y,tilt=0){const l=y-52;return `<g transform="translate(${x} ${y})"><path d="M-22 0H22L8-10H-8z" fill="#5a3d20"/><rect x="-3" y="-56" width="6" height="48" fill="#8a5f1a"/><circle cy="-58" r="6" fill="#d9a441"/><g transform="rotate(${tilt} 0 -56)"><rect x="-70" y="-59" width="140" height="5" rx="2.5" fill="#8a5f1a"/><path d="M-66-54L-84-18H-48zM66-54L48-18H84z" fill="none" stroke="#5a3d20" stroke-width="1.5"/><path d="M-90-18Q-66-6 -42-18z" fill="#d9a441" stroke="#8a5f1a" stroke-width="2"/><path d="M42-18Q66-6 90-18z" fill="#d9a441" stroke="#8a5f1a" stroke-width="2"/></g></g>`;}
+function facade(p,x,base,w,h,label){let o=`<rect x="${x}" y="${base-h}" width="${w}" height="${h}" fill="url(#${p}b)"/>`;const n=Math.max(1,Math.floor(w/48)),sw=w/n;for(let i=0;i<n;i++){const a=x+i*sw;o+=`<path d="M${a} ${base-h}V${base-h-24}L${a+sw} ${base-h}z" fill="#4a2018"/><path d="M${a} ${base-h-24}V${base-h}" stroke="#9fd3e0" stroke-width="3"/>`;}
+const cols=Math.max(2,Math.floor(w/44));for(let i=0;i<cols;i++){const wx=x+12+i*((w-24)/cols);o+=`<rect x="${wx}" y="${base-h+14}" width="20" height="26" rx="10" fill="#ffd98a" stroke="#4a2018" stroke-width="2.5"/><path d="M${wx+10} ${base-h+14}V${base-h+40}M${wx} ${base-h+28}H${wx+20}" stroke="#4a2018" stroke-width="1.6"/>`;}
+o+=`<path d="M${x+w/2-17} ${base}V${base-30}A17 17 0 0 1 ${x+w/2+17} ${base-30}V${base}z" fill="#2a1a10"/><path d="M${x+w/2} ${base-46}V${base}" stroke="#5c3a22" stroke-width="2"/>`;
+if(label)o+=`<rect x="${x+w/2-40}" y="${base-h+46}" width="80" height="16" rx="3" fill="#f3ead6" stroke="#5c2a20" stroke-width="2"/>`+T(x+w/2,base-h+58,label,'#5c2a20',10,800);
+return o;}
+const chimney=(x,top,base)=>`<rect x="${x}" y="${top}" width="16" height="${base-top}" fill="#6a2e22"/><rect x="${x-2}" y="${top}" width="20" height="5" fill="#4a2018"/>`+smoke(x+8,top-4);
+const svg=(inner,label)=>`<svg viewBox="0 0 600 220" role="img" aria-label="${label||''}" preserveAspectRatio="xMidYMid slice">${inner}</svg>`;
+const shop_i=(p,dusk)=>defs(p,dusk?'#1b1a3a':'#6b4a3a','#3a2a24','#1d1410');
+
+/* ---------- 6 màn ---------- */
+function s1(){const p='a';
+ return defs(p,'#f9dfa5','#f3e2bd','#e8d3a4')+sky(p)+sun(p,520,50,80)+skyline(140)+ground(160,'#a08a5c','#7c6a46')
+ +facade(p,24,160,140,82,'')+chimney(140,30,84)+`<rect x="60" y="118" width="60" height="42" rx="3" fill="#2a1a10"/>`+lathe(66,158,.85)+person(112,158,{coat:'#3f6d8a',apron:true,pose:'work',s:.78})+`<rect x="34" y="50" width="66" height="14" rx="3" fill="#f3ead6" stroke="#5c2a20" stroke-width="2"/>`+T(67,61,V('XƯỞNG NHỎ','SMALL SHOP'),'#5c2a20',9,800)
+ +arr(178,120)+`<path d="M212 84L232 64H332L352 84z" fill="#b8402f"/>${[0,1,2,3,4].map(i=>`<path d="M${212+i*28} 84L${232+i*20} 64h16L${240+i*28} 84z" fill="#f3ead6" opacity=".9"/>`).join('')}<rect x="220" y="84" width="124" height="6" fill="#7c3b28"/><rect x="224" y="90" width="4" height="70" fill="#5a3d20"/><rect x="336" y="90" width="4" height="70" fill="#5a3d20"/><rect x="224" y="124" width="116" height="10" fill="#8a5f3a"/>${[0,1,2,3,4].map(i=>`<circle cx="${240+i*20}" cy="120" r="5" fill="#9aa5ae" stroke="#4a5158" stroke-width="1.6"/><circle cx="${240+i*20}" cy="120" r="1.6" fill="#4a5158"/>`).join('')}`+crate(250,160)+barrel(322,160)+person(286,158,{coat:'#9c4227',hat:'cap',apron:true,s:.8})+person(390,158,{coat:'#5c7a55',hat:'top',s:.75,stache:true,flip:true})
+ +arr(408,120)+coin(470,112,17)+arr(492,120)+`<path d="M535 160q-8-30 6-42h26q14 12 6 42z" fill="#e8dcc0" stroke="#8a7a55" stroke-width="2.5"/><path d="M547 118q10-8 20 0" stroke="#8a7a55" stroke-width="2.5" fill="none"/><path d="M544 132h26" stroke="#8a7a55" stroke-width="1.6"/>`
+ +pill(100,195,V('① Tự làm','① You make it'),90)+pill(286,195,V('② Bán ở chợ','② Sell at market'),108)+pill(450,195,V('③ Tiền','③ Money'),64)+pill(549,195,V('④ Đồ cần dùng','④ What you need'),108);}
+function s2(){const p='b';
+ return defs(p,'#efe1c2','#e6d3ad','#d9c396')+sky(p)+skyline(130)+ground(158,'#94825a','#7a6944')
+ +facade(p,10,158,110,90,V('CHỢ','MARKET'))+facade(p,480,158,110,90,V('ĐẠI LÝ','DEALER'))
+ +person(150,156,{coat:'#3f6d8a',s:.95,apron:true,pose:'hand'})+person(450,156,{coat:'#9c4227',hat:'top',s:.95,stache:true,pose:'hand',flip:true})
+ +bal(300,150,0)+coin(268,94,7)+coin(332,94,7)+`<path d="M186 108Q300 66 414 108" fill="none" stroke="#5a4726" stroke-width="2" stroke-dasharray="5 5"/><path d="M190 108l-3-9-9 2M410 108l3-9 9 2" stroke="#5a4726" stroke-width="2" fill="none"/>`
+ +`<rect x="170" y="22" width="260" height="30" rx="8" fill="#22090d" opacity=".82"/>`+T(300,42,V('Tổng giá trị thị trường KHÔNG đổi','Total market value stays the SAME'),'#fff4d8',13)
+ +pill(150,196,V('Người này lời','One side gains'),100)+pill(450,196,V('Người kia lỗ','the other loses'),100);}
+function s3(){const p='c';
+ return defs(p,'#f7c98d','#f1d7a8','#dcc08b')+sky(p)+sun(p,90,70,90)+skyline(128,'#c3a070')+ground(160,'#8b7a55','#6f5f40')
+ +facade(p,150,160,300,96,'')+chimney(170,10,66)+chimney(414,6,66)+`<rect x="250" y="46" width="100" height="28" rx="4" fill="#f3ead6" stroke="#5c2a20" stroke-width="3"/>`+T(300,58,'LESTA','#8a1f33',11,800)+T(300,70,V('CẦN THỢ CƠ KHÍ','MECHANICS WANTED'),'#5c2a20',8,800)
+ +`<rect x="140" y="112" width="8" height="48" fill="#22160f"/><rect x="452" y="112" width="8" height="48" fill="#22160f"/>`
+ +person(180,160,{coat:'#6a6560',s:.8})+person(215,160,{coat:'#7a6a55',hat:'straw',s:.8,pose:'hand'})+`<path d="M232 132L238 96" stroke="#5a3d20" stroke-width="3"/><path d="M230 98H244" stroke="#8a939b" stroke-width="4"/>`+person(255,160,{coat:'#58646e',s:.8})+person(500,160,{coat:'#7a6a55',s:.8,flip:true})+person(535,160,{coat:'#6a6560',hat:'straw',s:.8,flip:true})+crate(568,160,.8)
+ +person(300,160,{coat:'#22140c',hat:'top',s:.9,stache:true,pose:'hand'})
+ +pill(215,196,V('Mất máy tiện, mất ruộng','Lost their lathes and land'),182)+pill(520,196,V('Chỉ còn sức lao động','Only labour-power left'),150);}
+function s4(){const s=S.L4||{},m=Math.max(1,Math.min(s.machines||2,6)),w=Math.max(1,Math.min(s.workers||3,6)),t=Math.min(Math.max((s.turn||1)-1,0),5),hurt=(s.health||70)<40,worker=S.role==='worker',p='d';
+ const gap=Math.min(66,300/m),lx=i=>26+i*gap;
+ let o=defs(p,'#e9d7ae','#d9c398','#c8ae7c')+`<rect width="600" height="220" fill="url(#${p}b)"/><rect width="600" height="220" fill="#2a1408" opacity=".35"/>`;
+ o+=[110,260,410].map(x=>`<path d="M${x} 0L${x+50} 26L${x+100} 0z" fill="#3a2418" opacity=".7"/>`).join('')+`<path d="M0 26H600" stroke="#2a1408" stroke-width="4"/>`;
+ o+=[70,200,330].map(x=>`<rect x="${x}" y="40" width="46" height="46" rx="3" fill="#bfe3ee" stroke="#3a2418" stroke-width="4"/><path d="M${x+23} 40V86M${x} 63H${x+46}" stroke="#3a2418" stroke-width="3"/><path d="M${x+4} 44L${x-40} 170H${x+8}L${x+46} 44z" fill="url(#${p}r)"/>`).join('');
+ o+=`<rect y="168" width="600" height="52" fill="url(#${p}p)"/><rect y="168" width="600" height="4" fill="#3a2418"/>`;
+ const shaftX=[];for(let i=0;i<m;i++)shaftX.push(lx(i)+8);o+=lineshaft(34,10,418,shaftX);
+ for(let i=0;i<m;i++)o+=`<path class="beltv" d="M${lx(i)+8} 40V${168-46*.9-2}" stroke="#4a3626" stroke-width="3.5" stroke-dasharray="6 4"/>`;
+ for(let i=0;i<w;i++){const k=i%m,px=lx(k)+34+Math.floor(i/m)*16;o+=person(px,166,{coat:hurt?'#847876':'#3f6d8a',apron:true,pose:'work',s:.76,dim:hurt});if(worker&&i===0)o+=`<path d="M${px-6} 82l6 9 6-9z" fill="#d9a441"/>`+T(px,78,V('BẠN','YOU'),'#3a2410',10,800);}
+ for(let i=0;i<m;i++)o+=lathe(lx(i),170,.9);
+ o+=`<rect x="428" y="60" width="164" height="108" rx="6" fill="#3a2418"/><rect x="434" y="66" width="152" height="102" fill="#a9d2e2"/><rect x="434" y="66" width="152" height="102" fill="url(#${p}s)" opacity=".0"/><rect x="434" y="140" width="152" height="28" fill="#9c8a5a"/><path d="M434 66H586M434 92H586" stroke="#3a2418" stroke-width="2" opacity=".35"/>`;
+ const cols=['#7a1c2c','#2f5a73','#3f7d4c','#9c4227','#5a4a7a'];for(let i=0;i<t;i++)o+=car(478+i*24,166,{c:cols[i%5],s:.42});
+ o+=`<rect x="470" y="40" width="92" height="20" rx="4" fill="#f3ead6" stroke="#5c2a20" stroke-width="2.5"/>`+T(516,54,'LESTA','#8a1f33',12,800);
+ o+=person(414,166,{coat:'#22140c',hat:'top',stache:true,s:.9,pose:'hand',flip:true});
+ o+=pill(300,206,V('Xe đã xuất xưởng: '+t,'Cars shipped: '+t),150)+pill(516,80,V('Sân xuất xưởng','Loading yard'),96);
+ return o;}
+function s5(){const s=S.L5||{},h=s.hours||8,t=s.tHours||4,hurt=(s.health||70)<40,night=h>=10,p='e',a=t/h*2*Math.PI,x=(Math.sin(a)*54).toFixed(1),y=(-Math.cos(a)*54).toFixed(1);
+ let o=defs(p,night?'#22254a':'#e9d7ae',night?'#2b2440':'#d9c398',night?'#191428':'#c8ae7c')+`<rect width="600" height="220" fill="url(#${p}s)"/><rect width="600" height="220" fill="url(#${p}b)" opacity="${night?.25:.55}"/>`;
+ o+=`<rect x="420" y="30" width="60" height="70" rx="3" fill="${night?'#0d1030':'#bfe3ee'}" stroke="#3a2418" stroke-width="4"/>`+(night?`<circle cx="452" cy="52" r="10" fill="#f6ecc0"/><circle cx="447" cy="49" r="9" fill="#0d1030"/>`+[0,1,2,3].map(i=>`<circle cx="${430+i*13}" cy="${80-i*4}" r="1.3" fill="#fff"/>`).join(''):`<circle cx="450" cy="58" r="10" fill="#ffd66b"/>`);
+ o+=`<rect y="168" width="600" height="52" fill="url(#${p}p)"/><rect y="168" width="600" height="4" fill="#3a2418"/>`;
+ o+=`<g transform="translate(110 100)"><circle r="66" fill="#f3ead6" stroke="#3a2418" stroke-width="5"/><circle r="54" fill="#c4462f"/><path d="M0 0V-54A54 54 0 ${a>Math.PI?1:0} 1 ${x} ${y}z" fill="#3f7d4c"/>${[...Array(12)].map((_,i)=>`<line x1="0" y1="-60" x2="0" y2="-${i%3?63:57}" transform="rotate(${i*30})" stroke="#3a2418" stroke-width="2"/>`).join('')}<circle r="5" fill="#3a2418"/></g>`
+ +`<rect x="200" y="46" width="14" height="14" rx="2" fill="#3f7d4c"/>`+T(222,58,V('t = '+t+'h  bù lại lương (v)','t = '+t+'h  repays wages (v)'),night?'#f3ead6':'#3a2410',13,700,'start')
+ +`<rect x="200" y="72" width="14" height="14" rx="2" fill="#c4462f"/>`+T(222,84,V('t′ = '+(h-t)+'h  làm không công (m)','t′ = '+(h-t)+'h  unpaid work (m)'),night?'#f3ead6':'#3a2410',13,700,'start')
+ +T(200,108,V('Ngày làm: '+h+' giờ','Workday: '+h+' hours'),night?'#ffd98a':'#8a1f33',15,800,'start')
+ +lathe(300,170,1.1)+person(394,168,{coat:hurt?'#847876':'#3f6d8a',apron:true,pose:'work',s:.9,dim:hurt,flip:true})+(night?lamp(340,30,p):'')+gear(556,150,20,12,'#7b838b')+gear(526,132,12,9,'#9aa3aa','spinr')
+ +pill(300,206,hurt?V('Thợ kiệt sức…','The worker is worn out…'):(night?V('Làm đến tối — t′ phình to','Working into the night — t′ balloons'):V('Ngày làm bình thường','A normal workday')),210);
+ return o;}
+function s6(){const p='f';
+ let o=defs(p,'#7a5230','#5e3d22','#3d2714')+`<rect width="600" height="220" fill="url(#${p}p)" opacity=".9"/><rect width="600" height="220" fill="#1a0c04" opacity=".35"/>`;
+ o+=[60,180,300,420,540].map(x=>`<rect x="${x-14}" y="0" width="28" height="150" fill="#5a3a20" stroke="#2f1c0c" stroke-width="2"/><path d="M${x-8} 8V142" stroke="#8a5f3a" stroke-width="2"/>`).join('');
+ o+=`<rect x="210" y="86" width="180" height="74" fill="#6b4626" stroke="#2f1c0c" stroke-width="3"/><rect x="200" y="80" width="200" height="10" fill="#8a5f3a" stroke="#2f1c0c" stroke-width="2"/>`+person(300,106,{coat:'#1a1410',hat:'none',s:.9,skin:'#e8c39a',pose:'hand'})+`<path d="M291 50Q291 40 300 40Q309 40 309 50Q300 45 291 50z" fill="#ececec"/>`
+ +`<rect x="330" y="76" width="34" height="8" rx="2" fill="#8a5f1a"/><rect x="358" y="70" width="6" height="20" rx="2" fill="#8a5f1a"/>`
+ +bal(250,86,-6).replace('translate(250 86)','translate(250 86) scale(.5)')
+ +`<rect x="50" y="110" width="92" height="50" fill="#6b4626" stroke="#2f1c0c" stroke-width="3"/>`+person(96,124,{coat:'#22140c',hat:'top',stache:true,s:.78})+`<rect x="458" y="110" width="92" height="50" fill="#6b4626" stroke="#2f1c0c" stroke-width="3"/>`+person(504,124,{coat:'#3f6d8a',apron:true,s:.78,flip:true})
+ +`<rect y="168" width="600" height="52" fill="#3d2714"/>`+[0,1,2,3,4,5,6].map(i=>`<rect x="${20+i*82}" y="176" width="66" height="20" rx="3" fill="#2f1c0c"/>${person(53+i*82,180,{coat:['#4a4a55','#6a5a4a','#4f5f4f'][i%3],hat:i%2?'cap':'none',s:.42})}`).join('')
+ +pill(96,150,V('Chủ hãng','The owner'),74)+pill(504,150,V('Thợ cơ khí','The mechanic'),82)
+ +`<rect x="176" y="6" width="248" height="28" rx="8" fill="#22090d" opacity=".85"/>`+T(300,25,V('Hợp tác hay bóc lột?','Cooperation or exploitation?'),'#fff4d8',15);
+ return o;}
+const sc={1:s1,2:s2,3:s3,4:s4,5:s5,6:s6};
+const CP={
+1:['Hàng → Tiền → Hàng: bạn tự làm phụ tùng, bán đi, rồi mua thứ mình cần. Tiền chỉ là khâu trung gian; mục đích là có đồ dùng.','Commodity → Money → Commodity: you make parts, sell them, then buy what you need. Money is only the go-between; the goal is use-value.'],
+2:['Mua rẻ bán đắt chỉ chuyển tiền từ túi người này sang túi người kia — cán cân tổng không hề nặng thêm.','Buying low and selling high only moves money between pockets — the total on the scale never grows.'],
+3:['Cổng xưởng Lesta: những người thợ mất máy tiện, mất ruộng đứng chờ việc. Họ tự do, nhưng chỉ còn sức lao động để bán — điều kiện để nó thành hàng hoá.','Lesta’s gate: mechanics who lost their lathes and farmers who lost their land wait for work. They are free, yet have only labour-power to sell — the condition that makes it a commodity.'],
+4:['Trong xưởng Lesta: máy tiện chỉ chuyển giá trị cũ (c); chỉ công nhân — lao động sống — tạo ra giá trị mới gồm v và m. Mỗi tháng xong có thêm một chiếc xe xuất xưởng.','Inside Lesta: lathes only pass on old value (c); only workers — living labour — create new value made of v and m. Each month ends with one more car shipped.'],
+5:['Xanh (t) là phần ngày làm bù lại lương, đỏ (t′) là phần làm không công tạo ra m. Kéo dài ngày làm hoặc rút t đều làm phần đỏ lớn thêm — làm càng khuya, sức khoẻ càng cạn.','Green (t) repays the wage; red (t′) is unpaid work that creates m. Lengthening the day or shrinking t both grow the red slice — the later the shift, the lower the health.'],
+6:['Hợp đồng tự nguyện, trao đổi ngang giá — nhưng phần t′ vẫn thuộc về chủ. Hãy nghe từng nhân chứng.','A voluntary contract, an exchange at value — yet t′ still belongs to the owner. Hear each witness.']};
+const banner=n=>`<div class="banner">${svg(sc[n](),CP[n][S.lang==='vi'?0:1])}<div class="cap">${CP[n][S.lang==='vi'?0:1]}</div></div>`;
+
+/* ---------- cốt truyện Lesta ---------- */
+function st1(){const p='g';return defs(p,'#1e2247','#3a2f4a','#2a1a14')+sky(p)+`<rect width="600" height="220" fill="url(#${p}b)" opacity=".35"/>`+`<rect x="60" y="40" width="200" height="130" rx="4" fill="#1e4f7a" stroke="#e8dcc0" stroke-width="4"/><g stroke="#cfe6f5" stroke-width="2" fill="none"><path d="M90 130H230M100 130Q110 100 140 100H190Q210 100 220 130"/><circle cx="118" cy="132" r="12"/><circle cx="204" cy="132" r="12"/><path d="M140 100V86H176V100M80 80H120M80 90H110"/></g>`+T(160,62,V('XE KHÔNG CẦN NGỰA','HORSELESS CARRIAGE'),'#cfe6f5',12,800)
+ +`<rect y="168" width="600" height="52" fill="url(#${p}p)"/><rect x="300" y="132" width="200" height="12" fill="#6b4626"/><rect x="310" y="144" width="8" height="24" fill="#4a2f15"/><rect x="482" y="144" width="8" height="24" fill="#4a2f15"/>`+lamp(440,20,p)+person(390,168,{coat:'#5a4630',apron:true,s:1.05,pose:'hand'})+lathe(330,132,.7)+gear(540,150,22,12,'#7b838b')+gear(505,130,12,9,'#9aa3aa','spinr')
+ +`<rect x="470" y="40" width="90" height="70" rx="3" fill="#0d1030" stroke="#3a2418" stroke-width="4"/><path d="M485 96Q505 70 525 96" fill="none" stroke="#e8dcc0" stroke-width="3"/><circle cx="530" cy="60" r="7" fill="#f6ecc0"/>`;}
+function st2(){const p='h';
+ return defs(p,'#fbe2a8','#f6e6c2','#e5cf9f')+sky(p)+sun(p,300,60,110)+[...Array(9)].map((_,i)=>`<path d="M300 60L${i*75} 0" stroke="#fff0b8" stroke-width="10" opacity=".18"/>`).join('')+skyline(140)+ground(160,'#94825a','#7a6944')
+ +`<path d="M20 30Q150 70 280 30M320 30Q450 70 580 30" stroke="#5a3d20" stroke-width="2" fill="none"/>`+[0,1,2,3,4,5,6,7,8].map(i=>`<path d="M${30+i*32} ${36+Math.sin(i*.7)*12}l10 0-5 14z" fill="${['#c4462f','#d9a441','#3f7d4c','#2f5a73'][i%4]}"/>`).join('')
+ +facade(p,30,160,170,80,'')+`<rect x="66" y="74" width="98" height="18" rx="3" fill="#f3ead6" stroke="#5c2a20" stroke-width="2"/>`+T(115,87,'LESTA','#8a1f33',12,800)+car(345,158,{c:'#7a1c2c',s:1.7,spin:true})
+ +person(470,160,{coat:'#22140c',hat:'top',stache:true,s:1.05,pose:'hand',flip:true})+person(520,160,{coat:'#3f6d8a',pose:'cheer',s:.9,apron:true})+person(560,160,{coat:'#9c4227',hat:'straw',pose:'cheer',s:.85})+person(224,160,{coat:'#5c7a55',pose:'cheer',s:.75})
+ +pill(300,200,V('Chiếc xe Lesta đầu tiên lăn bánh','The first Lesta car rolls out'),230);}
+function st3(){return s3();}
+function st4(){const p='i';
+ return defs(p,'#7a5230','#5e3d22','#3d2714')+`<rect width="600" height="220" fill="url(#${p}p)" opacity=".9"/><rect width="600" height="220" fill="#1a0c04" opacity=".4"/>`
+ +`<rect y="196" width="600" height="24" fill="#2a170a"/>`+person(150,196,{coat:'#22140c',hat:'top',stache:true,s:1.3,pose:'hand'})+person(450,196,{coat:'#3f6d8a',apron:true,s:1.3,pose:'hand',flip:true})+`<rect x="90" y="150" width="420" height="10" fill="#8a5f3a" stroke="#2f1c0c" stroke-width="2"/><rect x="100" y="160" width="400" height="60" fill="#6b4626" stroke="#2f1c0c" stroke-width="2"/>`
+ 
+ +`<rect x="255" y="122" width="90" height="30" rx="2" fill="#f3ead6" stroke="#8a7a55" stroke-width="2" transform="rotate(-3 300 137)"/><path d="M268 132H332M268 140H320M268 148H300" stroke="#8a7a55" stroke-width="2" transform="rotate(-3 300 137)"/><circle cx="326" cy="146" r="6" fill="#c4462f"/>`
+ +T(300,50,'?','#ffd98a',64,800)+T(230,80,'?','#e6b95a',30,800)+T(372,86,'?','#e6b95a',30,800)+bal(300,120,0).replace('translate(300 120)','translate(300 118) scale(.5)')
+ +pill(150,214,V('Chủ hãng','The owner'),80)+pill(450,214,V('Thợ cơ khí','The mechanic'),90);}
+const STORY=[
+ {art:st1,t:['Thợ cơ khí có giấc mơ','A mechanic with a dream'],p:['Đầu thế kỷ XX, xe ngựa vẫn chiếm lĩnh đường phố. Trong một xưởng tiện nhỏ, thợ cơ khí Yi Long Ma vẽ ra thứ chưa ai tin: một chiếc xe không cần ngựa.','At the turn of the 20th century, horses still ruled the streets. In a tiny lathe shop, mechanic Yi Long Ma sketched what few believed in: a carriage that needs no horse.']},
+ {art:st2,t:['Lesta ra đời','Lesta is born'],p:['Sau bao đêm tiện từng con ốc, chiếc xe Lesta đầu tiên lăn bánh. Đám đông reo hò, đại lý xếp hàng đặt mua. Yi Long Ma trở thành chủ hãng xe Lesta.','After countless nights turning bolts, the first Lesta car rolls out. Crowds cheer, dealers queue to order. Yi Long Ma becomes the owner of the Lesta car company.']},
+ {art:st3,t:['Trước cổng nhà máy','At the factory gate'],p:['Đơn hàng dồn về, Lesta cần thêm tay nghề. Cùng lúc, các xưởng nhỏ phá sản, nông dân mất ruộng — họ kéo đến cổng, không còn gì ngoài sức lao động của mình.','Orders pour in and Lesta needs more skilled hands. At the same time small shops go bust and farmers lose their land — they crowd the gate with nothing left but their labour-power.']},
+ {art:st4,t:['Hợp tác hay bóc lột?','Cooperation or exploitation?'],p:['Chủ bỏ vốn, thợ bỏ sức; hợp đồng tự nguyện, lương trả đủ. Nghe thì công bằng. Nhưng ai là người được hưởng giá trị thợ làm ra ngoài phần lương? Bạn sẽ tự tìm câu trả lời qua 6 màn chơi.','The owner puts in capital, the worker puts in effort; a voluntary contract, wages paid in full. Sounds fair. But who gets the value the worker creates beyond the wage? You will find your own answer across 6 stages.']}
+];
+
+/* ---------- hero, logo, chân dung, icon ---------- */
+function hero(){const p='j';
+ return `<svg viewBox="0 0 600 200" role="img" aria-label="Lesta Motor Works" style="display:block;width:100%;height:auto">`+defs(p,'#f6d59a','#efdcb6','#d9c396')+sky(p,600,200)+sun(p,470,56,80)+skyline(118,'#c3a070')+ground(148,'#8b7a55','#6f5f40',200)
+ +`<rect y="150" width="600" height="18" fill="#6f6a60"/><path d="M0 159H600" stroke="#d9cfa0" stroke-width="2" stroke-dasharray="18 12"/>`
+ +facade(p,30,148,250,90,'')+chimney(52,8,62)+chimney(236,4,62)+`<rect x="98" y="52" width="116" height="30" rx="5" fill="#f3ead6" stroke="#5c2a20" stroke-width="3"/>`+T(156,64,'LESTA','#8a1f33',13,800)+T(156,77,'MOTOR WORKS','#5c2a20',8,800)
+ +gear(320,60,18,10,'#9aa3aa')+gear(348,44,11,8,'#b4bcc3','spinr')+car(430,166,{c:'#7a1c2c',s:1.55,spin:true})+person(556,160,{coat:'#22140c',hat:'top',stache:true,s:.85,pose:'hand',flip:true})+`</svg>`;}
+const logo=()=>`<svg width="30" height="30" viewBox="-20 -20 40 40" aria-hidden="true"><g class="spin"><path d="${gearPath(15,10,19)}" fill="#bd8a34" stroke="#f3ead6" stroke-width="1.5"/></g><circle r="10" fill="#671626"/><path d="M-4-6V5H5" stroke="#f3ead6" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const role=k=>{const bg=`<circle cx="60" cy="60" r="58" fill="${k==='capital'?'#5a1a26':'#5c3220'}" stroke="#bd8a34" stroke-width="3"/>`;
+ return `<svg width="92" height="92" viewBox="0 0 120 120" aria-hidden="true">${bg}<g transform="translate(60 128) scale(1.35)">${k==='capital'
+ ?`<path d="M-30 0Q-28-34 0-36Q28-34 30 0z" fill="#22140c"/><path d="M-9-36L0-18L9-36z" fill="#f4ecd8"/><path d="M-13-30Q0-26 13-30" stroke="#d9a441" stroke-width="2.4" fill="none"/><circle cy="-52" r="15" fill="#e8c39a"/><path d="M-9-47Q0-42 9-47Q0-50 -9-47z" fill="#2b1a10"/><circle cx="-5" cy="-54" r="1.7" fill="#2b1a10"/><circle cx="5" cy="-54" r="1.7" fill="#2b1a10"/><rect x="-10" y="-88" width="20" height="26" rx="2" fill="#1a1410"/><rect x="-10" y="-70" width="20" height="5" fill="#8a2438"/><rect x="-19" y="-64" width="38" height="5" rx="2.5" fill="#1a1410"/>`
+ :`<path d="M-30 0Q-28-34 0-36Q28-34 30 0z" fill="#3f6d8a"/><path d="M-13-32H13L15 0H-15z" fill="#d8ccb0"/><circle cy="-52" r="15" fill="#e8c39a"/><circle cx="-5" cy="-54" r="1.7" fill="#2b1a10"/><circle cx="5" cy="-54" r="1.7" fill="#2b1a10"/><path d="M-4-46Q0-43.5 4-46" stroke="#2b1a10" stroke-width="1.6" fill="none"/><path d="M-15-60Q-14-76 0-76Q14-76 15-60z" fill="#4a3a2a"/><rect x="2" y="-62" width="20" height="5" rx="2.5" fill="#33271b"/><g stroke="#c9ced4" stroke-width="5" stroke-linecap="round"><path d="M14-6L34-32"/></g><circle cx="35" cy="-34" r="6" fill="none" stroke="#c9ced4" stroke-width="4"/>`}</g></svg>`;};
+const wrench=`<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6a5 5 0 0 1-7 5L5 19a2 2 0 0 1-3-3l8-8a5 5 0 0 1 5-7l-3 3 2 3 3 1z" fill="#8a5f1a"/></svg>`;
+const nut=`<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 5v10l-8 5-8-5V7z" fill="#7b838b" stroke="#4a5158" stroke-width="1.5"/><circle cx="12" cy="12" r="4" fill="#f3ead6" stroke="#4a5158" stroke-width="1.5"/></svg>`;
+const coinI=`<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#d9a441" stroke="#8a5f1a" stroke-width="2"/><text x="12" y="16.5" text-anchor="middle" font-size="12" font-weight="800" fill="#6b470f" font-family="Inter,sans-serif">$</text></svg>`;
+const scaleI=`<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v17M6 20h12M4 8h16M4 8l-3 7h6zM20 8l-3 7h6z" stroke="#5a4726" stroke-width="1.8" fill="none" stroke-linejoin="round"/></svg>`;
+const ICN={'🔧':wrench,'🔩':nut,'🪙':coinI,'⚖️':scaleI};
+
+/* icon sự kiện trong thẻ (modal) */
+const IC={rain:'<path d="M14 30a10 10 0 0 1 18-6a8 8 0 0 1 14 6z" fill="#8fa3b5"/><path d="M20 36l-3 9m10-9l-3 9m10-9l-3 9" stroke="#4a78a8" stroke-width="3" stroke-linecap="round"/>',iron:'<rect x="10" y="30" width="36" height="12" fill="#7d8791"/><rect x="16" y="18" width="30" height="12" fill="#a1abb5"/>',lathe:'<rect x="8" y="34" width="40" height="8" fill="#4a3a2a"/><rect x="10" y="20" width="12" height="16" fill="#bd8a34"/><rect x="22" y="26" width="22" height="4" fill="#888"/>',power:'<path d="M32 8L16 32h11l-4 16 18-24H30z" fill="#e6b95a"/>',order:'<rect x="12" y="18" width="32" height="26" fill="#d9b877" stroke="#7a5a30" stroke-width="2"/><path d="M12 28h32" stroke="#7a5a30" stroke-width="2"/>',quit:'<circle cx="26" cy="18" r="7" fill="#e8c9a0"/><path d="M18 28h16l3 18H15z" fill="#3f6d8a"/><path d="M40 24l10 4-10 4" stroke="#9c4227" stroke-width="3" fill="none"/>',clock:'<circle cx="28" cy="28" r="17" fill="#fff8ea" stroke="#5c2a20" stroke-width="3"/><path d="M28 28V16M28 28l9 5" stroke="#5c2a20" stroke-width="3" stroke-linecap="round"/>',union:'<circle cx="18" cy="20" r="6" fill="#e8c9a0"/><circle cx="38" cy="20" r="6" fill="#e8c9a0"/><path d="M8 44l3-16h10l3 16zm22 0l3-16h10l3 16z" fill="#3f6d8a"/>',rival:'<rect x="8" y="26" width="26" height="20" fill="#a5563a"/><rect x="26" y="14" width="6" height="14" fill="#5c2a20"/><path d="M38 40h14m-5-5l5 5-5 5" stroke="#9c4227" stroke-width="3" fill="none"/>',rice:'<path d="M14 46q-6-18 6-26h16q12 8 6 26z" fill="#e8dcc0" stroke="#8a7a55" stroke-width="2"/>'};
+const BAD=/rain|quit|lathe|power|rival/;
+const MAP=[[/gạo|rice/i,'rice'],[/mưa|rain/i,'rain'],[/sắt|iron|steel/i,'iron'],[/máy tiện|lathe|tai nạn|near-miss/i,'lathe'],[/điện|power/i,'power'],[/đơn hàng|order|khách|buyer|regular/i,'order'],[/nghỉ|quit/i,'quit'],[/tăng ca|overtime|ca đêm|night/i,'clock'],[/công đoàn|union|đồng nghiệp|coworker|tăng lương|raise|thanh tra|inspector|học việc|apprentice/i,'union'],[/đối thủ|rival/i,'rival']];
+const ico=h=>{const t=(h.match(/<h3>(.*?)<\/h3>/)||[])[1]||'';const m=MAP.find(r=>r[0].test(t));return m?`<svg class="ico" width="58" height="58" viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="27" fill="${BAD.test(m[1])?'#f6dcd4':'#f3ead6'}" stroke="${BAD.test(m[1])?'#d99a8a':'#d8c79c'}" stroke-width="2"/>${IC[m[1]]}</svg>`:'';};
+return {banner,ico,hero,logo,role,ICN,STORY,V};
+})();
+
+/* ---- gắn vào game ---- */
+const _rm=roadmap; roadmap=function(n){ return _rm(n)+ART.banner(n); };
+const _om=openModal; openModal=function(h){ _om(ART.ico(h)+h); };
+const _sh=statHTML; statHTML=function(cls,icon,...r){ return _sh(cls,ART.ICN[icon]||icon,...r); };
+
+/* ---- thanh kéo: kéo mượt, không dựng lại DOM khi đang kéo ---- */
+function paintRange(el){ const mn=+el.min||0,mx=+el.max||100; el.style.setProperty('--p',((+el.value-mn)/(mx-mn)*100)+'%'); }
+function paintRanges(){ document.querySelectorAll('input[type=range]').forEach(paintRange); }
+function liveSet(el,mod,k){
+  const v=+el.value; S[mod][k]=v; paintRange(el);
+  const b=el.previousElementSibling&&el.previousElementSibling.querySelector('b');
+  if(b) b.textContent=(b.textContent.trim().startsWith('$')?'$':'')+v.toLocaleString('en-US');
+}
+const _ri=renderInto; renderInto=function(){ _ri(); paintRanges(); };
+const _rd=render; render=function(){ _rd(); paintRanges(); };
+
+/* ---- màn cốt truyện ---- */
+let storyI=0;
+function renderStory(){
+  const s=ART.STORY[storyI], l=S.lang==='vi'?0:1, last=storyI===ART.STORY.length-1;
+  const you = S.role==='capital' ? ART.V('Bạn sẽ vào vai Yi Long Ma, chủ hãng Lesta.','You will play Yi Long Ma, owner of Lesta.') : ART.V('Bạn sẽ vào vai một thợ cơ khí xin việc ở Lesta, dưới quyền Yi Long Ma.','You will play a mechanic looking for work at Lesta, under Yi Long Ma.');
+  document.getElementById('story-box').innerHTML=`
+    <div class="story-art"><svg viewBox="0 0 600 220" preserveAspectRatio="xMidYMid slice" role="img" aria-label="${s.t[l]}">${s.art()}</svg></div>
+    <div class="story-dots">${ART.STORY.map((_,i)=>`<i class="${i===storyI?'on':''}"></i>`).join('')}</div>
+    <h2>${s.t[l]}</h2><p>${s.p[l]}</p>${last?`<p class="story-you">${you}</p>`:''}
+    <div class="start-actions" style="margin-top:18px;">
+      <button class="btn ghost" onclick="endStory()">${ART.V('Bỏ qua','Skip')}</button>
+      <button class="btn primary" onclick="storyNext()">${last?ART.V('Vào xưởng Lesta →','Enter Lesta →'):ART.V('Tiếp →','Next →')}</button>
+    </div>`;
+}
+function showStory(){ storyI=0; document.getElementById('diff-screen').style.display='none'; document.getElementById('story-screen').style.display='flex'; renderStory(); window.scrollTo(0,0); }
+function storyNext(){ if(storyI<ART.STORY.length-1){ storyI++; renderStory(); } else endStory(); }
+function endStory(){ document.getElementById('story-screen').style.display='none'; const was=document.getElementById('app').style.display==='flex'; document.getElementById('app').style.display='flex'; if(!was) goto('menu'); }
+
+/* ---- màn đầu & thẻ vai: thay emoji bằng tranh ---- */
+function paintHero(){ const h=document.getElementById('hero-art'); if(h) h.innerHTML=ART.hero(); }
+const _ss=showStart; showStart=function(){ _ss(); paintHero(); };
+const _sr=showRoleScreen; showRoleScreen=function(){ _sr(); ['capital','worker'].forEach(k=>{ const e=document.querySelector('#rc-'+k+' .emoji'); if(e) e.innerHTML=ART.role(k); }); };
+paintHero();
+</script>
 </body>
 </html>
