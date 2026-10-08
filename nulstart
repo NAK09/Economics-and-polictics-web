@@ -1,0 +1,1 @@
+offsetlocalcd /d "E:\ktct\"where py  errorlevel 1 (  echo Python Launcher (py) was not found. Install Python or use another local web server.  pause  exit /b 1)start "Hanh trinh map server" /min py -m http.server 8765 --bind 127.0.0.1 --directory "E:\ktct\"timeout /t 2 /nobreak  "" "http://127.0.0.1:8765/hanh-trinh-bac-ho.html"endlocal

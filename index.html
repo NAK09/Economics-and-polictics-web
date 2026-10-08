@@ -313,6 +313,16 @@
                     </span>
                 </div>
             </a>
+            <!-- Card: Hành trình tìm đường cứu nước -->
+            <article class="group relative bg-white dark:bg-darkCard rounded-3xl p-7 md:p-8 border border-gray-100 dark:border-gray-700 shadow-[0_10px_40px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_50px_rgba(180,83,9,0.18)] hover:-translate-y-2 transition-all duration-300 overflow-hidden flex flex-col h-full sfx-btn" data-aos="fade-up" data-aos-delay="600">
+                <div class="absolute -top-12 -right-12 w-40 h-40 bg-amber-50 dark:bg-amber-950/30 rounded-full group-hover:scale-[1.5] transition-transform duration-500"></div>
+                <div class="relative z-10 flex flex-col h-full">
+                    <div class="w-14 h-14 bg-amber-100 dark:bg-amber-900/50 text-amber-700 dark:text-amber-300 rounded-2xl flex items-center justify-center text-2xl mb-8 group-hover:-translate-y-1 transition-transform"><i class="fa-solid fa-earth-asia"></i></div>
+                    <h3 class="text-2xl font-serif font-bold text-gray-900 dark:text-white mb-3"><span class="lang-vi">Hành Trình Đi Tìm Ánh Sáng</span><span class="lang-en hidden">Journey to Find the Light</span></h3>
+                    <p class="text-gray-600 dark:text-gray-300 flex-grow text-[15px] leading-relaxed"><span class="lang-vi">Khám phá quả địa cầu tương tác và những dấu mốc tìm đường cứu nước từ 1911 đến 1930.</span><span class="lang-en hidden">Explore an interactive globe and milestones from 1911 to 1930.</span></p>
+                    <div class="mt-6 flex flex-wrap gap-3"><a href="./hanh-trinh-bac-ho.html" class="inline-flex items-center gap-2 rounded-xl bg-amber-600 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-amber-700"><span class="lang-vi">Mở hành trình</span><span class="lang-en hidden">Explore the globe</span><i class="fa-solid fa-arrow-right"></i></a><a href="https://www.youtube.com/watch?v=Fdmy_8E_g3E&amp;list=PLmJklp5rLDQb30xO82nPfeE0QnNNS0jxw&amp;index=1" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-xl border border-amber-700/30 px-4 py-2.5 text-sm font-bold text-amber-800 transition hover:bg-amber-50 dark:border-amber-300/30 dark:text-amber-300 dark:hover:bg-amber-950/40"><i class="fa-brands fa-youtube"></i><span class="lang-vi">Xem video bên ngoài</span><span class="lang-en hidden">Watch external video</span></a></div>
+                </div>
+            </article>
         </div>
     </main>
 
@@ -403,15 +413,6 @@
 
         <div id="chat-logs" class="p-4 h-72 overflow-y-auto flex flex-col gap-4 bg-white dark:bg-gray-900">
             <!-- Messages rendered by renderChat() -->
-        </div>
-
-        <div class="flex gap-2 p-3 overflow-x-auto border-t border-gray-100 dark:border-gray-800 scrollbar-hide whitespace-nowrap bg-gray-50 dark:bg-gray-800">
-            <button onclick="sendSuggestion1()" class="px-4 py-1.5 bg-white dark:bg-gray-700 border border-red-200 dark:border-gray-600 text-red-800 dark:text-yellow-400 rounded-full text-xs font-bold shadow-sm hover:bg-red-50 transition-colors sfx-btn">
-                <span class="lang-vi">🌸 5 đặc điểm độc quyền?</span><span class="lang-en hidden">🌸 5 Monopoly traits?</span>
-            </button>
-            <button onclick="sendSuggestion2()" class="px-4 py-1.5 bg-white dark:bg-gray-700 border border-red-200 dark:border-gray-600 text-red-800 dark:text-yellow-400 rounded-full text-xs font-bold shadow-sm hover:bg-red-50 transition-colors sfx-btn">
-                <span class="lang-vi">💡 Tư bản tài chính là gì?</span><span class="lang-en hidden">💡 What is Finance Capital?</span>
-            </button>
         </div>
 
         <div class="p-3 bg-white dark:bg-darkCard border-t border-gray-200 dark:border-gray-700 flex gap-3 items-center">
@@ -514,6 +515,31 @@
             }
         }
 
+        function escapeChatHtml(value) {
+            return String(value || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function formatChatMessage(value) {
+            return escapeChatHtml(value).trim()
+                .replace(/```[\s\S]*?```/g, block => block.replace(/```[\w-]*\n?/g, '').replace(/```/g, ''))
+                .replace(/\$\$([\s\S]+?)\$\$/g, '$1')
+                .replace(/\$([^$\n]+)\$/g, '$1')
+                .replace(/`([^`]+)`/g, '$1')
+                .replace(/\\\((.*?)\\\)|\\\[(.*?)\\\]/g, '$1$2')
+                .replace(/\*\*\*([\s\S]+?)\*\*\*/g, '<strong><em>$1</em></strong>')
+                .replace(/\*\*([\s\S]+?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*([^*\n]+)\*/g, '<em>$1</em>')
+                .replace(/^#{1,6}\s+/gm, '')
+                .replace(/^\s*[-*+]\s+/gm, '• ')
+                .replace(/\n{3,}/g, '\n\n')
+                .replace(/\n/g, '<br>');
+        }
+
         function renderChat() {
             const chatLogs = document.getElementById('chat-logs');
             chatLogs.innerHTML = '';
@@ -527,15 +553,16 @@
                     ? 'bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3 rounded-2xl rounded-tr-none shadow-sm text-sm max-w-[85%] font-medium leading-relaxed self-end text-black dark:text-white'
                     : 'bg-red-50/50 dark:bg-gray-800 border border-red-100 dark:border-gray-700 p-3 rounded-2xl rounded-tl-none shadow-sm text-sm max-w-[88%] font-medium leading-relaxed self-start text-gray-800 dark:text-gray-200';
 
-                div.innerHTML = textContent;
+                if (isUser) div.textContent = textContent;
+                else div.innerHTML = formatChatMessage(textContent);
                 chatLogs.appendChild(div);
             });
 
             if (chatState.isLoading) {
-                const waitMsg = currentLang === 'vi' ? 'Đồng chí đợi mình một chút xíu nha... 🌸' : 'Give me a tiny moment, comrade... 🌸';
+                const waitMsg = currentLang === 'vi' ? 'Mình đang chuẩn bị câu trả lời…' : 'Preparing a reply…';
                 const loadingDiv = document.createElement('div');
                 loadingDiv.className = 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3 rounded-2xl rounded-tl-none shadow-sm text-sm max-w-[85%] font-medium leading-relaxed self-start text-gray-500 italic';
-                loadingDiv.innerHTML = waitMsg;
+                loadingDiv.textContent = waitMsg;
                 chatLogs.appendChild(loadingDiv);
             }
 
@@ -543,8 +570,8 @@
         }
 
         function clearChat() {
-            const viGreet = 'Chào đồng chí đáng yêu! 🥰 Mình là <strong class="text-red-800 dark:text-yellow-400">Trợ lý AI Kinh tế Chính trị Mác - Lênin</strong> đây. Đừng ngại ngần, hãy hỏi mình bất cứ điều gì nha! ✨';
-            const enGreet = 'Greetings, lovely comrade! 🥰 I am your <strong class="text-red-800 dark:text-yellow-400">Marxist-Leninist AI Assistant</strong>! Don\'t hesitate to ask me anything! ✨';
+            const viGreet = 'Chào bạn, mình là **Trợ lý AI Kinh tế Chính trị Mác – Lênin**. Bạn cần hỗ trợ nội dung nào?';
+            const enGreet = 'Hi, I’m your **Marxist–Leninist Political Economy assistant**. What would you like help with?';
 
             chatState.messages = [{
                 sender: 'bot',
@@ -582,29 +609,20 @@
                 } else {
                     chatState.messages.push({
                         sender: 'bot',
-                        text: `⚠ Lỗi backend: ${data.error || 'Không thể lấy phản hồi từ AI'}`
+                        text: `Không thể trả lời lúc này. ${data.error || 'Vui lòng thử lại sau.'}`
                     });
                 }
             } catch (err) {
                 console.error("Lỗi kết nối:", err);
                 chatState.messages.push({
                     sender: 'bot',
-                    text: '⚠ Không thể kết nối tới Server API! Vui lòng kiểm tra lại thiết lập trên Vercel.'
+                    text: 'Không thể kết nối tới máy chủ. Vui lòng thử lại sau.'
                 });
             } finally {
                 chatState.isLoading = false;
                 renderChat();
                 sfxPop.play();
             }
-        }
-
-        function sendSuggestion1() {
-            document.getElementById('userQueryInput').value = currentLang === 'vi' ? '5 đặc điểm độc quyền là gì?' : 'What are the 5 characteristics of monopoly?';
-            handleSendChat();
-        }
-        function sendSuggestion2() {
-            document.getElementById('userQueryInput').value = currentLang === 'vi' ? 'Tư bản tài chính là gì?' : 'What is Finance Capital?';
-            handleSendChat();
         }
 
         window.addEventListener('scroll', () => {
@@ -633,3 +651,4 @@
     <script src="/chat-widget.js" defer></script>
 </body>
 </html>
+

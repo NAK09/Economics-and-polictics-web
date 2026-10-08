@@ -692,11 +692,20 @@ const questionBankSource = [
     }
 ];
 
+const cleanQuizNotation = value => String(value ?? '')
+    .replace(/\$\$([\s\S]+?)\$\$/g, '$1')
+    .replace(/\$([^$\n]+)\$/g, '$1')
+    .replace(/\\\((.*?)\\\)/g, '$1')
+    .replace(/\\\[([\s\S]*?)\\\]/g, '$1');
+
 window.questionBank = questionBankSource.map((q, index) => ({
     id: index + 1,
-    text: { vi: q.q, en: q.qEn },
-    options: { vi: q.o, en: q.oEn },
+    text: { vi: cleanQuizNotation(q.q), en: cleanQuizNotation(q.qEn) },
+    options: {
+        vi: q.o.map(cleanQuizNotation),
+        en: q.oEn.map(cleanQuizNotation)
+    },
     correct: q.a,
-    explanation: { vi: q.e, en: q.eEn },
-    tag: { vi: q.tag[0], en: q.tag[1] }
+    explanation: { vi: cleanQuizNotation(q.e), en: cleanQuizNotation(q.eEn) },
+    tag: { vi: cleanQuizNotation(q.tag[0]), en: cleanQuizNotation(q.tag[1]) }
 }));

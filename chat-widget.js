@@ -19,28 +19,42 @@
   const toggle = document.createElement('button');
   toggle.id = 'site-ai-toggle';
   toggle.type = 'button';
-  toggle.textContent = '✨ Hỏi AI';
+  toggle.textContent = 'Hỏi AI';
   toggle.setAttribute('aria-controls', 'site-ai-panel');
   toggle.setAttribute('aria-expanded', 'false');
 
   const panel = document.createElement('section');
   panel.id = 'site-ai-panel';
   panel.setAttribute('aria-label', 'Trợ lý AI');
-  panel.innerHTML = '<div id="site-ai-head">Trợ lý Kinh tế Chính trị ✨</div><div id="site-ai-log" aria-live="polite"></div><form id="site-ai-form"><input id="site-ai-input" type="text" maxlength="2000" placeholder="Nhập câu hỏi..." autocomplete="off" aria-label="Câu hỏi"><button type="submit">Gửi</button></form>';
+  panel.innerHTML = '<div id="site-ai-head">Trợ lý Kinh tế Chính trị</div><div id="site-ai-log" aria-live="polite"></div><form id="site-ai-form"><input id="site-ai-input" type="text" maxlength="2000" placeholder="Nhập câu hỏi..." autocomplete="off" aria-label="Câu hỏi"><button type="submit">Gửi</button></form>';
   document.body.append(toggle, panel);
 
   const log = panel.querySelector('#site-ai-log');
   const input = panel.querySelector('#site-ai-input');
   const form = panel.querySelector('#site-ai-form');
+  const formatAssistantText = (value) => String(value || '')
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;')
+    .replace(/\$\$([\s\S]+?)\$\$/g, '$1')
+    .replace(/\$([^$\n]+)\$/g, '$1')
+    .replace(/`([^`]+)`/g, '$1')
+    .replace(/\\\((.*?)\\\)|\\\[(.*?)\\\]/g, '$1$2')
+    .replace(/\*\*\*([\s\S]+?)\*\*\*/g, '<strong><em>$1</em></strong>')
+    .replace(/\*\*([\s\S]+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*([^*\n]+)\*/g, '<em>$1</em>')
+    .replace(/^#{1,6}\s+/gm, '')
+    .replace(/^\s*[-*+]\s+/gm, '• ')
+    .replace(/\n{3,}/g, '\n\n').replace(/\n/g, '<br>');
   const addMessage = (text, sender) => {
     const message = document.createElement('div');
     message.className = `site-ai-message ${sender}`;
-    message.textContent = text;
+    if (sender === 'bot') message.innerHTML = formatAssistantText(text);
+    else message.textContent = text;
     log.append(message);
     log.scrollTop = log.scrollHeight;
     return message;
   };
-  addMessage('Chào bạn! Mình có thể giúp gì về Kinh tế Chính trị Mác – Lênin? 🥰', 'bot');
+  addMessage('Chào bạn, mình có thể hỗ trợ bạn học Kinh tế Chính trị Mác – Lênin. Bạn đang cần giải đáp nội dung nào?', 'bot');
 
   toggle.addEventListener('click', () => {
     const open = panel.classList.toggle('open');
@@ -54,7 +68,7 @@
     addMessage(question, 'user');
     input.value = '';
     input.disabled = true;
-    const pending = addMessage('Mình đang tìm câu trả lời…', 'bot');
+    const pending = addMessage('Mình đang chuẩn bị câu trả lời…', 'bot');
     try {
       const response = await fetch('/api/chat', {
         method: 'POST',
@@ -62,7 +76,7 @@
         body: JSON.stringify({ message: question })
       });
       const data = await response.json();
-      pending.textContent = response.ok && data.reply ? data.reply : (data.error || 'AI chưa thể trả lời lúc này.');
+      pending.innerHTML = formatAssistantText(response.ok && data.reply ? data.reply : (data.error || 'AI chưa thể trả lời lúc này.'));
     } catch (error) {
       pending.textContent = 'Không thể kết nối tới máy chủ AI. Vui lòng thử lại sau.';
       console.error('AI chat request failed:', error);
